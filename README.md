@@ -3,5 +3,12 @@ Development of a web-based inventory and sales management system for Joylisa Pou
 
 | Internal Code Release | Version | Date Released |
 | ------------- | ------------- | ------------- | 
-| PP.010.000  | v1.0.0 | 2024-02-06 |  
- 
+| PP.010.000 | v1.0.0 | 2024-02-06 |  
+
+## PP.010.000 Release Notes
+* lorem ipsum dolor
+* lorem ipsum dolor
+* lorem ipsum dolor
+
+### Important Links
+* Design Specifications: https://github.com/jar-RED/poultry-palace.git
