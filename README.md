@@ -3,7 +3,9 @@ Development of a web-based inventory and sales management system for Joylisa Pou
 
 | Internal Code Release | Version | Date Released |
 | ------------- | ------------- | ------------- | 
-| PP.010.000 | v1.0.0 | 2024-02-17 |  
+| PP.010.000 | v1.0.0 | 2024-02-17 | 
+
+| | |
 
 ## PP.010.000 Release Notes 
 * Register and Login UI finished
