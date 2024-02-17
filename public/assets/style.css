@@ -1,0 +1,584 @@
+body {
+    background-color: #648266;
+    margin: 0;
+}
+
+html {
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* HEADER CONTENT STYLES */
+
+.header-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header-welcome{
+    position: relative;
+    height: 150px;
+    top: 0;
+    width: auto;
+}
+
+.header-content img, .header-content p {
+    margin: 15px;
+}
+
+.header-content img{
+    width: 86px;
+    height: 83px;
+}
+
+.header-text{
+    text-align: center;
+}
+
+.main-header-text{
+    text-align: center;
+}
+
+.main-header-text p{
+    font-size: 24;
+}
+
+.welcome-text {
+    margin-top: 50px;
+    color: white;
+    text-align: center;
+}
+
+
+.intro-text {
+    font-size: x-large;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+.web-name {
+    font-size: xx-large;
+    font-weight: bolder;
+    margin-top: 10;
+    font-family: 'Poppins', sans-serif;
+    color: #E3E3CE;
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-image img {
+    width:200px;
+    height:190px;
+}
+
+/* WEBSITE BODY STYLES */
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.register-body{
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-box {
+    width: 300px;
+    height: 300px;
+    margin-top: 30px;
+    color: white;
+    background-color: #708E76;
+    border-radius: 10px;
+    border-color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.register-box h1 {
+    margin-left: 20px;
+}
+
+.register-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-box label {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.register-box input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.register-box button {
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #40513E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.alternative {
+    justify-content: center;
+}
+
+.alternative p {
+    font-size: 17;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.alternative a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content-body {
+    height: auto;
+    width: auto;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+
+/* WEBSITE FOOTER STYLES */
+.main-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+.menu {
+    background-color: #3A4D39;
+    /* margin-top: 100px; */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-items{
+    display: flex;
+}
+
+.menu-items img {
+    width: 55px;
+    height: 55px;
+}
+
+.menu-items figure {
+    margin: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
+    width: 46px;
+    height: 70px;
+}
+
+.menu-items figcaption {
+    text-align: center;
+    font-size:  12px; 
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+  
+
+/* Login Section */
+
+.login-body {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 300px;
+    margin-top: 30px;
+    color: white;
+    background-color: #708E76;
+    border-radius: 10px;
+    border-color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.login-box h1 {
+    margin-left: 20px;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-box label {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.login-box input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.login-box button {
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+    background-color: #40513E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Dashboard */
+
+.dashboard-content {
+    margin-top: 20px;
+}
+
+.dashboard-content img{
+    height: 280px;
+    width: 360px;
+    
+}
+
+.dashboard-content p {
+    margin-top: 30px;
+    color: white;
+    text-align: center;
+    letter-spacing: 1;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-content h4 {
+    color: white;
+    font-weight: lighter;
+    text-align: center;
+    margin-top: 80px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Inventory */
+
+#inventory-body a {
+    color: E3E3CE;
+    letter-spacing: 1pt;
+    font-size: 16pt;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-decoration: none;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+#inventory-body nav {
+    height: 55px;
+    display: flex;
+}
+
+#inventory-body p {
+    color: rgba(255, 255, 255, 0.607);
+    font-size: 20;
+    font-style: italic;
+    text-align: center;
+    margin-top: 150;
+    margin-bottom: -5;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#inv-main-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+#chicken-stock {
+    width: 130;
+    height: 135;
+    border-radius: 18px;
+    border-color: white;
+    border-style: groove;
+    background-color: 83A186;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    letter-spacing: 0.5pt;
+}
+
+#chicken-feeds {
+    width: 130;
+    height: 135;
+    border-radius: 18px;
+    border-color: white;
+    border-style: groove;
+    background-color: 83A186;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    letter-spacing: 0.5pt;
+}
+
+#main-container-2 {
+    display: flex;
+    justify-content: center;
+    height: 260px;
+}
+
+#inv-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#inv-btn-container img {
+    width: fit-content;
+    height: 90px;
+    position: absolute;
+    margin-left: 350px;
+    margin-top: 120px;
+}
+
+#chicken-eggs {
+    width: 130px;
+    height: 225px;
+    margin-top: 30px;
+    border-radius: 18px;
+    border-color: white;
+    border-style: groove;
+    background-color: 83A186;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    letter-spacing: 0.5pt;
+}
+
+/* Inventory - ORDERS */
+#inv-order-container{
+    width: auto;
+    height: 500px;
+}
+
+#order-list {
+    width: 400px;
+    height: 100px;
+    border-radius: 18px;
+    border-color: white;
+    border-style: groove;
+    background-color: 83A186;
+    color: E3E3CE;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.5pt;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#order-list h4{
+    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-left: 20pt;
+    font-size: 24;
+}
+
+#order-list span{
+    margin-left: 20pt;
+    font-style: italic;
+    font-size: 17;
+}
+
+#order-quant {
+    display: flex;
+}
+
+#order-quant p{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#order-status{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#stat-condition p{
+    color: black;
+    margin-top: 0;
+    text-align: center;
+    font-size: 15;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    border-radius: 50px;
+    padding: 4px;
+    background-color: 8ED495;
+    color: black;
+}
+
+#order-amount p{
+    color: black;
+    margin-top: 0;
+    text-align: center;
+    font-size: 25;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 15px;
+    margin-bottom: 20;
+    margin-left: 20px;
+    margin-right: 10px;
+    border-radius: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    background-color: 8ED495;
+}
+
+
+/* Sales */
+#sales-body a {
+    color: E3E3CE;
+    letter-spacing: 1pt;
+    font-size: 16pt;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-decoration: none;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+#sales-body nav {
+    height: 55px;
+    display: flex;
+}
+
+#sales-body p {
+    color: rgba(255, 255, 255, 0.607);
+    font-size: 20;
+    font-style: italic;
+    text-align: center;
+    margin-top: 150;
+    margin-bottom: -5;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#sales-main-container{
+    width: auto;
+    height: 500px;
+}
+
+#sales-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sales-btn-container img {
+    width: fit-content;
+    height: 90px;
+    margin-left: 350px;
+    position: absolute;
+    margin-top: -120px;
+}
+
+#setting-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+#setting-cont img {
+    width: fit-content;
+    height: 30px;
+    margin-left: 350;
+}
+
+#sales-list {
+    width: 400px;
+    height: 100px;
+    border-radius: 18px;
+    border-color: white;
+    border-style: groove;
+    background-color: 83A186;
+    color: E3E3CE;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.5pt;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+#sales-list h4{
+    margin-bottom: 5pt;
+    margin-top: 15pt;
+    margin-left: 20pt;
+    font-size: 22;
+}
+
+#sales-list span{
+    margin-left: 20pt;
+    font-style: italic;
+}
+
+#sales-amount{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20pt;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20;
+    margin-left: 50px;
+    border-radius: 50px;
+    padding: 25px;
+    background-color: 8ED495;
+    color: black;
+    border-color: white;
+}
+
+#sales-amount span {
+    margin: 0;
+    font-style: normal;
+}
