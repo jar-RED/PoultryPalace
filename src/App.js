@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
-import SignUp from './components/auth/SignUp';
 import Dashboard from './components/Dashboard';
 import InventoryDefault from './components/InventoryDefault';
 
