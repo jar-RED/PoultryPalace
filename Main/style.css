@@ -1,0 +1,157 @@
+body {
+    background-color: #648266;
+}
+
+.header-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header-content img, .header-content p {
+    margin: 15px;
+}
+
+.header-content img{
+    width: 86px;
+    height: 83px;
+}
+
+.header-text{
+    text-align: center;
+}
+
+.welcome-text {
+    margin-top: 100px;
+    color: white;
+    text-align: center;
+}
+
+
+.intro-text {
+    font-size: 25;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.web-name {
+    font-size: 30;
+    font-weight: bolder;
+    margin-top: 10;
+    font-family: Arial, Helvetica, sans-serif;
+    color: E3E3CE;
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-image img {
+    width:200px;
+    height:190px;
+}
+
+.register-box {
+    width: 300px;
+    margin-top: 30px;
+    color: white;
+    background-color: #708E76;
+    border-radius: 10px;
+    border-color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.register-box h1 {
+    margin-left: 20px;
+}
+
+.register-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-box label {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.register-box input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.register-box button {
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #40513E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alternative p {
+    font-size: 17;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.alternative a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-box {
+    width: 300px;
+    margin-top: 30px;
+    color: white;
+    background-color: #708E76;
+    border-radius: 10px;
+    border-color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.login-box h1 {
+    margin-left: 20px;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-box label {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.login-box input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.login-box button {
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #40513E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
