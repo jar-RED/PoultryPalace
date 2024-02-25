@@ -19,11 +19,14 @@ const InventoryEmpty = () => {
       <section id="inventory-body" className="content-body">
         <div className="container">
           <nav>
-            <Link to={"/inventory-list"} className="alternative">
+            <Link to={"/inventory-list"} className="inv-list">
               {" "}
               Inventory List
             </Link>
-            <a href="inventory-orders-list.html">Orders</a>
+            <Link to={"/inventory-orders"} className="inv-orders">
+              {" "}
+              Orders
+            </Link>
           </nav>
         </div>
         <p>Empty.</p>
