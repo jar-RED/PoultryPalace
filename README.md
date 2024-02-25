@@ -3,15 +3,18 @@ Development of a web-based inventory and sales management system for Joylisa Pou
 
 | Internal Code Release | Version | Date Released |
 | ------------- | ------------- | ------------- | 
-| PP.010.000 | v1.0.0 | 2024-02-17 | 
+| PP.010.000 | v1.0.0 | 2024-02-18 16:00:00 | 
 |            |        |            | 
 
 
 ## PP.010.000 Release Notes 
-* Register and Login UI finished
-* Login and Authentication functions integrated
-* Dashboard routing after logging in finished
-* Initial database set up using firebase
+* Finished Register and Login UI
+* Login and Authentication Functions Integration
+* Dashboard Routing after Login 
+* Initial Database Setup using Firebase
+* Unintended autofill from auto-saved credentials in input text boxes
+* Invalid credentials error notification needs fixing
+* Routing to different modules in the menu not yet implemented
 
 ### Important Links
 * Design Specifications: https://github.com/jar-RED/poultry-palace.git
