@@ -50,7 +50,7 @@ html {
 }
 
 .welcome-text {
-  margin-top: 50px;
+  margin-top: 25px;
   color: white;
   text-align: center;
 }
@@ -77,16 +77,17 @@ html {
 }
 
 .logo-image img {
-  width: 200px;
-  height: 190px;
+  max-width: 100%;
+  height: auto;
 }
 
 /* WEBSITE BODY STYLES */
 
 .container {
-  display: flex;
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
   align-items: center;
+  max-width: 450px;
 }
 
 .register-body {
@@ -98,7 +99,6 @@ html {
 
 .register-box {
   width: 300px;
-  height: 300px;
   margin-top: 30px;
   color: white;
   background-color: #708e76;
@@ -145,6 +145,7 @@ html {
   padding: 10px 20px;
   margin-left: 50px;
   margin-right: 50px;
+  margin-bottom: 10px;
   background-color: #40513e;
   color: white;
   border: none;
@@ -286,9 +287,11 @@ html {
   margin-top: 20px;
 }
 
+/* Needs adjustment */
 .dashboard-content img {
-  height: 280px;
-  width: 360px;
+  max-width: 350px;
+  width: 350px;
+  height: auto;
 }
 
 .dashboard-content p {
@@ -313,7 +316,6 @@ html {
 #inventory-body a {
   color: #e3e3ce;
   letter-spacing: 1pt;
-  font-size: 16pt;
   font-family:
     system-ui,
     -apple-system,
@@ -327,10 +329,10 @@ html {
     "Helvetica Neue",
     sans-serif;
   text-decoration: none;
-  padding-top: 10pt;
-  padding-bottom: 10pt;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 #inventory-body nav {
@@ -436,9 +438,9 @@ html {
 }
 
 #chicken-eggs {
-  width: 130px;
-  height: 225px;
-  margin-top: 30px;
+  width: 170px;
+  height: 250px;
+  margin-top: 20px;
   border-radius: 18px;
   border-color: white;
   border-style: groove;
@@ -460,10 +462,15 @@ html {
   letter-spacing: 0.5pt;
 }
 
+.egg-cont {
+  text-align: left;
+  margin-left: 15px;
+}
+
 /* Inventory - ORDERS */
 #inv-order-container {
   width: auto;
-  height: 500px;
+  height: auto;
 }
 
 #order-list {
@@ -525,7 +532,7 @@ html {
   color: black;
   margin-top: 0;
   text-align: center;
-  font-size: 15;
+  font-size: 15px;
   font-weight: 700;
   font-style: normal;
   margin-top: 10px;
@@ -533,7 +540,7 @@ html {
   margin-right: 10px;
   border-radius: 50px;
   padding: 4px;
-  background-color: 8ED495;
+  background-color: #8ed495;
   color: black;
 }
 
@@ -630,7 +637,8 @@ html {
   justify-content: center;
   align-items: center;
   height: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #setting-cont img {
@@ -698,3 +706,50 @@ html {
   margin: 0;
   font-style: normal;
 }
+
+/*---------------- NEEDS EDITING -------------------*/
+/* Styles for screens smaller than   600px */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .header-welcome {
+    font-size: 16px;
+  }
+
+  #inventory-body a {
+    font-size: 18px;
+  }
+}
+
+/* Styles for screens between   600px and   900px */
+@media (min-width: 600px) and (max-width: 900px) {
+  body {
+    font-size: 16px;
+  }
+
+  .header-welcome {
+    font-size: 18px;
+  }
+
+  #inventory-body a {
+    font-size: 18px;
+  }
+}
+
+/* Styles for screens larger than   900px */
+@media (min-width: 900px) {
+  body {
+    font-size: 18px;
+  }
+
+  .header-welcome {
+    font-size: 20px;
+  }
+
+  #inventory-body a {
+    font-size: 25px;
+  }
+}
+/* -------------------------------------------------- */

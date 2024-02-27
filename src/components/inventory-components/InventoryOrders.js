@@ -8,6 +8,18 @@ const InventoryOrders = () => {
     setActiveLink(linkName);
   };
 
+  // const OrderStatus = ({ status }) => {
+  //   let statusClass = '';
+
+  //   if (status === 'RECEIVED') {
+  //     statusClass = 'status-received';
+  //   } else if (status === 'DRAFT') {
+  //     statusClass = 'status-draft';
+  //   }
+
+  //   return <p className={statusClass}>{status}</p>;
+  // };
+
   return (
     <div>
       <section id="inventory-header" className="header-welcome">
@@ -37,9 +49,8 @@ const InventoryOrders = () => {
               to={"/inventory-list"}
               className="inv-list"
               style={{
-                backgroundColor:
-                  activeLink === "inventory-list" ? "" : "#3a4d39",
-                borderRadius: "20px",
+                backgroundColor: activeLink === "inventory-list" ? "" : "",
+                // borderRadius: "20px",
               }}
               onClick={() => handleLinkClick("inventory-list")}
             >
@@ -50,7 +61,9 @@ const InventoryOrders = () => {
               to={"/inventory-orders"}
               className="inv-order"
               style={{
-                backgroundColor: activeLink === "inventory-orders" ? "" : "",
+                backgroundColor:
+                  activeLink === "inventory-orders" ? "" : "#3a4d39",
+                borderRadius: "20px",
               }}
               onClick={() => handleLinkClick("inventory-orders")}
             >
