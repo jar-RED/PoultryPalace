@@ -45,25 +45,20 @@ html {
   text-align: center;
 }
 
-.main-header-text p {
-  font-size: 24;
-}
-
 .welcome-text {
   margin-top: 25px;
   color: white;
   text-align: center;
+  font-size: 27px;
 }
 
 .intro-text {
-  font-size: x-large;
-  margin: 0;
+  margin: 0px;
   font-family: "Poppins", sans-serif;
   color: white;
 }
 
 .web-name {
-  font-size: xx-large;
   font-weight: bolder;
   /* margin-top: 10px; */
   font-family: "Poppins", sans-serif;
@@ -362,14 +357,14 @@ html {
 }
 
 #inv-main-container {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 5px;
 }
 
 #chicken-stock {
-  width: 130px;
+  width: 200px;
   height: 135px;
   border-radius: 18px;
   border-color: white;
@@ -393,7 +388,7 @@ html {
 }
 
 #chicken-feeds {
-  width: 130px;
+  width: 200px;
   height: 135px;
   border-radius: 18px;
   border-color: white;
@@ -419,28 +414,30 @@ html {
 #main-container-2 {
   display: flex;
   justify-content: center;
-  height: 260px;
+  height: auto;
 }
 
-.btn-container {
-  position: relative;
+.form-row {
   display: flex;
-  background-color: white;
-  height: 80px;
-  bottom: 13%;
-  right: 0;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  line-height: 1.8;
 }
 
-#btn-container img {
-  width: fit-content;
-  height: 80px;
-  position: absolute;
+.form-column {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.inv-btn-cont {
+  justify-content: center;
+  display: flex;
 }
 
 #chicken-eggs {
-  width: 170px;
-  height: 250px;
-  margin-top: 20px;
+  width: 400px;
+  height: 230px;
+  margin-top: 5px;
   border-radius: 18px;
   border-color: white;
   border-style: groove;
@@ -458,13 +455,15 @@ html {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-  text-align: center;
   letter-spacing: 0.5pt;
 }
 
 .egg-cont {
-  text-align: left;
-  margin-left: 15px;
+  margin-left: 20px;
+}
+
+.egg-cont h4 {
+  text-align: center;
 }
 
 /* Inventory - ORDERS */
@@ -707,6 +706,8 @@ html {
   font-style: normal;
 }
 
+/* ----------------------- */
+
 /*---------------- NEEDS EDITING -------------------*/
 /* Styles for screens smaller than   600px */
 @media (max-width: 600px) {
@@ -714,8 +715,8 @@ html {
     font-size: 14px;
   }
 
-  .header-welcome {
-    font-size: 16px;
+  .main-header-text {
+    font-size: 22px;
   }
 
   #inventory-body a {
@@ -729,8 +730,8 @@ html {
     font-size: 16px;
   }
 
-  .header-welcome {
-    font-size: 18px;
+  .main-header-text {
+    font-size: 26px;
   }
 
   #inventory-body a {
@@ -744,12 +745,12 @@ html {
     font-size: 18px;
   }
 
-  .header-welcome {
-    font-size: 20px;
+  .main-header-text {
+    font-size: 28px;
   }
 
   #inventory-body a {
-    font-size: 25px;
+    font-size: 24px;
   }
 }
 /* -------------------------------------------------- */

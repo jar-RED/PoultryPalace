@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
-import AddButton from "../AddButton";
+import Modal from "../modal/Modal";
 
 const InventoryList = () => {
   const [activeLink, setActiveLink] = useState("");
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
+
   return (
     <div>
       <section id="inventory-header" className="header-welcome">
@@ -38,7 +39,9 @@ const InventoryList = () => {
               className="inv-list"
               style={{
                 backgroundColor:
-                  activeLink === "inventory-list" ? "" : "#3a4d39",
+                  activeLink === "inventory-list"
+                    ? "inventory-list"
+                    : "#3a4d39",
                 borderRadius: "20px",
               }}
               onClick={() => handleLinkClick("inventory-list")}
@@ -85,30 +88,35 @@ const InventoryList = () => {
 
         <div id="main-container-2">
           <div id="chicken-eggs">
-            <h4>
-              CHICKEN <br />
-              EGGS
-            </h4>
-            <form className="egg-cont" action="">
-              <label>PULLETS: </label>
-              <output name="pullets">00</output> <br />
-              <label>SMALL: </label>
-              <output name="small">00</output> <br />
-              <label>MEDIUM: </label>
-              <output name="medium">00</output> <br />
-              <label>LARGE: </label>
-              <output name="large">00</output> <br />
-              <label>EXTRA LARGE: </label>
-              <output name="x-large">00</output> <br />
-              <label>JUMBO: </label>
-              <output name="jumbo">00</output> <br />
+            <form className="egg-cont">
+              <h4>CHICKEN EGGS</h4>
+              <div className="form-row">
+                <div className="form-column">
+                  <label>PULLETS: </label>
+                  <output name="pullets">00</output> <br />
+                  <label>SMALL: </label>
+                  <output name="small">00</output> <br />
+                  <label>MEDIUM: </label>
+                  <output name="medium">00</output> <br />
+                </div>
+                <div className="form-column">
+                  <label>LARGE: </label>
+                  <output name="large">00</output> <br />
+                  <label>EXTRA LARGE: </label>
+                  <output name="x-large">00</output> <br />
+                  <label>JUMBO: </label>
+                  <output name="jumbo">00</output> <br />
+                </div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <label>TOTAL EGGS IN STOCK: </label>
+                <output name="total">00</output> <br />
+              </div>
             </form>
           </div>
         </div>
-        <div id="inv-btn-container">
-          <img src="assets/Add_round_fill.png" alt="add-button" onclick="" />
-        </div>
       </section>
+      <Modal />
       <MenuBar />
     </div>
   );

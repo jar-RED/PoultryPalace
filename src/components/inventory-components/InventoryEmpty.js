@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Modal from "../modal/Modal";
 
 const InventoryEmpty = () => {
   return (
@@ -19,7 +20,11 @@ const InventoryEmpty = () => {
       <section id="inventory-body" className="content-body">
         <div className="container">
           <nav>
-            <Link to={"/inventory-list"} className="inv-list">
+            <Link
+              to={"/inventory-list"}
+              className="inv-list"
+              style={{ backgroundColor: "#3a4d39", borderRadius: "20px" }}
+            >
               {" "}
               Inventory List
             </Link>
@@ -31,6 +36,8 @@ const InventoryEmpty = () => {
         </div>
         <p>Empty.</p>
       </section>
+
+      <Modal />
     </>
   );
 };

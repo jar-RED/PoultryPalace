@@ -62,7 +62,9 @@ const InventoryOrders = () => {
               className="inv-order"
               style={{
                 backgroundColor:
-                  activeLink === "inventory-orders" ? "" : "#3a4d39",
+                  activeLink === "inventory-orders"
+                    ? "inventory-orders"
+                    : "#3a4d39",
                 borderRadius: "20px",
               }}
               onClick={() => handleLinkClick("inventory-orders")}

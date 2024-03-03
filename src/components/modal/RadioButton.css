@@ -1,0 +1,83 @@
+.invRadioBtn {
+  background-color: white;
+  color: black;
+  max-width: 200px;
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+.invRadioBtn div {
+  padding: 5px;
+}
+
+.invRadioBtn div:hover {
+  background-color: #f1f1f182;
+}
+
+.invRadioBtn input {
+  margin-bottom: 5px;
+  padding: 0;
+  margin-right: 5px;
+}
+
+.invRadioBtn label {
+  margin-left: 10px;
+}
+
+.invRadioBtn input[type="radio"]:checked + label {
+  color: white; /* Change the color as needed */
+}
+
+.eggInptBtn {
+  font-family: Poppins, sans-serif;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.eggInptBtn button {
+  padding: 5px 10px 5px 10px;
+  border-radius: 20px;
+  background-color: #83a186;
+  color: white;
+  border-color: transparent;
+  font-size: 18px;
+  margin-bottom: 20px;
+  margin-left: 115px;
+}
+
+.eggInptBtn {
+  border-color: white;
+  background-color: #3a4d39;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.eggInptBtn h4 {
+  text-align: center;
+}
+
+.egg-rows {
+  display: flex;
+}
+
+.egg-col-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  text-align: center;
+}
+
+.egg-col-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  text-align: center;
+}
+
+.egg-rows input {
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}

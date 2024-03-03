@@ -1,7 +1,6 @@
 import React from "react";
 import InventoryEmpty from "./inventory-components/InventoryEmpty";
 import MenuBar from "./MenuBar";
-import AddButton from "./AddButton";
 
 // const StyledDiv = div`
 //   display: flex;
@@ -11,11 +10,7 @@ import AddButton from "./AddButton";
 function InventoryDefault() {
   return (
     <>
-      {/* <StyledDiv color="Red">
-
-      </StyledDiv> */}
       <InventoryEmpty />
-      {/* <AddButton /> */}
       <MenuBar />
     </>
   );

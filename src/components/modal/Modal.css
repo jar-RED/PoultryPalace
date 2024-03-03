@@ -1,0 +1,97 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.btn-modal {
+  position: fixed;
+  height: 70px;
+  cursor: pointer;
+  width: fit-content;
+  margin-left: 310px;
+}
+
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.modal-content {
+  color: white;
+  font-family: Poppins, sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #83a186;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 300px;
+  min-width: 250px;
+  border-radius: 10px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 7px 7px;
+  background-color: rgba(255, 46, 46, 0.767);
+  border-radius: 10px;
+  border-color: transparent;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content label {
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.modal-content input {
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.disc-btn {
+  background-color: rgba(255, 46, 46, 0.767);
+  border-color: transparent;
+  margin-right: 70px;
+  border-radius: 20px;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  font-size: 18px;
+}
+
+.save-btn {
+  background-color: rgba(0, 128, 0, 0.592);
+  border-color: transparent;
+  margin-left: 70px;
+  border-radius: 20px;
+  font-size: 18px;
+  padding: 5px 10px 5px 10px;
+}
+
+.modal-btns {
+  width: 100vw;
+}
