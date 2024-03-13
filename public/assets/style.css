@@ -178,7 +178,9 @@ html {
   left: 0;
   bottom: 0;
   width: 100%;
+  z-index: 10;
 }
+
 .menu {
   background-color: #3a4d39;
   display: flex;
@@ -287,6 +289,7 @@ html {
   max-width: 350px;
   width: 350px;
   height: auto;
+  margin-left: 50px;
 }
 
 .dashboard-content p {

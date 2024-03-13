@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./RadioButton.css";
 
-const RadioButton = () => {
+const RadioButton = ({ onOptionChange }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [showPopupButton, setShowPopupButton] = useState(false);
 
   const handleRadioChange = (event) => {
     const value = event.target.value;
+    setSelectedOption(value);
+    onOptionChange(value);
 
     setSelectedOption(value);
     if (value === "option3") {
@@ -79,22 +81,39 @@ const RadioButton = () => {
             <h4>Set Eggs Input</h4>
             <div className="egg-rows">
               <div className="egg-col-1">
-                <label htmlFor="">Pullets:</label>
-                <input type="number" /> <br />
-                <label htmlFor="">Small:</label>
-                <input type="number" /> <br />
-                <label htmlFor="">Medium:</label>
-                <input type="number" /> <br />
+                <label htmlFor="">
+                  Pullets:
+                  <input type="number" />
+                </label>
+                <label htmlFor="">
+                  Small:
+                  <input type="number" />{" "}
+                </label>
+                <label htmlFor="">
+                  Medium:
+                  <input type="number" />{" "}
+                </label>
               </div>
               <div className="egg-col-2">
-                <label htmlFor="">Large:</label>
-                <input type="number" /> <br />
-                <label htmlFor="">X-large:</label>
-                <input type="number" /> <br />
-                <label htmlFor="">Jumbo:</label>
-                <input type="number" /> <br />
+                <label htmlFor="">
+                  Large: <input type="number" />
+                </label>{" "}
+                <br />
+                <label htmlFor="">
+                  X-large: <input type="number" />{" "}
+                </label>
+                <label htmlFor="">
+                  Jumbo: <input type="number" />{" "}
+                </label>
               </div>
             </div>
+            <div className="colDate">
+              <label htmlFor="date">
+                Date:
+                <input type="date" />
+              </label>
+            </div>
+
             <button
               className="eggs-save"
               type="button"

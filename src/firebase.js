@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,11 +12,14 @@ const firebaseConfig = {
   projectId: "poultry-palace-authentication",
   storageBucket: "poultry-palace-authentication.appspot.com",
   messagingSenderId: "88103451067",
-  appId: "1:88103451067:web:0150dd879ae4d677dfac9e"
+  appId: "1:88103451067:web:0150dd879ae4d677dfac9e",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Firestore and get a reference to the database
+const db = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);

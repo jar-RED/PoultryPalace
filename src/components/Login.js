@@ -19,7 +19,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        alert(error.message);
+        alert("Invalid credentials. Please try again.");
       });
   };
 

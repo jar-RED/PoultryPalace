@@ -22,7 +22,7 @@ const Register = () => {
       })
       .catch((error) => {
         console.log(error);
-        alert(error.message);
+        alert("Please enter a valid email address and password.");
       });
   };
 

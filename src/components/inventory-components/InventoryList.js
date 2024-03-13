@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
+import { collection, getDocs } from "firebase/firestore";
 
 const InventoryList = () => {
   const [activeLink, setActiveLink] = useState("");
+  const [chickenStock, setChickenStock] = useState(0);
+  const [chickenFeeds, setChickenFeeds] = useState(0);
+
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
+  };
+
+  const updateChickenStock = (newStock) => {
+    console.log("Updating chicken stock to:", newStock);
+    setChickenStock(newStock);
+  };
+
+  const updateChickenFeeds = (newFeeds) => {
+    console.log("Updating chicken feeds to:", newFeeds);
+    setChickenFeeds(newFeeds);
   };
 
   return (
@@ -70,7 +84,7 @@ const InventoryList = () => {
                 STOCK
               </h4>
               <label htmlFor="chicken-stock">STOCK: </label>
-              <output name="chicken-stock">00</output>
+              <output name="chicken-stock">{chickenStock}</output>
             </form>
           </div>
 
@@ -81,7 +95,7 @@ const InventoryList = () => {
                 FEEDS
               </h4>
               <label htmlFor="chicken-feeds">STOCK: </label>
-              <output name="chicken-feeds">00</output>
+              <output name="chicken-feeds">{chickenFeeds}</output>
             </form>
           </div>
         </div>
@@ -116,7 +130,10 @@ const InventoryList = () => {
           </div>
         </div>
       </section>
-      <Modal />
+      <Modal
+        updateChickenStock={updateChickenStock}
+        updateChickenFeeds={updateChickenFeeds}
+      />
       <MenuBar />
     </div>
   );

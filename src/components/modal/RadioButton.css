@@ -32,6 +32,7 @@
   font-family: Poppins, sans-serif;
   margin-left: 5px;
   margin-top: 5px;
+  font-size: 15px;
 }
 
 .eggInptBtn button {
@@ -61,23 +62,29 @@
 }
 
 .egg-col-1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: block;
   width: 50%;
-  text-align: center;
+  text-align: right;
+  margin-right: 10px;
 }
 
 .egg-col-2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: block;
+  margin-right: 20px;
   width: 50%;
-  text-align: center;
+  text-align: right;
 }
 
 .egg-rows input {
   width: 50px;
   margin-left: auto;
   margin-right: auto;
+  padding: 5px;
+}
+
+.colDate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
