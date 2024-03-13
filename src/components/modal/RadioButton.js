@@ -7,7 +7,6 @@ const RadioButton = ({ onOptionChange }) => {
 
   const handleRadioChange = (event) => {
     const value = event.target.value;
-    setSelectedOption(value);
     onOptionChange(value);
 
     setSelectedOption(value);

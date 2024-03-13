@@ -61,7 +61,7 @@ export default function Modal({ updateChickenStock, updateChickenFeeds }) {
   }, [modal, updateChickenStock, updateChickenFeeds, stockInput]);
 
   const handleSave = () => {
-    if (isValid) {
+    if (isValid && selectedOption !== "" && stockInput > 0) {
       toggleModal();
       if (selectedOption === "option1") {
         updateChickenStock(stockInput);

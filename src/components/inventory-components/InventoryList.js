@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
-import { collection, getDocs } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
+// import { auth } from "../../firebase";
 
 const InventoryList = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -13,9 +14,19 @@ const InventoryList = () => {
     setActiveLink(linkName);
   };
 
-  const updateChickenStock = (newStock) => {
+  const updateChickenStock = async (newStock) => {
     console.log("Updating chicken stock to:", newStock);
     setChickenStock(newStock);
+    // const chickenStockRef = doc(auth, "inventory", "2J5KZ2IeFVQYJISAegb6");
+
+    // try {
+    //   await updateDoc(chickenStockRef, {
+    //     chickenStock: newStock, // Assuming 'stock' is the field name in your Firestore document
+    //   });
+    //   console.log("Chicken stock updated successfully");
+    // } catch (error) {
+    //   console.error("Error updating chicken stock: ", error);
+    // }
   };
 
   const updateChickenFeeds = (newFeeds) => {
