@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
-import { doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { updateDoc, doc } from "firebase/firestore";
 // import { auth } from "../../firebase";
 
 const InventoryList = () => {
@@ -10,28 +12,64 @@ const InventoryList = () => {
   const [chickenStock, setChickenStock] = useState(0);
   const [chickenFeeds, setChickenFeeds] = useState(0);
 
+  useEffect(() => {
+    const fetchInventoryData = async () => {
+      const docRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setChickenStock(data.chickenStock || 0);
+        setChickenFeeds(data.chickenFeeds || 0);
+      } else {
+        console.log("No such document!");
+      }
+    };
+
+    fetchInventoryData();
+  }, []);
+
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
 
   const updateChickenStock = async (newStock) => {
     console.log("Updating chicken stock to:", newStock);
-    setChickenStock(newStock);
-    // const chickenStockRef = doc(auth, "inventory", "2J5KZ2IeFVQYJISAegb6");
+    const stockNumber = Number(newStock);
 
-    // try {
-    //   await updateDoc(chickenStockRef, {
-    //     chickenStock: newStock, // Assuming 'stock' is the field name in your Firestore document
-    //   });
-    //   console.log("Chicken stock updated successfully");
-    // } catch (error) {
-    //   console.error("Error updating chicken stock: ", error);
-    // }
+    // Update local state
+    setChickenStock(stockNumber);
+    const chickenStockRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+
+    // Update the chickenStock field in Firestore
+    try {
+      await updateDoc(chickenStockRef, {
+        chickenStock: stockNumber,
+      });
+      console.log("Chicken stock updated successfully in Firestore");
+    } catch (error) {
+      console.error("Error updating chicken stock in Firestore: ", error);
+    }
   };
 
-  const updateChickenFeeds = (newFeeds) => {
+  const updateChickenFeeds = async (newFeeds) => {
     console.log("Updating chicken feeds to:", newFeeds);
+
+    const feedNumber = Number(newFeeds);
+
+    // Update local state
     setChickenFeeds(newFeeds);
+    const chickenFeedRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+
+    // Update the chickenFeed field in Firestore
+    try {
+      await updateDoc(chickenFeedRef, {
+        chickenFeeds: feedNumber,
+      });
+      console.log("Chicken feeds updated successfully in Firestore");
+    } catch (error) {
+      console.error("Error updating chicken feeds in Firestore: ", error);
+    }
   };
 
   return (
