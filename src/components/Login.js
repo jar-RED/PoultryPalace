@@ -19,7 +19,32 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        alert("Invalid credentials. Please try again.");
+        let errorMessage = "An error occurred.";
+
+        // Check for specific error codes
+        switch (error.code) {
+          case "auth/invalid-email":
+            errorMessage = "Please fill in the required fields";
+            break;
+          case "auth/user-disabled":
+            errorMessage = "The user has been disabled.";
+            break;
+          case "auth/user-not-found":
+            errorMessage = "No user found with this email.";
+            break;
+          case "auth/wrong-password":
+            errorMessage = "The password is incorrect.";
+            break;
+          case "auth/invalid-credential":
+            errorMessage = "Invalid credentials. Please try again.";
+            break;
+          case "auth/network-request-failed":
+          default:
+            errorMessage = "An error occurred.";
+        }
+
+        // Display the error message as an alert
+        alert(errorMessage);
       });
   };
 

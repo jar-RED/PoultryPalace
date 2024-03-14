@@ -5,7 +5,6 @@ import Modal from "../modal/Modal";
 import { addDoc, collection, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { updateDoc, doc } from "firebase/firestore";
-// import { auth } from "../../firebase";
 
 const InventoryList = () => {
   const [activeLink, setActiveLink] = useState("");

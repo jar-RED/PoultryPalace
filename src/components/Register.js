@@ -22,7 +22,29 @@ const Register = () => {
       })
       .catch((error) => {
         console.log(error);
-        alert("Please enter a valid email address and password.");
+        let errorMessage = "An error occurred.";
+
+        // Check for specific error codes
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            errorMessage =
+              "The email address is already in use by another account.";
+            break;
+          case "auth/invalid-email":
+            errorMessage = "Please fill in the required fields.";
+            break;
+          case "auth/weak-password":
+            errorMessage = "The password is too weak.";
+            break;
+          case "auth/missing-email":
+          case "auth/missing-password":
+            errorMessage = "Please fill in all fields.";
+            break;
+          default:
+            errorMessage = "An unknown error occurred.";
+        }
+
+        alert(errorMessage);
       });
   };
 
