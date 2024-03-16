@@ -5,7 +5,7 @@ Development of a web-based inventory and sales management system for Joylisa Pou
 | ------------- | ------------- | ------------- | 
 | PP.010.000 | v1.0.0 | 2024-02-18 16:00:00 | 
 | PP.010.001 | v1.0.0 | 2024-03-03 07:45:00 | 
-| PP.010.002 | v1.0.0 | 2024-03-03 17:30:00 | 
+| PP.010.002 | v1.0.0 | 2024-03-17 07:30:00 | 
 
 ## PP.010.002 Release Notes 
 * Complexity constraints on the register and login authentication
