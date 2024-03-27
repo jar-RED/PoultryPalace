@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
+import OrdersModal from "../modal/OrdersModal";
 
 const InventoryOrders = () => {
   const [activeLink, setActiveLink] = useState("");
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
-
-  // const OrderStatus = ({ status }) => {
-  //   let statusClass = '';
-
-  //   if (status === 'RECEIVED') {
-  //     statusClass = 'status-received';
-  //   } else if (status === 'DRAFT') {
-  //     statusClass = 'status-draft';
-  //   }
-
-  //   return <p className={statusClass}>{status}</p>;
-  // };
 
   return (
     <div>
@@ -83,43 +72,41 @@ const InventoryOrders = () => {
         </div>
         <div id="inv-order-container">
           <div id="order-list">
-            <div id="order-info">
+            <div className="order-info" id="order-info">
               <div id="order-quant">
-                <h4>Chicken Feeds</h4>
-                <p>x10</p>
+                <label>Chicken Feeds</label>
+                <output>x10</output>
               </div>
               <span>Delivery date: 12/31/23</span>
             </div>
             <div id="order-status">
               <div id="stat-condition">
-                <p>RECEIVED</p>
+                <output>RECEIVED</output>
               </div>
               <div id="order-amount">
-                <p>500.00</p>
+                <output>500.00</output>
               </div>
             </div>
           </div>
           <div id="order-list">
-            <div id="order-info">
+            <div className="order-info" id="order-info">
               <div id="order-quant">
-                <h4>Chicken Feeds</h4>
-                <p>x17</p>
+                <label>Chicken Stock</label>
+                <output name="chicken-stock">x100</output>
               </div>
               <span>Delivery date: 03/14/24</span>
             </div>
             <div id="order-status">
               <div id="stat-condition">
-                <p>DRAFT</p>
+                <output>DRAFT</output>
               </div>
               <div id="order-amount">
-                <p>3000.00</p>
+                <output>3000.00</output>
               </div>
             </div>
           </div>
         </div>
-        {/* <div id="sales-btn-container">
-          <img src="assets/images/Add_round_fill.png" alt="sales-add-button" />
-        </div> */}
+        <OrdersModal />
       </section>
       <MenuBar />
     </div>

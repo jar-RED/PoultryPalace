@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import "./RadioButton.css";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const RadioButton = ({ onOptionChange }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [showPopupButton, setShowPopupButton] = useState(false);
+  const [eggInputs, setEggInputs] = useState({
+    eggJumbo: 0,
+    eggLarge: 0,
+    eggMedium: 0,
+    eggPullets: 0,
+    eggSmall: 0,
+    eggXLarge: 0,
+    date: "",
+  });
 
   const handleRadioChange = (event) => {
     const value = event.target.value;
@@ -15,6 +26,36 @@ const RadioButton = ({ onOptionChange }) => {
     } else {
       setShowPopupButton(false);
     }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    const numericValue = name.startsWith("egg") ? Number(value) : value;
+    setEggInputs({ ...eggInputs, [name]: numericValue });
+  };
+
+  const saveEggInputs = async () => {
+    console.log("Updating egg inputs:", eggInputs);
+
+    const eggInputsRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+
+    try {
+      await updateDoc(eggInputsRef, {
+        eggJumbo: eggInputs.eggJumbo,
+        eggLarge: eggInputs.eggLarge,
+        eggMedium: eggInputs.eggMedium,
+        eggPullets: eggInputs.eggPullets,
+        eggSmall: eggInputs.eggSmall,
+        eggXLarge: eggInputs.eggXLarge,
+
+        date: new Date(),
+      });
+      console.log("Egg inputs updated successfully in Firestore");
+      setShowPopupButton(false);
+    } catch (error) {
+      console.error("Error updating egg inputs in Firestore: ", error);
+    }
+    setShowPopupButton(false);
   };
 
   return (
@@ -74,7 +115,7 @@ const RadioButton = ({ onOptionChange }) => {
           <br />
         </div>
       </div>
-      <div className="eggInptBtn">
+      <div className={`eggInptBtn ${showPopupButton ? "show" : ""}`}>
         {showPopupButton && (
           <>
             <h4>Set Eggs Input</h4>
@@ -82,27 +123,54 @@ const RadioButton = ({ onOptionChange }) => {
               <div className="egg-col-1">
                 <label htmlFor="">
                   Pullets:
-                  <input type="number" />
+                  <input
+                    type="number"
+                    name="eggPullets"
+                    onChange={handleInputChange}
+                  />
                 </label>
                 <label htmlFor="">
                   Small:
-                  <input type="number" />{" "}
+                  <input
+                    type="number"
+                    name="eggSmall"
+                    onChange={handleInputChange}
+                  />{" "}
                 </label>
                 <label htmlFor="">
                   Medium:
-                  <input type="number" />{" "}
+                  <input
+                    type="number"
+                    name="eggMedium"
+                    onChange={handleInputChange}
+                  />{" "}
                 </label>
               </div>
               <div className="egg-col-2">
                 <label htmlFor="">
-                  Large: <input type="number" />
+                  Large:{" "}
+                  <input
+                    type="number"
+                    name="eggLarge"
+                    onChange={handleInputChange}
+                  />
                 </label>{" "}
                 <br />
                 <label htmlFor="">
-                  X-large: <input type="number" />{" "}
+                  X-large:{" "}
+                  <input
+                    type="number"
+                    name="eggXLarge"
+                    onChange={handleInputChange}
+                  />{" "}
                 </label>
                 <label htmlFor="">
-                  Jumbo: <input type="number" />{" "}
+                  Jumbo:{" "}
+                  <input
+                    type="number"
+                    name="eggJumbo"
+                    onChange={handleInputChange}
+                  />{" "}
                 </label>
               </div>
             </div>
@@ -113,11 +181,7 @@ const RadioButton = ({ onOptionChange }) => {
               </label>
             </div>
 
-            <button
-              className="eggs-save"
-              type="button"
-              onClick={() => setShowPopupButton(false)}
-            >
+            <button className="eggs-save" type="button" onClick={saveEggInputs}>
               Save
             </button>
           </>

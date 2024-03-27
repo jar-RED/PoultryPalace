@@ -188,23 +188,31 @@ html {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  border-color: none;
 }
 
 .menu-items {
   display: flex;
+  border-color: none;
 }
 
 .menu-items img {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 60px;
 }
 
 .menu-items figure {
-  margin: 10px;
-  padding-left: 18px;
-  padding-right: 18px;
-  width: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
   height: 70px;
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 17px;
+  padding-right: 17px;
+  border-color: none;
 }
 
 .menu-items figcaption {
@@ -281,16 +289,16 @@ html {
 
 /* Dashboard */
 
-.dashboard-content {
+/* .dashboard-content {
   margin-top: 20px;
-}
+} */
 
 /* Needs adjustment */
 .dashboard-content img {
-  max-width: 350px;
-  width: 350px;
-  height: auto;
+  max-width: 100%;
+  width: 85%;
   margin-left: 50px;
+  height: auto;
 }
 
 .dashboard-content p {
@@ -368,6 +376,13 @@ html {
   gap: 5px;
 }
 
+.sectionContainer {
+  height: 530px;
+  /* width: 700px; */
+  margin-right: auto;
+  margin-left: auto;
+}
+
 #chicken-stock {
   width: 200px;
   height: 135px;
@@ -437,6 +452,7 @@ html {
 .inv-btn-cont {
   justify-content: center;
   display: flex;
+  height: 75px;
 }
 
 #chicken-eggs {
@@ -478,8 +494,8 @@ html {
 }
 
 #order-list {
-  width: 400px;
-  height: 100px;
+  width: 370px;
+  height: 90px;
   border-radius: 18px;
   border-color: white;
   border-style: groove;
@@ -504,11 +520,16 @@ html {
   display: flex;
 }
 
-#order-list h4 {
-  margin-bottom: 5px;
-  margin-top: 15px;
+.order-info label {
+  font-weight: bold;
   margin-left: 20pt;
-  font-size: 24;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.order-info output {
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 #order-list span {
@@ -521,50 +542,44 @@ html {
   display: flex;
 }
 
-#order-quant p {
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
 #order-status {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-#stat-condition p {
-  color: black;
-  margin-top: 0;
-  text-align: center;
-  font-size: 15px;
-  font-weight: 700;
-  font-style: normal;
+#stat-condition {
   margin-top: 10px;
   margin-left: 20px;
   margin-right: 10px;
+  text-align: center;
+}
+
+#stat-condition output {
+  color: black;
+  text-align: center;
+  font-weight: bold;
   border-radius: 50px;
   padding: 4px;
   background-color: #8ed495;
-  color: black;
+  font-size: 15px;
 }
 
-#order-amount p {
-  color: black;
-  margin-top: 0;
-  text-align: center;
-  font-size: 25;
-  font-weight: 700;
-  font-style: normal;
-  margin-top: 15px;
+#order-amount {
   margin-bottom: 20;
   margin-left: 20px;
   margin-right: 10px;
-  border-radius: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 2px;
-  padding-top: 2px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+#order-amount output {
+  color: black;
+  text-align: center;
+  font-size: 25;
+  font-weight: bold;
   background-color: #8ed495;
+  border-radius: 50px;
+  padding: 5px;
 }
 
 /* Sales */
@@ -717,7 +732,7 @@ html {
 /* Styles for screens smaller than   600px */
 @media (max-width: 600px) {
   body {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .main-header-text {
@@ -732,7 +747,7 @@ html {
 /* Styles for screens between   600px and   900px */
 @media (min-width: 600px) and (max-width: 900px) {
   body {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .main-header-text {
@@ -747,7 +762,7 @@ html {
 /* Styles for screens larger than   900px */
 @media (min-width: 900px) {
   body {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .main-header-text {

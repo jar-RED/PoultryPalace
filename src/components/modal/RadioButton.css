@@ -25,7 +25,7 @@
 }
 
 .invRadioBtn input[type="radio"]:checked + label {
-  color: white; /* Change the color as needed */
+  color: white;
 }
 
 .eggInptBtn {
@@ -87,4 +87,17 @@
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+}
+
+.eggInptBtn {
+  transform: translateY(1%);
+  opacity: 0;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+.eggInptBtn.show {
+  transform: translateY(0);
+  opacity: 1;
 }

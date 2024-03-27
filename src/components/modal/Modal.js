@@ -28,18 +28,39 @@ export default function Modal({ updateChickenStock, updateChickenFeeds }) {
     }
   }, [modal]);
 
-  const handleInputChange = (e) => {
+  const handleStockInputChange = (e) => {
     setStockInput(e.target.value);
+    validateForm();
+  };
+
+  const handleAlertInputChange = (e) => {
     setAlertInput(e.target.value);
     validateForm();
   };
 
   const validateForm = () => {
-    // Check if all required fields are filled
-    if (stockInput > 0) {
-      setIsValid(true);
-    } else if (alertInput > 0) {
-      setIsValid(true);
+    if (selectedOption === "option1") {
+      if (stockInput > 0) {
+        setIsValid(true);
+      } else if (alertInput > 0) {
+        setIsValid(true);
+      } else {
+        setIsValid(false);
+      }
+    } else if (selectedOption === "option2") {
+      if (stockInput > 0) {
+        setIsValid(true);
+      } else if (alertInput > 0) {
+        setIsValid(true);
+      } else {
+        setIsValid(false);
+      }
+    } else if (selectedOption === "option3") {
+      if (alertInput > 0) {
+        setIsValid(true);
+      } else {
+        setIsValid(false);
+      }
     } else {
       setIsValid(false);
     }
@@ -61,13 +82,23 @@ export default function Modal({ updateChickenStock, updateChickenFeeds }) {
   }, [modal, updateChickenStock, updateChickenFeeds, stockInput]);
 
   const handleSave = () => {
-    if (isValid && selectedOption !== "" && stockInput > 0) {
+    if (
+      isValid &&
+      selectedOption !== "option3" &&
+      stockInput > 0 &&
+      alertInput > 0
+    ) {
       toggleModal();
       if (selectedOption === "option1") {
         updateChickenStock(stockInput);
+        setIsValid(false);
       } else if (selectedOption === "option2") {
         updateChickenFeeds(stockInput);
+        setIsValid(false);
       }
+    } else if (isValid && selectedOption === "option3" && alertInput > 0) {
+      toggleModal();
+      setIsValid(false);
     } else {
       alert("Please fill all required fields.");
     }
@@ -92,14 +123,16 @@ export default function Modal({ updateChickenStock, updateChickenFeeds }) {
             <form action="addInvItem">
               <label htmlFor="">Inventory Category</label>
               <RadioButton onOptionChange={setSelectedOption} />
-              <label htmlFor="stocks">
-                Set no. of stocks:
-                <input type="number" onChange={handleInputChange} />
-              </label>
+              {selectedOption !== "option3" && (
+                <label className="stockInpt" htmlFor="stocks">
+                  Set no. of stocks:
+                  <input type="number" onChange={handleStockInputChange} />
+                </label>
+              )}
 
               <label htmlFor="alert">
                 Send alarm if stock is below:
-                <input type="number" />
+                <input type="number" onChange={handleAlertInputChange} />
               </label>
             </form>
             <button className="close-modal" onClick={toggleModal}>

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const DashboardBody = () => {
   return (
     <section id="dashboard-body" className="content-body">
       <div className="container">
         <div className="dashboard-content">
-          <img src="assets/images/image 2.png" alt="dashboard-img" />
+          <img src="assets/images/dashboard1.gif" alt="dashboard-img" />
           <p>
             JOYLISA Poultry Farm is located in <br />
             municipality of Hindang, Leyte <br />
@@ -15,7 +15,7 @@ const DashboardBody = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default DashboardBody
+export default DashboardBody;

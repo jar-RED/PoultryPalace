@@ -38,6 +38,9 @@ const Login = () => {
           case "auth/invalid-credential":
             errorMessage = "Invalid credentials. Please try again.";
             break;
+          case "auth/missing-password":
+            errorMessage = "Please enter your password and try again.";
+            break;
           case "auth/network-request-failed":
           default:
             errorMessage = "An error occurred.";

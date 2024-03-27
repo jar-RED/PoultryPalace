@@ -10,6 +10,12 @@ const InventoryList = () => {
   const [activeLink, setActiveLink] = useState("");
   const [chickenStock, setChickenStock] = useState(0);
   const [chickenFeeds, setChickenFeeds] = useState(0);
+  const [pullets, setPullets] = useState(0);
+  const [small, setSmall] = useState(0);
+  const [medium, setMedium] = useState(0);
+  const [large, setLarge] = useState(0);
+  const [xLarge, setXLarge] = useState(0);
+  const [jumbo, setJumbo] = useState(0);
 
   useEffect(() => {
     const fetchInventoryData = async () => {
@@ -18,9 +24,14 @@ const InventoryList = () => {
 
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setChickenStock(data.chickenStock || 0);
-        setChickenFeeds(data.chickenFeeds || 0);
-      } else {
+        setChickenStock(Number(data.chickenStock) || 0);
+        setChickenFeeds(Number(data.chickenFeeds) || 0);
+        setPullets(Number(data.eggPullets) || 0);
+        setSmall(Number(data.eggSmall) || 0);
+        setMedium(Number(data.eggMedium) || 0);
+        setLarge(Number(data.eggLarge) || 0);
+        setXLarge(Number(data.eggXLarge) || 0);
+        setJumbo(Number(data.eggJumbo) || 0);
         console.log("No such document!");
       }
     };
@@ -36,11 +47,9 @@ const InventoryList = () => {
     console.log("Updating chicken stock to:", newStock);
     const stockNumber = Number(newStock);
 
-    // Update local state
     setChickenStock(stockNumber);
-    const chickenStockRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
 
-    // Update the chickenStock field in Firestore
+    const chickenStockRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
     try {
       await updateDoc(chickenStockRef, {
         chickenStock: stockNumber,
@@ -93,95 +102,97 @@ const InventoryList = () => {
         </div>
       </section>
 
-      <section id="inventory-body" className="content-body">
-        <div className="container">
-          <nav>
-            <Link
-              to={"/inventory-list"}
-              className="inv-list"
-              style={{
-                backgroundColor:
-                  activeLink === "inventory-list"
-                    ? "inventory-list"
-                    : "#3a4d39",
-                borderRadius: "20px",
-              }}
-              onClick={() => handleLinkClick("inventory-list")}
-            >
-              {" "}
-              Inventory List
-            </Link>
-            <Link
-              to={"/inventory-orders"}
-              className="inv-order"
-              style={{
-                backgroundColor: activeLink === "inventory-orders" ? "" : "",
-              }}
-              onClick={() => handleLinkClick("inventory-orders")}
-            >
-              {" "}
-              Orders
-            </Link>
-          </nav>
-        </div>
-        <div id="inv-main-container">
-          <div id="chicken-stock">
-            <form action="">
-              <h4>
-                CHICKEN <br />
-                STOCK
-              </h4>
-              <label htmlFor="chicken-stock">STOCK: </label>
-              <output name="chicken-stock">{chickenStock}</output>
-            </form>
+      <div className="sectionContainer">
+        <section id="inventory-body" className="content-body">
+          <div className="container">
+            <nav>
+              <Link
+                to={"/inventory-list"}
+                className="inv-list"
+                style={{
+                  backgroundColor:
+                    activeLink === "inventory-list"
+                      ? "inventory-list"
+                      : "#3a4d39",
+                  borderRadius: "20px",
+                }}
+                onClick={() => handleLinkClick("inventory-list")}
+              >
+                {" "}
+                Inventory List
+              </Link>
+              <Link
+                to={"/inventory-orders"}
+                className="inv-order"
+                style={{
+                  backgroundColor: activeLink === "inventory-orders" ? "" : "",
+                }}
+                onClick={() => handleLinkClick("inventory-orders")}
+              >
+                {" "}
+                Orders
+              </Link>
+            </nav>
+          </div>
+          <div id="inv-main-container">
+            <div id="chicken-stock">
+              <form action="">
+                <h4>
+                  CHICKEN <br />
+                  STOCK
+                </h4>
+                <label htmlFor="chicken-stock">STOCK: </label>
+                <output name="chicken-stock">{chickenStock}</output>
+              </form>
+            </div>
+
+            <div id="chicken-feeds">
+              <form action="">
+                <h4>
+                  CHICKEN <br />
+                  FEEDS
+                </h4>
+                <label htmlFor="chicken-feeds">STOCK: </label>
+                <output name="chicken-feeds">{chickenFeeds}</output>
+              </form>
+            </div>
           </div>
 
-          <div id="chicken-feeds">
-            <form action="">
-              <h4>
-                CHICKEN <br />
-                FEEDS
-              </h4>
-              <label htmlFor="chicken-feeds">STOCK: </label>
-              <output name="chicken-feeds">{chickenFeeds}</output>
-            </form>
-          </div>
-        </div>
-
-        <div id="main-container-2">
-          <div id="chicken-eggs">
-            <form className="egg-cont">
-              <h4>CHICKEN EGGS</h4>
-              <div className="form-row">
-                <div className="form-column">
-                  <label>PULLETS: </label>
-                  <output name="pullets">00</output> <br />
-                  <label>SMALL: </label>
-                  <output name="small">00</output> <br />
-                  <label>MEDIUM: </label>
-                  <output name="medium">00</output> <br />
+          <div id="main-container-2">
+            <div id="chicken-eggs">
+              <form className="egg-cont">
+                <h4>CHICKEN EGGS</h4>
+                <div className="form-row">
+                  <div className="form-column">
+                    <label>PULLETS: </label>
+                    <output name="pullets">{pullets}</output> <br />
+                    <label>SMALL: </label>
+                    <output name="small">{small}</output> <br />
+                    <label>MEDIUM: </label>
+                    <output name="medium">{medium}</output> <br />
+                  </div>
+                  <div className="form-column">
+                    <label>LARGE: </label>
+                    <output name="large">{large}</output> <br />
+                    <label>EX-LARGE: </label>
+                    <output name="x-large">{xLarge}</output> <br />
+                    <label>JUMBO: </label>
+                    <output name="jumbo">{jumbo}</output> <br />
+                  </div>
                 </div>
-                <div className="form-column">
-                  <label>LARGE: </label>
-                  <output name="large">00</output> <br />
-                  <label>EXTRA LARGE: </label>
-                  <output name="x-large">00</output> <br />
-                  <label>JUMBO: </label>
-                  <output name="jumbo">00</output> <br />
+                <div style={{ textAlign: "center" }}>
+                  <label>TOTAL EGGS IN STOCK: </label>
+                  <output name="total">00</output> <br />
                 </div>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <label>TOTAL EGGS IN STOCK: </label>
-                <output name="total">00</output> <br />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
-      </section>
-      <Modal
-        updateChickenStock={updateChickenStock}
-        updateChickenFeeds={updateChickenFeeds}
-      />
+        </section>
+        <Modal
+          updateChickenStock={updateChickenStock}
+          updateChickenFeeds={updateChickenFeeds}
+        />
+      </div>
       <MenuBar />
     </div>
   );

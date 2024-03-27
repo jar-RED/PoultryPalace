@@ -13,6 +13,22 @@ const Register = () => {
 
   const signUp = (e) => {
     e.preventDefault();
+
+    if (password.length > 1 && password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password) && password.length > 1) {
+      alert("Password must contain at least one uppercase letter.");
+      return;
+    }
+
+    if (!/\d/.test(password) && password.length > 1) {
+      alert("Password must contain at least one number.");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);

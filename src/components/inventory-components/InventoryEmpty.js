@@ -4,7 +4,7 @@ import Modal from "../modal/Modal";
 
 const InventoryEmpty = () => {
   return (
-    <>
+    <div>
       <section id="inventory-header" className="header-welcome">
         <header>
           <div className="header-content">
@@ -17,28 +17,31 @@ const InventoryEmpty = () => {
         </header>
       </section>
 
-      <section id="inventory-body" className="content-body">
-        <div className="container">
-          <nav>
-            <Link
-              to={"/inventory-list"}
-              className="inv-list"
-              style={{ backgroundColor: "#3a4d39", borderRadius: "20px" }}
-            >
-              {" "}
-              Inventory List
-            </Link>
-            <Link to={"/inventory-orders"} className="inv-orders">
-              {" "}
-              Orders
-            </Link>
-          </nav>
-        </div>
-        <p>Empty.</p>
-      </section>
+      <div className="sectionContainer">
+        <section id="inventory-body" className="content-body">
+          <div className="container">
+            <nav>
+              <Link
+                to={"/inventory-list"}
+                className="inv-list"
+                style={{ backgroundColor: "#3a4d39", borderRadius: "20px" }}
+              >
+                {" "}
+                Inventory List
+              </Link>
+              <Link to={"/inventory-orders"} className="inv-orders">
+                {" "}
+                Orders
+              </Link>
+            </nav>
+          </div>
+          <div></div>
+          <p>Empty.</p>
+        </section>
 
-      <Modal />
-    </>
+        <Modal />
+      </div>
+    </div>
   );
 };
 
