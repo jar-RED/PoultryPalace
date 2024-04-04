@@ -1,0 +1,27 @@
+.add-sales-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e3e3ce;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.add-sales-cont img {
+  height: 50px;
+}
+
+.sales-amount {
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.sales-amount output {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  background-color: #8ed495;
+  border-radius: 50px;
+  padding: 5px;
+}

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
-import OrdersModal from "../modal/OrdersModal";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
+import "./salesList.css";
+import SalesModal from "./SalesModal";
 
-const InventoryOrders = () => {
+const SalesList = () => {
   const [activeLink, setActiveLink] = useState("");
-  const [orders, setOrders] = useState([]);
+  const [sales, setSalesList] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -22,25 +23,25 @@ const InventoryOrders = () => {
   };
 
   useEffect(() => {
-    const ordersCollection = collection(db, "orders");
-    const unsubscribe = onSnapshot(ordersCollection, (snapshot) => {
-      const ordersList = snapshot.docs.map((doc) => ({
+    const salesCollection = collection(db, "sales");
+    const unsubscribe = onSnapshot(salesCollection, (snapshot) => {
+      const salesList = snapshot.docs.map((doc) => ({
         ...doc.data(),
-        deliveryDate: formatFirestoreTimestamp(doc.data().deliveryDate),
+        dateOfPurchase: formatFirestoreTimestamp(doc.data().dateOfPurchase),
       }));
-      setOrders(ordersList);
+      setSalesList(salesList);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const sortOrdersByDate = () => {
-    const sortedOrders = [...orders].sort((a, b) => {
-      const dateA = new Date(a.deliveryDate);
-      const dateB = new Date(b.deliveryDate);
+  const sortSalesByDate = () => {
+    const sortedSales = [...sales].sort((a, b) => {
+      const dateA = new Date(a.dateOfPurchase);
+      const dateB = new Date(b.dateOfPurchase);
       return sortAscending ? dateA - dateB : dateB - dateA;
     });
-    setOrders(sortedOrders);
+    setSalesList(sortedSales);
     setSortAscending(!sortAscending);
   };
 
@@ -61,7 +62,7 @@ const InventoryOrders = () => {
                 JOYLISA WEB
               </Link>{" "}
             </p>
-            <p className="intro-text">Inventory</p>
+            <p className="intro-text">Sales</p>
           </div>
         </div>
       </section>
@@ -70,44 +71,33 @@ const InventoryOrders = () => {
         <div className="container">
           <nav>
             <Link
-              to={"/inventory-list"}
-              className="inv-list"
+              to={"/sales-list"}
+              className="sales-list"
               style={{
-                backgroundColor: activeLink === "inventory-list" ? "" : "",
-                // borderRadius: "20px",
+                backgroundColor:
+                  activeLink === "sales-list" ? "sales-list" : "#3a4d39",
+                borderRadius: "15px",
               }}
               onClick={() => handleLinkClick("inventory-list")}
             >
               {" "}
-              Inventory List
+              Sales List
             </Link>
             <Link
-              to={"/inventory-orders"}
-              className="inv-order"
+              to={"/sales-invoice"}
+              className="sales-invoice"
               style={{
                 backgroundColor:
-                  activeLink === "inventory-orders"
-                    ? "inventory-orders"
-                    : "#3a4d39",
-                borderRadius: "20px",
+                  activeLink === "sales-invoice" ? "sales-invoice" : "",
               }}
               onClick={() => handleLinkClick("inventory-orders")}
             >
               {" "}
-              Orders
+              Invoice
             </Link>
           </nav>
         </div>
-        {/* <div id="setting-cont">
-          <img
-            className="sort-btn"
-            src="assets/images/sort-btn.svg"
-            alt="settings"
-            onClick={sortOrdersByDate}
-          />
-        </div> */}
-
-        <div className="inv-setting-cont">
+        <div className="add-sales-cont">
           <div style={{ display: "flex", marginLeft: "220px" }}>
             <div
               style={{
@@ -117,46 +107,46 @@ const InventoryOrders = () => {
             >
               <label>Add</label>
             </div>
-            <OrdersModal />
+            <SalesModal />
           </div>
-          <label htmlFor="" style={{ marginLeft: "5px" }}>
-            Sort
-          </label>
+          <label style={{ marginLeft: "5px" }}>Sort</label>
           <img
             src="assets/images/sort-btn.svg"
             alt="sort"
-            onClick={sortOrdersByDate}
+            onClick={sortSalesByDate}
           />
         </div>
-        <div id="inv-order-container" style={{ cursor: "pointer" }}>
-          {orders.map((order, index) => (
-            <div key={order.id || index} id="order-list">
+        <div id="inv-order-container">
+          {sales.map((sale, index) => (
+            <div
+              key={sale.id || index}
+              id="sales-list"
+              style={{ cursor: "pointer" }}
+            >
               <div className="order-info" id="order-info">
                 <div id="order-quant">
-                  <label>{order.orderCategory}</label>
-                  <output>x{order.quantity}</output>
+                  <label>{sale.customerName}</label>
                 </div>
-                <span>Delivery date: {order.deliveryDate}</span>
+                <span>Purchase Date: {sale.dateOfPurchase}</span>
               </div>
-              <div id="order-status">
-                <div id="stat-condition">
+              <div
+                id="sales-status"
+                className="sales-status"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="sales-amount">
                   <output
                     style={{
-                      backgroundColor:
-                        order.status === "PENDING" ? "#E3B09F" : "#8ed495",
+                      backgroundColor: "#8ed495",
+                      padding: "5px",
+                      marginTop: "0px",
                     }}
                   >
-                    {order.status}
-                  </output>
-                </div>
-                <div id="order-amount">
-                  <output
-                    style={{
-                      backgroundColor:
-                        order.status === "PENDING" ? "#E3B09F" : "#8ed495",
-                    }}
-                  >
-                    {order.totalAmount}.00
+                    {sale.totalAmount}.00
                   </output>
                 </div>
               </div>
@@ -169,4 +159,4 @@ const InventoryOrders = () => {
   );
 };
 
-export default InventoryOrders;
+export default SalesList;

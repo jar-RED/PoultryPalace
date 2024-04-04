@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function OrdersModal() {
   const [modal, setModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
 
   const toggleModal = (e) => {
     setModal(!modal);
@@ -16,14 +21,40 @@ export default function OrdersModal() {
     }
   }, [modal]);
 
+  useEffect(() => {
+    if (modal) {
+      setSelectedOption("");
+      setQuantity("");
+      setTotalAmount("");
+      setDeliveryDate("");
+    }
+  }, [modal]);
+
+  const handleOrders = async (e) => {
+    e.preventDefault();
+    toggleModal();
+    try {
+      await addDoc(collection(db, "orders"), {
+        orderCategory: selectedOption,
+        quantity: Number(quantity),
+        totalAmount: Number(totalAmount),
+        deliveryDate: new Date(deliveryDate),
+        status: "PENDING",
+      });
+    } catch (err) {
+      console.error("Error adding document: ", err);
+    }
+  };
+
   return (
     <div>
       <div className="inv-btn-cont">
         <img
-          src="assets/images/Add_round_fill.png"
+          src="assets/images/add-square.svg"
           onClick={toggleModal}
           className="btn-modal"
-          alt=""
+          alt="add-tbn"
+          style={{ height: "50px" }}
         />
       </div>
 
@@ -38,7 +69,7 @@ export default function OrdersModal() {
                 <div
                   style={{
                     backgroundColor:
-                      selectedOption === "option1" ? "#3a4d39" : "",
+                      selectedOption === "Chicken Stock" ? "#3a4d39" : "",
                     borderRadius: "10px 10px 0 0",
                   }}
                 >
@@ -46,8 +77,9 @@ export default function OrdersModal() {
                     type="radio"
                     id="option1"
                     name="options"
-                    value="option1"
-                    checked={selectedOption === "option1"}
+                    value="Chicken Stock"
+                    checked={selectedOption === "Chicken Stock"}
+                    onChange={(e) => setSelectedOption(e.target.value)}
                   />
                   <label htmlFor="option1">Chicken Stock</label>
                   <br />
@@ -56,35 +88,48 @@ export default function OrdersModal() {
                 <div
                   style={{
                     backgroundColor:
-                      selectedOption === "option2" ? "#3a4d39" : "",
-                    borderRadius: "0",
+                      selectedOption === "Chicken Feeds" ? "#3a4d39" : "",
+                    borderRadius: "0 0 10px 10px",
                   }}
                 >
                   <input
                     type="radio"
                     id="option2"
                     name="options"
-                    value="option2"
-                    checked={selectedOption === "option2"}
+                    value="Chicken Feeds"
+                    checked={selectedOption === "Chicken Feeds"}
+                    onChange={(e) => setSelectedOption(e.target.value)}
                   />
                   <label htmlFor="option2">Chicken Feeds</label>
                   <br />
                 </div>
               </div>
 
-              <label htmlFor="order-quant">
+              <label htmlFor="order-quant" style={{ marginTop: "20px" }}>
                 Enter no. of quantity
-                <input type="number" />
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
               </label>
 
               <label htmlFor="order-amnt">
                 Enter total amount
-                <input type="number" />
+                <input
+                  type="number"
+                  value={totalAmount}
+                  onChange={(e) => setTotalAmount(e.target.value)}
+                />
               </label>
 
               <label htmlFor="order-date">
                 Estimated delivery date:
-                <input type="date" />
+                <input
+                  type="date"
+                  value={deliveryDate}
+                  onChange={(e) => setDeliveryDate(e.target.value)}
+                />
               </label>
             </form>
             <button className="close-modal" onClick={toggleModal}>
@@ -95,7 +140,9 @@ export default function OrdersModal() {
               <button className="disc-btn" onClick={toggleModal}>
                 Discard
               </button>
-              <button className="save-btn">Save</button>
+              <button onClick={handleOrders} className="save-btn">
+                Save
+              </button>
             </div>
           </div>
         </div>

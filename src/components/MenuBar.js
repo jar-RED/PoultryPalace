@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { act } from "react-dom/test-utils";
 import { useNavigate } from "react-router-dom";
 
 function MenuBar() {
@@ -52,7 +53,7 @@ function MenuBar() {
       notifications: false,
       reports: false,
     });
-    history("/sales");
+    history("/sales-list");
   };
 
   const handleNotificationsClick = (event) => {
@@ -86,7 +87,9 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              backgroundColor: activeItem.inventory ? "#708e76" : "",
+              paddingTop: "10px",
+              // backgroundColor: activeItem.inventory ? "#708e76" : "",
+              borderTop: activeItem.inventory ? "2.5px solid lightgray" : "",
             }}
             onClick={handleInventoryClick}
           >
@@ -96,7 +99,9 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              backgroundColor: activeItem.sales ? "#708e76" : "",
+              paddingTop: "10px",
+              // backgroundColor: activeItem.sales ? "#708e76" : "",
+              borderTop: activeItem.sales ? "2px solid #FFFFFF" : "",
             }}
             onClick={handleSalesClick}
           >
@@ -109,6 +114,7 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
+              paddingTop: "10px",
               backgroundColor: activeItem.notifications ? "#708e76" : "",
             }}
             onClick={handleNotificationsClick}
@@ -119,7 +125,9 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              backgroundColor: activeItem.reports ? "#708e76" : "",
+              paddingTop: "10px",
+              // backgroundColor: activeItem.reports ? "#708e76" : "",
+              borderTop: activeItem.reports ? "2px solid #FFFFFF" : "",
             }}
             onClick={handleReportsClick}
           >

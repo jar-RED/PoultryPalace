@@ -16,6 +16,7 @@ const InventoryList = () => {
   const [large, setLarge] = useState(0);
   const [xLarge, setXLarge] = useState(0);
   const [jumbo, setJumbo] = useState(0);
+  const [totalEggs, setTotalEggs] = useState(0);
 
   useEffect(() => {
     const fetchInventoryData = async () => {
@@ -38,6 +39,15 @@ const InventoryList = () => {
 
     fetchInventoryData();
   }, []);
+
+  useEffect(() => {
+    const calculateTotalEggs = () => {
+      const total = pullets + small + medium + large + xLarge + jumbo;
+      setTotalEggs(total);
+    };
+
+    calculateTotalEggs();
+  }, [pullets, small, medium, large, xLarge, jumbo]);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -77,6 +87,33 @@ const InventoryList = () => {
       console.log("Chicken feeds updated successfully in Firestore");
     } catch (error) {
       console.error("Error updating chicken feeds in Firestore: ", error);
+    }
+  };
+
+  const updateChickenEggs = async (eggInputs) => {
+    console.log("Updating chicken eggs to:", eggInputs);
+
+    // Update local state
+    setPullets(Number(eggInputs.eggPullets) || 0);
+    setSmall(Number(eggInputs.eggSmall) || 0);
+    setMedium(Number(eggInputs.eggMedium) || 0);
+    setLarge(Number(eggInputs.eggLarge) || 0);
+    setXLarge(Number(eggInputs.eggXLarge) || 0);
+    setJumbo(Number(eggInputs.eggJumbo) || 0);
+
+    const eggInputsRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+    try {
+      await updateDoc(eggInputsRef, {
+        eggPullets: eggInputs.eggPullets,
+        eggSmall: eggInputs.eggSmall,
+        eggMedium: eggInputs.eggMedium,
+        eggLarge: eggInputs.eggLarge,
+        eggXLarge: eggInputs.eggXLarge,
+        eggJumbo: eggInputs.eggJumbo,
+      });
+      console.log("Chicken eggs updated successfully in Firestore");
+    } catch (error) {
+      console.error("Error updating chicken eggs in Firestore: ", error);
     }
   };
 
@@ -182,16 +219,17 @@ const InventoryList = () => {
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <label>TOTAL EGGS IN STOCK: </label>
-                  <output name="total">00</output> <br />
+                  <output name="total">{totalEggs}</output> <br />
                 </div>
               </form>
             </div>
           </div>
+          <Modal
+            updateChickenStock={updateChickenStock}
+            updateChickenFeeds={updateChickenFeeds}
+            updateChickenEggs={updateChickenEggs}
+          />
         </section>
-        <Modal
-          updateChickenStock={updateChickenStock}
-          updateChickenFeeds={updateChickenFeeds}
-        />
       </div>
       <MenuBar />
     </div>
