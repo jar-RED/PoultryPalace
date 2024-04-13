@@ -5,13 +5,23 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import "./salesList.css";
 import SalesModal from "./SalesModal";
+import EditDeleteModal from "./EditDeleteModal";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const SalesList = () => {
   const [activeLink, setActiveLink] = useState("");
   const [sales, setSalesList] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSale, setSelectedSale] = useState(null);
+
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
+  };
+
+  const handleSaleClick = (sale) => {
+    setSelectedSale(sale);
+    setIsModalOpen(true);
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -26,6 +36,7 @@ const SalesList = () => {
     const salesCollection = collection(db, "sales");
     const unsubscribe = onSnapshot(salesCollection, (snapshot) => {
       const salesList = snapshot.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
         dateOfPurchase: formatFirestoreTimestamp(doc.data().dateOfPurchase),
       }));
@@ -43,6 +54,16 @@ const SalesList = () => {
     });
     setSalesList(sortedSales);
     setSortAscending(!sortAscending);
+  };
+
+  const deleteSale = async (saleId) => {
+    try {
+      await deleteDoc(doc(db, "sales", saleId));
+      console.log("Sale deleted successfully");
+      setSalesList(sales.filter((sale) => sale.id !== saleId));
+    } catch (error) {
+      console.error("Error deleting sale: ", error);
+    }
   };
 
   return (
@@ -116,12 +137,14 @@ const SalesList = () => {
             onClick={sortSalesByDate}
           />
         </div>
+
         <div id="inv-order-container">
           {sales.map((sale, index) => (
             <div
               key={sale.id || index}
               id="sales-list"
               style={{ cursor: "pointer" }}
+              onClick={() => handleSaleClick(sale)}
             >
               <div className="order-info" id="order-info">
                 <div id="order-quant">
@@ -154,6 +177,12 @@ const SalesList = () => {
           ))}
         </div>
       </section>
+      <EditDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        selectedSale={selectedSale}
+        deleteSale={deleteSale}
+      />
       <MenuBar />
     </div>
   );
