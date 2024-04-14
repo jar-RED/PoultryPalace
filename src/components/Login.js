@@ -46,7 +46,6 @@ const Login = () => {
             errorMessage = "An error occurred.";
         }
 
-        // Display the error message as an alert
         alert(errorMessage);
       });
   };
@@ -61,7 +60,7 @@ const Login = () => {
       </section>
 
       <section id="logo" className="grid">
-        <div className="logo-image">
+        <div className="logo-image" style={{ display: "flex" }}>
           <img src="assets/images/farm-logo.png" alt="farm-logo" />
         </div>
       </section>

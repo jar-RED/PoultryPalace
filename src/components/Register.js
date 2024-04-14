@@ -69,12 +69,14 @@ const Register = () => {
       <section id="welcome" className="header-welcome">
         <div className="welcome-text">
           <p className="intro-text">Welcome to</p>
-          <p className="web-name">JOYLISA WEB</p>
+          <p className="web-name" style={{ marginBottom: "20px" }}>
+            JOYLISA WEB
+          </p>
         </div>
       </section>
 
       <section id="logo" className="grid">
-        <div className="logo-image">
+        <div className="logo-image" style={{ display: "flex" }}>
           <img src="assets/images/farm-logo.png" alt="farm-logo" />
         </div>
       </section>

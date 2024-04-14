@@ -5,13 +5,24 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import "./salesList.css";
 import InvoiceModal from "./InvoiceModal";
+import EditDeleteModal from "./EditDeleteModal";
+import { doc, deleteDoc } from "firebase/firestore";
+import InvoiceEditDeleteModal from "./InvoiceEditDeleteModal";
 
-const SalesList = () => {
+const SalesInvoice = () => {
   const [activeLink, setActiveLink] = useState("");
   const [invoice, setInvoiceList] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
+  };
+
+  const handleInvoiceClick = (invoice) => {
+    setSelectedInvoice(invoice);
+    setIsModalOpen(true);
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -26,6 +37,7 @@ const SalesList = () => {
     const invoiceCollection = collection(db, "invoice");
     const unsubscribe = onSnapshot(invoiceCollection, (snapshot) => {
       const invoiceList = snapshot.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
         dueDate: formatFirestoreTimestamp(doc.data().dueDate),
       }));
@@ -35,7 +47,7 @@ const SalesList = () => {
     return () => unsubscribe();
   }, []);
 
-  const sortSalesByDate = () => {
+  const sortInvoiceByDate = () => {
     const sortedInvoice = [...invoice].sort((a, b) => {
       const dateA = new Date(a.dueDate);
       const dateB = new Date(b.dueDate);
@@ -43,6 +55,16 @@ const SalesList = () => {
     });
     setInvoiceList(sortedInvoice);
     setSortAscending(!sortAscending);
+  };
+
+  const deleteInvoice = async (invoiceId) => {
+    try {
+      await deleteDoc(doc(db, "invoice", invoiceId));
+      console.log("Invoice deleted successfully");
+      setInvoiceList(invoice.filter((invoice) => invoice.id !== invoiceId));
+    } catch (error) {
+      console.error("Error deleting invoice: ", error);
+    }
   };
 
   return (
@@ -114,7 +136,7 @@ const SalesList = () => {
           <img
             src="assets/images/sort-btn.svg"
             alt="sort"
-            onClick={sortSalesByDate}
+            onClick={sortInvoiceByDate}
           />
         </div>
         <div id="inv-order-container">
@@ -123,6 +145,7 @@ const SalesList = () => {
               key={invoice.id || index}
               id="sales-list"
               style={{ cursor: "pointer" }}
+              onClick={() => handleInvoiceClick(invoice)}
             >
               <div className="order-info" id="order-info">
                 <div style={{ marginTop: "10px" }}>
@@ -181,9 +204,15 @@ const SalesList = () => {
           ))}
         </div>
       </section>
+      <InvoiceEditDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        selectedInvoice={selectedInvoice}
+        deleteInvoice={deleteInvoice}
+      />
       <MenuBar />
     </div>
   );
 };
 
-export default SalesList;
+export default SalesInvoice;

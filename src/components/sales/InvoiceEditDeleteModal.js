@@ -1,17 +1,30 @@
 import React, { useState } from "react";
-import { ConfirmationPopup } from "./ConfirmationPopup";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { InvoiceConfirmationPopup } from "./InvoiceConfirmationPopup";
 
-const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
+const InvoiceEditDeleteModal = ({
+  isOpen,
+  onClose,
+  selectedInvoice,
+  deleteInvoice,
+}) => {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [customerName, setCustomerName] = useState(
-    selectedSale?.customerName || ""
+    selectedInvoice?.customerName || ""
   );
   const [totalAmount, setTotalAmount] = useState(
-    selectedSale?.totalAmount || ""
+    selectedInvoice?.totalAmount || ""
+  );
+
+  const [invoiceNumber, setInvoiceNumber] = useState(
+    selectedInvoice?.invoiceNumber || ""
+  );
+
+  const [invoiceStatus, setInvoiceStatus] = useState(
+    selectedInvoice?.status || ""
   );
 
   const handleDeleteClick = () => {
@@ -19,20 +32,22 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
   };
 
   const handleDeleteConfirmation = () => {
-    deleteSale(selectedSale.id);
+    deleteInvoice(selectedInvoice.id);
     onClose();
   };
 
-  const editSale = async () => {
+  const editInvoice = async () => {
     try {
-      await updateDoc(doc(db, "sales", selectedSale.id), {
+      await updateDoc(doc(db, "invoice", selectedInvoice.id), {
         customerName,
         totalAmount: Number(totalAmount),
+        invoiceNumber: Number(invoiceNumber),
+        status: invoiceStatus,
       });
-      console.log("Sale edited successfully");
+      console.log("Invoice edited successfully");
       onClose();
     } catch (error) {
-      console.error("Error editing sale: ", error);
+      console.error("Error editing invoice: ", error);
     }
   };
 
@@ -55,9 +70,9 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
         >
           {isEditMode ? (
             <>
-              <h3 style={{ textAlign: "center" }}>Edit Sale Item</h3>
+              <h3 style={{ textAlign: "center" }}>Edit Invoice Item</h3>
               <input
-                type="text"
+                type="string"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Customer Name"
@@ -78,8 +93,30 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
                   fontSize: "15px",
                 }}
               />
+              <input
+                type="number"
+                value={invoiceNumber}
+                onChange={(e) => setInvoiceNumber(e.target.value)}
+                placeholder="Invoice Number"
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  fontSize: "15px",
+                }}
+              />
+              <input
+                type="text"
+                value={invoiceStatus}
+                onChange={(e) => setInvoiceStatus(e.target.value)}
+                placeholder="Status"
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  fontSize: "15px",
+                }}
+              />
               <button
-                onClick={editSale}
+                onClick={editInvoice}
                 style={{
                   marginTop: "10px",
                   backgroundColor: "#8ed495",
@@ -151,14 +188,14 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
           )}
         </div>
       </div>
-      <ConfirmationPopup
+      <InvoiceConfirmationPopup
         isOpen={isConfirmationOpen}
         onClose={() => setIsConfirmationOpen(false)}
-        saleId={selectedSale?.id}
-        deleteSale={handleDeleteConfirmation}
+        invoiceId={selectedInvoice?.id}
+        deleteInvoice={handleDeleteConfirmation}
       />
     </>
   );
 };
 
-export default EditDeleteModal;
+export default InvoiceEditDeleteModal;
