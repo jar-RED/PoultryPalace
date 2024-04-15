@@ -30,6 +30,10 @@ export default function SalesModal() {
 
   const handleSales = async (e) => {
     e.preventDefault();
+    if (!customerName || !totalAmount || !purchaseDate) {
+      window.alert("Please fill in all fields.");
+      return;
+    }
     toggleModal();
     try {
       await addDoc(collection(db, "sales"), {

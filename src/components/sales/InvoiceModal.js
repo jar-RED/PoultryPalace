@@ -32,6 +32,10 @@ export default function InvoiceModal() {
 
   const handleInvoice = async (e) => {
     e.preventDefault();
+    if (!customerName || !totalAmount || !dueDate || !invoiceNumber) {
+      window.alert("Please fill in all fields.");
+      return;
+    }
     toggleModal();
     try {
       await addDoc(collection(db, "invoice"), {

@@ -71,50 +71,125 @@ const InvoiceEditDeleteModal = ({
           {isEditMode ? (
             <>
               <h3 style={{ textAlign: "center" }}>Edit Invoice Item</h3>
-              <input
-                type="string"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="Customer Name"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              />
-              <input
-                type="number"
-                value={totalAmount}
-                onChange={(e) => setTotalAmount(e.target.value)}
-                placeholder="Total Amount"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              />
-              <input
-                type="number"
-                value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
-                placeholder="Invoice Number"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              />
-              <input
-                type="text"
-                value={invoiceStatus}
-                onChange={(e) => setInvoiceStatus(e.target.value)}
-                placeholder="Status"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              />
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <input
+                  type="string"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    fontSize: "15px",
+                    paddingTop: "15px",
+                  }}
+                />
+                <label
+                  htmlFor="customerName"
+                  style={{
+                    position: "absolute",
+                    top: customerName ? "0" : "10px",
+                    left: "5px",
+                    color: customerName ? "#999" : "#999",
+                    transition: "0.3s ease all",
+                    fontSize: customerName ? "12px" : "15px",
+                  }}
+                >
+                  Customer Name
+                </label>
+              </div>
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <input
+                  type="number"
+                  value={totalAmount}
+                  onChange={(e) => setTotalAmount(e.target.value)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    fontSize: "15px",
+                    paddingTop: "15px",
+                  }}
+                />
+                <label
+                  htmlFor="totalAmount"
+                  style={{
+                    position: "absolute",
+                    top: totalAmount ? "0" : "10px",
+                    left: "5px",
+                    color: totalAmount ? "#999" : "#999",
+                    transition: "0.3s ease all",
+                    fontSize: totalAmount ? "12px" : "15px",
+                  }}
+                >
+                  Total Amount
+                </label>
+              </div>
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <input
+                  type="number"
+                  value={invoiceNumber}
+                  onChange={(e) => setInvoiceNumber(e.target.value)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    fontSize: "15px",
+                    paddingTop: "15px",
+                  }}
+                />
+                <label
+                  htmlFor="invoiceNumber"
+                  style={{
+                    position: "absolute",
+                    top: invoiceNumber ? "0" : "10px",
+                    left: "5px",
+                    color: invoiceNumber ? "#999" : "#999",
+                    transition: "0.3s ease all",
+                    fontSize: invoiceNumber ? "12px" : "15px",
+                  }}
+                >
+                  Invoice Number
+                </label>
+              </div>
+
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <label
+                  htmlFor="invoiceStatus"
+                  style={{
+                    display: "block",
+                    marginBottom: "0px",
+                    fontSize: "15px",
+                    color: "#999",
+                  }}
+                >
+                  Status
+                </label>
+                <select
+                  id="invoiceStatus"
+                  value={invoiceStatus}
+                  onChange={(e) => setInvoiceStatus(e.target.value)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "10px",
+                    fontSize: "15px",
+                    padding: "5px",
+                    width: "120px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <option value="DRAFT" style={{ left: "15px" }}>
+                    Draft
+                  </option>
+                  <option value="PAID">Paid</option>
+                </select>
+              </div>
               <button
                 onClick={editInvoice}
                 style={{
