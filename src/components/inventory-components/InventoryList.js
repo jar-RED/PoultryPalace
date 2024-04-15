@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
+import { addDoc, collection, getDoc, updateDoc, doc } from "firebase/firestore";
+import MenuBar from "../MenuBar";
 import Modal from "../modal/Modal";
-import { addDoc, collection, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { updateDoc, doc } from "firebase/firestore";
 
-const InventoryList = () => {
+function InventoryList() {
   const [activeLink, setActiveLink] = useState("");
   const [chickenStock, setChickenStock] = useState(0);
   const [chickenFeeds, setChickenFeeds] = useState(0);
@@ -126,7 +125,7 @@ const InventoryList = () => {
             <p>
               {" "}
               <Link
-                to={"/dashboard"}
+                to="/dashboard"
                 className="web-name"
                 style={{ textDecoration: "none" }}
               >
@@ -144,7 +143,7 @@ const InventoryList = () => {
           <div className="container">
             <nav>
               <Link
-                to={"/inventory-list"}
+                to="/inventory-list"
                 className="inv-list"
                 style={{
                   backgroundColor:
@@ -159,7 +158,7 @@ const InventoryList = () => {
                 Inventory List
               </Link>
               <Link
-                to={"/inventory-orders"}
+                to="/inventory-orders"
                 className="inv-order"
                 style={{
                   backgroundColor: activeLink === "inventory-orders" ? "" : "",
@@ -234,6 +233,6 @@ const InventoryList = () => {
       <MenuBar />
     </div>
   );
-};
+}
 
 export default InventoryList;

@@ -60,7 +60,7 @@ export default function OrdersModal() {
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleModal} className="overlay" />
           <div className="modal-content">
             <h2>Add Orders</h2>
             <form action="addInvItem">

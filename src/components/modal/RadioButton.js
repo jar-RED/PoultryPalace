@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./RadioButton.css";
-import { db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
-const RadioButton = ({ onOptionChange }) => {
+function RadioButton({ onOptionChange }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showPopupButton, setShowPopupButton] = useState(false);
   const [eggInputs, setEggInputs] = useState({
@@ -17,7 +17,7 @@ const RadioButton = ({ onOptionChange }) => {
   });
 
   const handleRadioChange = (event) => {
-    const value = event.target.value;
+    const { value } = event.target;
     onOptionChange(value);
 
     setSelectedOption(value);
@@ -189,6 +189,6 @@ const RadioButton = ({ onOptionChange }) => {
       </div>
     </>
   );
-};
+}
 
 export default RadioButton;

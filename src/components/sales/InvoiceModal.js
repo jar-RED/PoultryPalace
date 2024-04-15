@@ -39,7 +39,7 @@ export default function InvoiceModal() {
     toggleModal();
     try {
       await addDoc(collection(db, "invoice"), {
-        customerName: customerName,
+        customerName,
         invoiceNumber: Number(invoiceNumber),
         totalAmount: Number(totalAmount),
         dueDate: new Date(dueDate),
@@ -64,7 +64,7 @@ export default function InvoiceModal() {
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleModal} className="overlay" />
           <div className="modal-content">
             <h2>Create Invoice</h2>
             <form action="addInvItem">

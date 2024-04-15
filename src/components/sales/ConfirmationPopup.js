@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const ConfirmationPopup = ({ isOpen, onClose, saleId, deleteSale }) => {
+export function ConfirmationPopup({ isOpen, onClose, saleId, deleteSale }) {
   if (!isOpen) return null;
 
   const handleDeleteConfirmation = () => {
@@ -10,7 +10,7 @@ export const ConfirmationPopup = ({ isOpen, onClose, saleId, deleteSale }) => {
 
   return (
     <div className="confirmation-popup">
-      <div className="overlay" onClick={onClose}></div>
+      <div className="overlay" onClick={onClose} />
       <div
         className="modal-content"
         style={{
@@ -62,4 +62,4 @@ export const ConfirmationPopup = ({ isOpen, onClose, saleId, deleteSale }) => {
       </div>
     </div>
   );
-};
+}

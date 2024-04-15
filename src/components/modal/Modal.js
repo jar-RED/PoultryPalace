@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
 import "./RadioButton.css";
-import { db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function Modal({
   updateChickenStock,
@@ -54,9 +54,9 @@ export default function Modal({
     validateForm();
   };
 
-  //Eggs inputs
+  // Eggs inputs
   const handleRadioChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
 
     setSelectedOption(value);
     if (value === "option3") {
@@ -178,7 +178,7 @@ export default function Modal({
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleModal} className="overlay" />
           <div className="modal-content">
             <h2>Add Inventory Item</h2>
             <form action="addInvItem">

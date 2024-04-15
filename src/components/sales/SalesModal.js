@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./salesModal.css";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export default function SalesModal() {
@@ -9,7 +9,7 @@ export default function SalesModal() {
   const [totalAmount, setTotalAmount] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
 
-  const toggleModal = (e) => {
+  const toggleModal = () => {
     setModal(!modal);
   };
 
@@ -37,7 +37,7 @@ export default function SalesModal() {
     toggleModal();
     try {
       await addDoc(collection(db, "sales"), {
-        customerName: customerName,
+        customerName,
         totalAmount: Number(totalAmount),
         dateOfPurchase: new Date(purchaseDate),
       });
@@ -60,7 +60,7 @@ export default function SalesModal() {
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div onClick={toggleModal} className="overlay" />
           <div className="modal-content">
             <h2>Add Sales</h2>
             <form action="addInvItem">

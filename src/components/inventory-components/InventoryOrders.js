@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
-import OrdersModal from "../modal/OrdersModal";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import MenuBar from "../MenuBar";
+import OrdersModal from "../modal/OrdersModal";
 import { db } from "../../firebase";
 
-const InventoryOrders = () => {
+function InventoryOrders() {
   const [activeLink, setActiveLink] = useState("");
   const [orders, setOrders] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
@@ -53,7 +53,7 @@ const InventoryOrders = () => {
             <p>
               {" "}
               <Link
-                to={"/dashboard"}
+                to="/dashboard"
                 className="web-name"
                 style={{ textDecoration: "none" }}
               >
@@ -70,7 +70,7 @@ const InventoryOrders = () => {
         <div className="container">
           <nav>
             <Link
-              to={"/inventory-list"}
+              to="/inventory-list"
               className="inv-list"
               style={{
                 backgroundColor: activeLink === "inventory-list" ? "" : "",
@@ -82,7 +82,7 @@ const InventoryOrders = () => {
               Inventory List
             </Link>
             <Link
-              to={"/inventory-orders"}
+              to="/inventory-orders"
               className="inv-order"
               style={{
                 backgroundColor:
@@ -136,7 +136,10 @@ const InventoryOrders = () => {
                   <label>{order.orderCategory}</label>
                   <output>x{order.quantity}</output>
                 </div>
-                <span>Delivery date: {order.deliveryDate}</span>
+                <span>
+                  Delivery date:
+                  {order.deliveryDate}
+                </span>
               </div>
               <div id="order-status">
                 <div id="stat-condition">
@@ -156,7 +159,8 @@ const InventoryOrders = () => {
                         order.status === "PENDING" ? "#E3B09F" : "#8ed495",
                     }}
                   >
-                    {order.totalAmount}.00
+                    {order.totalAmount}
+                    .00
                   </output>
                 </div>
               </div>
@@ -167,6 +171,6 @@ const InventoryOrders = () => {
       <MenuBar />
     </div>
   );
-};
+}
 
 export default InventoryOrders;

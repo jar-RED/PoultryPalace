@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ConfirmationPopup } from "./ConfirmationPopup";
 import { updateDoc, doc } from "firebase/firestore";
+import { ConfirmationPopup } from "./ConfirmationPopup";
 import { db } from "../../firebase";
 
-const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
+function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -42,7 +42,7 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
   return (
     <>
       <div className="option-modal">
-        <div onClick={onClose} className="overlay"></div>
+        <div onClick={onClose} className="overlay" />
         <div
           className="modal-content"
           style={{
@@ -226,6 +226,6 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
       />
     </>
   );
-};
+}
 
 export default EditDeleteModal;

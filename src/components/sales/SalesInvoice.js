@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
-import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import MenuBar from "../MenuBar";
 import { db } from "../../firebase";
 import "./salesList.css";
 import InvoiceModal from "./InvoiceModal";
 import EditDeleteModal from "./EditDeleteModal";
-import { doc, deleteDoc } from "firebase/firestore";
+
 import InvoiceEditDeleteModal from "./InvoiceEditDeleteModal";
 
-const SalesInvoice = () => {
+function SalesInvoice() {
   const [activeLink, setActiveLink] = useState("");
   const [invoice, setInvoiceList] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
@@ -76,7 +82,7 @@ const SalesInvoice = () => {
             <p>
               {" "}
               <Link
-                to={"/dashboard"}
+                to="/dashboard"
                 className="web-name"
                 style={{ textDecoration: "none" }}
               >
@@ -93,7 +99,7 @@ const SalesInvoice = () => {
         <div className="container">
           <nav>
             <Link
-              to={"/sales-list"}
+              to="/sales-list"
               className="sales-list"
               style={{
                 backgroundColor:
@@ -106,7 +112,7 @@ const SalesInvoice = () => {
               Sales List
             </Link>
             <Link
-              to={"/sales-invoice"}
+              to="/sales-invoice"
               className="sales-invoice"
               style={{
                 backgroundColor:
@@ -156,7 +162,10 @@ const SalesInvoice = () => {
                   <label>{invoice.customerName}</label>
                 </div>
 
-                <span>Due Date: {invoice.dueDate}</span>
+                <span>
+                  Due Date:
+                  {invoice.dueDate}
+                </span>
               </div>
               <div
                 id="sales-status"
@@ -195,7 +204,8 @@ const SalesInvoice = () => {
                         marginTop: "0px",
                       }}
                     >
-                      {invoice.totalAmount}.00
+                      {invoice.totalAmount}
+                      .00
                     </output>
                   </div>
                 </div>
@@ -213,6 +223,6 @@ const SalesInvoice = () => {
       <MenuBar />
     </div>
   );
-};
+}
 
 export default SalesInvoice;

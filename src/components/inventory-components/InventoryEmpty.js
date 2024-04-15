@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Modal from "../modal/Modal";
 
-const InventoryEmpty = () => {
+function InventoryEmpty() {
   return (
     <div>
       <section id="inventory-header" className="header-welcome">
@@ -22,20 +22,20 @@ const InventoryEmpty = () => {
           <div className="container">
             <nav>
               <Link
-                to={"/inventory-list"}
+                to="/inventory-list"
                 className="inv-list"
                 style={{ backgroundColor: "#3a4d39", borderRadius: "20px" }}
               >
                 {" "}
                 Inventory List
               </Link>
-              <Link to={"/inventory-orders"} className="inv-orders">
+              <Link to="/inventory-orders" className="inv-orders">
                 {" "}
                 Orders
               </Link>
             </nav>
           </div>
-          <div></div>
+          <div />
           <p>Empty.</p>
         </section>
 
@@ -43,6 +43,6 @@ const InventoryEmpty = () => {
       </div>
     </div>
   );
-};
+}
 
 export default InventoryEmpty;

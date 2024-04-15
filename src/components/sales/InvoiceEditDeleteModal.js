@@ -3,12 +3,12 @@ import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { InvoiceConfirmationPopup } from "./InvoiceConfirmationPopup";
 
-const InvoiceEditDeleteModal = ({
+function InvoiceEditDeleteModal({
   isOpen,
   onClose,
   selectedInvoice,
   deleteInvoice,
-}) => {
+}) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -54,7 +54,7 @@ const InvoiceEditDeleteModal = ({
   return (
     <>
       <div className="option-modal">
-        <div onClick={onClose} className="overlay"></div>
+        <div onClick={onClose} className="overlay" />
         <div
           className="modal-content"
           style={{
@@ -271,6 +271,6 @@ const InvoiceEditDeleteModal = ({
       />
     </>
   );
-};
+}
 
 export default InvoiceEditDeleteModal;

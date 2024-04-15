@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from "react";
-import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
-const Register = () => {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error] = useState(null);
@@ -110,11 +109,11 @@ const Register = () => {
         </div>
       </section>
 
-      <section class="grid">
-        <div class="alternative">
+      <section className="grid">
+        <div className="alternative">
           <p>
             Do you have an account?
-            <Link to={"/login"} className="alternative">
+            <Link to="/login" className="alternative">
               {" "}
               Login
             </Link>
@@ -123,6 +122,6 @@ const Register = () => {
       </section>
     </div>
   );
-};
+}
 
 export default Register;

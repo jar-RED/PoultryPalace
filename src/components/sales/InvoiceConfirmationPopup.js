@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-export const InvoiceConfirmationPopup = ({
+export function InvoiceConfirmationPopup({
   isOpen,
   onClose,
   invoiceId,
   deleteInvoice,
-}) => {
+}) {
   if (!isOpen) return null;
 
   const handleDeleteConfirmation = () => {
@@ -15,7 +15,7 @@ export const InvoiceConfirmationPopup = ({
 
   return (
     <div className="confirmation-popup">
-      <div className="overlay" onClick={onClose}></div>
+      <div className="overlay" onClick={onClose} />
       <div
         className="modal-content"
         style={{
@@ -67,4 +67,4 @@ export const InvoiceConfirmationPopup = ({
       </div>
     </div>
   );
-};
+}

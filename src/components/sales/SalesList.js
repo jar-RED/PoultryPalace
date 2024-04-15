@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
-import MenuBar from "../MenuBar";
 import { Link } from "react-router-dom";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import MenuBar from "../MenuBar";
 import { db } from "../../firebase";
 import "./salesList.css";
 import SalesModal from "./SalesModal";
 import EditDeleteModal from "./EditDeleteModal";
-import { doc, deleteDoc } from "firebase/firestore";
 
-const SalesList = () => {
+function SalesList() {
   const [activeLink, setActiveLink] = useState("");
   const [sales, setSalesList] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
@@ -75,7 +80,7 @@ const SalesList = () => {
             <p>
               {" "}
               <Link
-                to={"/dashboard"}
+                to="/dashboard"
                 className="web-name"
                 style={{ textDecoration: "none" }}
               >
@@ -92,7 +97,7 @@ const SalesList = () => {
         <div className="container">
           <nav>
             <Link
-              to={"/sales-list"}
+              to="/sales-list"
               className="sales-list"
               style={{
                 backgroundColor:
@@ -105,7 +110,7 @@ const SalesList = () => {
               Sales List
             </Link>
             <Link
-              to={"/sales-invoice"}
+              to="/sales-invoice"
               className="sales-invoice"
               style={{
                 backgroundColor:
@@ -150,7 +155,10 @@ const SalesList = () => {
                 <div id="order-quant">
                   <label>{sale.customerName}</label>
                 </div>
-                <span>Purchase Date: {sale.dateOfPurchase}</span>
+                <span>
+                  Purchase Date:
+                  {sale.dateOfPurchase}
+                </span>
               </div>
               <div
                 id="sales-status"
@@ -169,7 +177,8 @@ const SalesList = () => {
                       marginTop: "0px",
                     }}
                   >
-                    {sale.totalAmount}.00
+                    {sale.totalAmount}
+                    .00
                   </output>
                 </div>
               </div>
@@ -186,6 +195,6 @@ const SalesList = () => {
       <MenuBar />
     </div>
   );
-};
+}
 
 export default SalesList;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashboardBody = () => {
+function DashboardBody() {
   return (
     <section id="dashboard-body" className="content-body">
       <div className="container">
@@ -16,6 +16,6 @@ const DashboardBody = () => {
       </div>
     </section>
   );
-};
+}
 
 export default DashboardBody;
