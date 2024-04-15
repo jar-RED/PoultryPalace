@@ -7,6 +7,9 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isCustomerNameFocused, setIsCustomerNameFocused] = useState(false);
+  const [isTotalAmountFocused, setIsTotalAmountFocused] = useState(false);
+
   const [customerName, setCustomerName] = useState(
     selectedSale?.customerName || ""
   );
@@ -56,7 +59,7 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
           {isEditMode ? (
             <>
               <h3 style={{ textAlign: "center" }}>Edit Sale Item</h3>
-              <input
+              {/* <input
                 type="text"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
@@ -66,8 +69,40 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
                   marginRight: "auto",
                   fontSize: "15px",
                 }}
-              />
-              <input
+              /> */}
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  onFocus={() => setIsCustomerNameFocused(true)}
+                  onBlur={() => setIsCustomerNameFocused(false)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    fontSize: "15px",
+                    paddingTop: "15px",
+                  }}
+                />
+                <label
+                  htmlFor="customerName"
+                  style={{
+                    position: "absolute",
+                    top: isCustomerNameFocused || customerName ? "0" : "10px",
+                    left: "5px",
+                    color:
+                      isCustomerNameFocused || customerName ? "#999" : "#999",
+                    transition: "0.3s ease all",
+                    fontSize:
+                      isCustomerNameFocused || customerName ? "12px" : "15px",
+                  }}
+                >
+                  Customer Name
+                </label>
+              </div>
+              {/* <input
                 type="number"
                 value={totalAmount}
                 onChange={(e) => setTotalAmount(e.target.value)}
@@ -77,7 +112,39 @@ const EditDeleteModal = ({ isOpen, onClose, selectedSale, deleteSale }) => {
                   marginRight: "auto",
                   fontSize: "15px",
                 }}
-              />
+              /> */}
+              <div
+                style={{ position: "relative", margin: "auto", width: "200px" }}
+              >
+                <input
+                  type="number"
+                  value={totalAmount}
+                  onChange={(e) => setTotalAmount(e.target.value)}
+                  onFocus={() => setIsTotalAmountFocused(true)}
+                  onBlur={() => setIsTotalAmountFocused(false)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    fontSize: "15px",
+                    paddingTop: "15px",
+                  }}
+                />
+                <label
+                  htmlFor="customerName"
+                  style={{
+                    position: "absolute",
+                    top: isTotalAmountFocused || totalAmount ? "0" : "10px",
+                    left: "5px",
+                    color:
+                      isTotalAmountFocused || totalAmount ? "#999" : "#999",
+                    transition: "0.3s ease all",
+                    fontSize:
+                      isTotalAmountFocused || totalAmount ? "12px" : "15px",
+                  }}
+                >
+                  Total Amount
+                </label>
+              </div>
               <button
                 onClick={editSale}
                 style={{
