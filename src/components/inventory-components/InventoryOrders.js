@@ -79,7 +79,7 @@ function InventoryOrders() {
               onClick={() => handleLinkClick("inventory-list")}
             >
               {" "}
-              Inventory List
+              Inventory
             </Link>
             <Link
               to="/inventory-orders"
@@ -108,7 +108,7 @@ function InventoryOrders() {
         </div> */}
 
         <div className="inv-setting-cont">
-          <div style={{ display: "flex", marginLeft: "220px" }}>
+          <div style={{ display: "flex", marginLeft: "160px" }}>
             <div
               style={{
                 display: "flex",
@@ -136,10 +136,7 @@ function InventoryOrders() {
                   <label>{order.orderCategory}</label>
                   <output>x{order.quantity}</output>
                 </div>
-                <span>
-                  Delivery date:
-                  {order.deliveryDate}
-                </span>
+                <span>Delivery date: {order.deliveryDate}</span>
               </div>
               <div id="order-status">
                 <div id="stat-condition">
@@ -147,6 +144,7 @@ function InventoryOrders() {
                     style={{
                       backgroundColor:
                         order.status === "PENDING" ? "#E3B09F" : "#8ed495",
+                      fontSize: "12px",
                     }}
                   >
                     {order.status}

@@ -85,8 +85,13 @@ html {
 .container {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: auto;
   align-items: center;
   max-width: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* background-color: rgba(255, 255, 255, 0.358); */
 }
 
@@ -170,7 +175,7 @@ html {
 }
 
 .content-body {
-  height: 67vh; /* 100vh */
+  height: 100vh; /* 100vh */
   width: 100vw;
   /* display: flex;
     align-items: center;
@@ -180,7 +185,10 @@ html {
 /* WEBSITE FOOTER STYLES */
 .main-footer {
   width: 100vw;
-  z-index: 10;
+  /* bottom: 0;
+  position: absolute; */
+  /* height: 10%;
+  z-index: 10; */
 }
 
 .menu {
@@ -199,15 +207,15 @@ html {
 
 .menu-items img {
   width: 50px;
-  height: 60px;
+  height: 100%;
 }
 
 .menu-items figure {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80px;
-  height: 70px;
+  width: auto;
+  height: auto;
   margin-left: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -289,9 +297,12 @@ html {
 
 /* Dashboard */
 
-/* .dashboard-content {
-  margin-top: 20px;
-} */
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 
 /* Needs adjustment */
 .dashboard-content img {
@@ -377,7 +388,7 @@ html {
 
 .sectionContainer {
   /* height: 530px; */
-  height: 67vh;
+  height: 100vh;
   /* width: 700px; */
   margin-right: auto;
   margin-left: auto;
@@ -494,7 +505,7 @@ html {
 }
 
 #order-list {
-  width: 380px;
+  width: 320px;
   height: 90px;
   border-radius: 18px;
   border-color: white;
@@ -529,17 +540,19 @@ html {
   margin-left: 20pt;
   margin-top: 15px;
   margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .order-info output {
   margin-top: 15px;
   margin-left: 10px;
+  font-size: 15px;
 }
 
 #order-list span {
   margin-left: 20pt;
   font-style: italic;
-  font-size: 17px;
+  font-size: 13.5px;
 }
 
 #order-quant {
@@ -668,8 +681,8 @@ html {
 }
 
 #sales-list {
-  width: 400px;
-  height: 100px;
+  width: 320px;
+  height: 90px;
   border-radius: 18px;
   border-color: white;
   border-style: groove;

@@ -65,7 +65,7 @@ export default function InvoiceModal() {
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay" />
-          <div className="modal-content">
+          <div className="modal-content" style={{ maxWidth: "250px" }}>
             <h2>Create Invoice</h2>
             <form action="addInvItem">
               <label htmlFor="customer-name" style={{ marginTop: "20px" }}>
@@ -74,7 +74,7 @@ export default function InvoiceModal() {
                   type="string"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  style={{ width: "200px" }}
+                  style={{ width: "auto" }}
                 />
               </label>
 
@@ -84,7 +84,7 @@ export default function InvoiceModal() {
                   type="number"
                   value={invoiceNumber}
                   onChange={(e) => setInvoiceNumber(e.target.value)}
-                  style={{ width: "130px" }}
+                  style={{ width: "auto" }}
                 />
               </label>
 
@@ -94,12 +94,12 @@ export default function InvoiceModal() {
                   type="number"
                   value={totalAmount}
                   onChange={(e) => setTotalAmount(e.target.value)}
-                  style={{ width: "130px" }}
+                  style={{ width: "auto" }}
                 />
               </label>
 
               <label htmlFor="order-date">
-                Date of Purchase
+                Due date of payment
                 <input
                   type="date"
                   value={dueDate}
@@ -111,8 +111,12 @@ export default function InvoiceModal() {
               X
             </button>
 
-            <div className="modal-btns">
-              <button className="disc-btn" onClick={toggleModal}>
+            <div className="modal-btns" style={{ display: "flex" }}>
+              <button
+                className="disc-btn"
+                onClick={toggleModal}
+                style={{ marginRight: "0px" }}
+              >
                 Discard
               </button>
               <button onClick={handleInvoice} className="save-btn">

@@ -61,7 +61,7 @@ export default function OrdersModal() {
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay" />
-          <div className="modal-content">
+          <div className="modal-content" style={{ maxWidth: "250px" }}>
             <h2>Add Orders</h2>
             <form action="addInvItem">
               <label htmlFor="">Order Category</label>
@@ -137,7 +137,11 @@ export default function OrdersModal() {
             </button>
 
             <div className="modal-btns">
-              <button className="disc-btn" onClick={toggleModal}>
+              <button
+                className="disc-btn"
+                onClick={toggleModal}
+                style={{ marginRight: "0px" }}
+              >
                 Discard
               </button>
               <button onClick={handleOrders} className="save-btn">

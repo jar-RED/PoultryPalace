@@ -72,7 +72,7 @@ function InvoiceEditDeleteModal({
             <>
               <h3 style={{ textAlign: "center" }}>Edit Invoice Item</h3>
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
                   type="string"
@@ -100,7 +100,7 @@ function InvoiceEditDeleteModal({
                 </label>
               </div>
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
                   type="number"
@@ -128,7 +128,7 @@ function InvoiceEditDeleteModal({
                 </label>
               </div>
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
                   type="number"
@@ -157,7 +157,7 @@ function InvoiceEditDeleteModal({
               </div>
 
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <label
                   htmlFor="invoiceStatus"
@@ -202,6 +202,7 @@ function InvoiceEditDeleteModal({
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                 }}
               >
                 Save Changes
@@ -217,6 +218,7 @@ function InvoiceEditDeleteModal({
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                 }}
               >
                 Cancel
@@ -238,6 +240,7 @@ function InvoiceEditDeleteModal({
                   paddingRight: "20px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                   //   borderColor: "transparent",
                 }}
               >
@@ -254,6 +257,7 @@ function InvoiceEditDeleteModal({
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                   //   borderColor: "transparent",
                 }}
               >

@@ -19,7 +19,7 @@ function InventoryList() {
 
   useEffect(() => {
     const fetchInventoryData = async () => {
-      const docRef = doc(db, "inventory", "2J5KZ2IeFVQYJISAegb6");
+      const docRef = doc(db, "inventory", "PTLoZvdciACLA6uiciRE");
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -155,7 +155,7 @@ function InventoryList() {
                 onClick={() => handleLinkClick("inventory-list")}
               >
                 {" "}
-                Inventory List
+                Inventory
               </Link>
               <Link
                 to="/inventory-orders"

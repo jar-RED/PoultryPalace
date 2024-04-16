@@ -44,6 +44,7 @@ export function InvoiceConfirmationPopup({
             paddingRight: "10px",
             paddingTop: "5px",
             paddingBottom: "5px",
+            color: "black",
           }}
         >
           Yes, Delete
@@ -60,6 +61,7 @@ export function InvoiceConfirmationPopup({
             paddingRight: "10px",
             paddingTop: "5px",
             paddingBottom: "5px",
+            color: "black",
           }}
         >
           Cancel

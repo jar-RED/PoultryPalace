@@ -124,7 +124,7 @@ function SalesList() {
           </nav>
         </div>
         <div className="add-sales-cont">
-          <div style={{ display: "flex", marginLeft: "220px" }}>
+          <div style={{ display: "flex", marginLeft: "160px" }}>
             <div
               style={{
                 display: "flex",
@@ -155,10 +155,7 @@ function SalesList() {
                 <div id="order-quant">
                   <label>{sale.customerName}</label>
                 </div>
-                <span>
-                  Purchase Date:
-                  {sale.dateOfPurchase}
-                </span>
+                <span>Date: {sale.dateOfPurchase}</span>
               </div>
               <div
                 id="sales-status"

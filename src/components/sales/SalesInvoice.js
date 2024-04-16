@@ -127,7 +127,7 @@ function SalesInvoice() {
           </nav>
         </div>
         <div className="add-sales-cont">
-          <div style={{ display: "flex", marginLeft: "220px" }}>
+          <div style={{ display: "flex", marginLeft: "160px" }}>
             <div
               style={{
                 display: "flex",

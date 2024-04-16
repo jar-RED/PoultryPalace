@@ -61,7 +61,7 @@ export default function SalesModal() {
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay" />
-          <div className="modal-content">
+          <div className="modal-content" style={{ maxWidth: "250px" }}>
             <h2>Add Sales</h2>
             <form action="addInvItem">
               <label htmlFor="order-quant" style={{ marginTop: "20px" }}>
@@ -96,7 +96,11 @@ export default function SalesModal() {
             </button>
 
             <div className="modal-btns">
-              <button className="disc-btn" onClick={toggleModal}>
+              <button
+                className="disc-btn"
+                onClick={toggleModal}
+                style={{ marginRight: "0px" }}
+              >
                 Discard
               </button>
               <button onClick={handleSales} className="save-btn">

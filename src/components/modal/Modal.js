@@ -179,7 +179,7 @@ export default function Modal({
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay" />
-          <div className="modal-content">
+          <div className="modal-content" style={{ maxWidth: "250px" }}>
             <h2>Add Inventory Item</h2>
             <form action="addInvItem">
               <label htmlFor="">Inventory Category</label>
@@ -336,7 +336,11 @@ export default function Modal({
             </button>
 
             <div className="modal-btns">
-              <button className="disc-btn" onClick={toggleModal}>
+              <button
+                className="disc-btn"
+                onClick={toggleModal}
+                style={{ marginRight: "0px" }}
+              >
                 Discard
               </button>
               <button className="save-btn" onClick={handleSave}>

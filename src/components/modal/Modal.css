@@ -3,11 +3,8 @@ body.active-modal {
 }
 
 .btn-modal {
-  /* position: fixed;
-  height: 70px; */
   cursor: pointer;
   width: fit-content;
-  /* margin-left: 310px; */
   z-index: 1000;
 }
 
@@ -19,7 +16,7 @@ body.active-modal {
   left: 0;
   right: 0;
   bottom: 0;
-  position: fixed;
+  position: absolute;
 }
 
 .overlay {
@@ -35,11 +32,8 @@ body.active-modal {
   transform: translate(-50%, -50%);
   line-height: 1.4;
   background: #83a186;
-  padding: 14px 28px;
-  border-radius: 3px;
-  max-width: 300px;
-  min-width: 250px;
-  border-radius: 10px;
+  max-width: 250px;
+  border-radius: 30px;
 }
 
 .close-modal {
@@ -77,7 +71,6 @@ body.active-modal {
 .disc-btn {
   background-color: rgba(255, 46, 46, 0.767);
   border-color: transparent;
-  margin-right: 70px;
   border-radius: 20px;
   color: white;
   padding: 5px 10px 5px 10px;
@@ -87,7 +80,7 @@ body.active-modal {
 .save-btn {
   background-color: rgba(0, 128, 0, 0.592);
   border-color: transparent;
-  margin-left: 70px;
+  /* margin-left: 30px; */
   border-radius: 20px;
   font-size: 18px;
   padding: 5px 10px 5px 10px;

@@ -71,7 +71,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                 }}
               /> */}
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
                   type="text"
@@ -114,7 +114,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                 }}
               /> */}
               <div
-                style={{ position: "relative", margin: "auto", width: "200px" }}
+                style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
                   type="number"
@@ -157,6 +157,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                 }}
               >
                 Save Changes
@@ -172,6 +173,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                 }}
               >
                 Cancel
@@ -193,6 +195,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   paddingRight: "20px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                   //   borderColor: "transparent",
                 }}
               >
@@ -209,6 +212,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   paddingRight: "10px",
                   paddingTop: "5px",
                   paddingBottom: "5px",
+                  color: "black",
                   //   borderColor: "transparent",
                 }}
               >

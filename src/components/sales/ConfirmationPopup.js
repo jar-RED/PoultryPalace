@@ -39,6 +39,7 @@ export function ConfirmationPopup({ isOpen, onClose, saleId, deleteSale }) {
             paddingRight: "10px",
             paddingTop: "5px",
             paddingBottom: "5px",
+            color: "black",
           }}
         >
           Yes, Delete
@@ -55,6 +56,7 @@ export function ConfirmationPopup({ isOpen, onClose, saleId, deleteSale }) {
             paddingRight: "10px",
             paddingTop: "5px",
             paddingBottom: "5px",
+            color: "black",
           }}
         >
           Cancel

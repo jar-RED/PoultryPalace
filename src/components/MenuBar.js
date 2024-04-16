@@ -93,7 +93,10 @@ function MenuBar() {
             }}
             onClick={handleInventoryClick}
           >
-            <img src="assets/images/Desk_fill.png" alt="inventory-management" />
+            <img
+              src="assets/images/inventory-icon.svg"
+              alt="inventory-management"
+            />
             <figcaption>Inventory</figcaption>
           </figure>
           <figure
@@ -105,10 +108,7 @@ function MenuBar() {
             }}
             onClick={handleSalesClick}
           >
-            <img
-              src="assets/images/Wallet_alt_fill.png"
-              alt="sales-management"
-            />
+            <img src="assets/images/sales-icon.svg" alt="sales-management" />
             <figcaption>Sales</figcaption>
           </figure>
           <figure
@@ -119,7 +119,10 @@ function MenuBar() {
             }}
             onClick={handleNotificationsClick}
           >
-            <img src="assets/images/Bell_pin_fill.png" alt="notifications" />
+            <img
+              src="assets/images/notification-icon.svg"
+              alt="notifications"
+            />
             <figcaption>Notifications</figcaption>
           </figure>
           <figure
@@ -131,7 +134,7 @@ function MenuBar() {
             }}
             onClick={handleReportsClick}
           >
-            <img src="assets/images/Pipe_fill.png" alt="reports" />
+            <img src="assets/images/reports-icon.svg" alt="reports" />
             <figcaption>Reports</figcaption>
           </figure>
         </div>
