@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import MenuBar from "../MenuBar";
 import OrdersModal from "../modal/OrdersModal";
 import { db } from "../../firebase";
+import OrdersEditDelete from "./OrdersEditDelete";
 
 function InventoryOrders() {
   const [activeLink, setActiveLink] = useState("");
   const [orders, setOrders] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
+  };
+
+  const handleOrdersClick = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -25,6 +39,7 @@ function InventoryOrders() {
     const ordersCollection = collection(db, "orders");
     const unsubscribe = onSnapshot(ordersCollection, (snapshot) => {
       const ordersList = snapshot.docs.map((doc) => ({
+        id: doc.id,
         ...doc.data(),
         deliveryDate: formatFirestoreTimestamp(doc.data().deliveryDate),
       }));
@@ -42,6 +57,16 @@ function InventoryOrders() {
     });
     setOrders(sortedOrders);
     setSortAscending(!sortAscending);
+  };
+
+  const deleteOrder = async (orderId) => {
+    try {
+      await deleteDoc(doc(db, "orders", orderId));
+      console.log("Order deleted successfully");
+      setOrders(orders.filter((order) => order.id !== orderId));
+    } catch (error) {
+      console.error("Error deleting order: ", error);
+    }
   };
 
   return (
@@ -128,9 +153,14 @@ function InventoryOrders() {
             onClick={sortOrdersByDate}
           />
         </div>
-        <div id="inv-order-container" style={{ cursor: "pointer" }}>
+        <div id="inv-order-container" className="body-list-container">
           {orders.map((order, index) => (
-            <div key={order.id || index} id="order-list">
+            <div
+              key={order.id || index}
+              id="order-list"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleOrdersClick(order)}
+            >
               <div className="order-info" id="order-info">
                 <div id="order-quant">
                   <label>{order.orderCategory}</label>
@@ -166,6 +196,12 @@ function InventoryOrders() {
           ))}
         </div>
       </section>
+      <OrdersEditDelete
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        selectedOrder={selectedOrder}
+        deleteOrder={deleteOrder}
+      />
       <MenuBar />
     </div>
   );

@@ -11,8 +11,6 @@ import MenuBar from "../MenuBar";
 import { db } from "../../firebase";
 import "./salesList.css";
 import InvoiceModal from "./InvoiceModal";
-import EditDeleteModal from "./EditDeleteModal";
-
 import InvoiceEditDeleteModal from "./InvoiceEditDeleteModal";
 
 function SalesInvoice() {
@@ -145,7 +143,7 @@ function SalesInvoice() {
             onClick={sortInvoiceByDate}
           />
         </div>
-        <div id="inv-order-container">
+        <div id="inv-order-container" className="body-list-container">
           {invoice.map((invoice, index) => (
             <div
               key={invoice.id || index}

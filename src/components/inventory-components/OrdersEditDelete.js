@@ -1,41 +1,43 @@
 import React, { useState } from "react";
 import { updateDoc, doc } from "firebase/firestore";
-import { ConfirmationPopup } from "./ConfirmationPopup";
 import { db } from "../../firebase";
+import { OrdersConfirmation } from "./OrdersConfirmation";
 
-function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
+function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isCustomerNameFocused, setIsCustomerNameFocused] = useState(false);
-  const [isTotalAmountFocused, setIsTotalAmountFocused] = useState(false);
 
-  const [customerName, setCustomerName] = useState(
-    selectedSale?.customerName || ""
-  );
   const [totalAmount, setTotalAmount] = useState(
-    selectedSale?.totalAmount || ""
+    selectedOrder?.totalAmount || ""
   );
+
+  const [orderQuantity, setOrderQuantity] = useState(
+    selectedOrder?.quantity || ""
+  );
+
+  const [orderStatus, setOrderStatus] = useState(selectedOrder?.status || "");
 
   const handleDeleteClick = () => {
     setIsConfirmationOpen(true);
   };
 
   const handleDeleteConfirmation = () => {
-    deleteSale(selectedSale.id);
+    deleteOrder(selectedOrder.id);
     onClose();
   };
 
-  const editSale = async () => {
+  const editOrder = async () => {
     try {
-      await updateDoc(doc(db, "sales", selectedSale.id), {
-        customerName,
+      await updateDoc(doc(db, "orders", selectedOrder.id), {
         totalAmount: Number(totalAmount),
+        quantity: Number(orderQuantity),
+        status: orderStatus,
       });
-      console.log("Sale edited successfully");
+      console.log("Order edited successfully");
       onClose();
     } catch (error) {
-      console.error("Error editing sale: ", error);
+      console.error("Error editing selected order: ", error);
     }
   };
 
@@ -58,27 +60,14 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
         >
           {isEditMode ? (
             <>
-              <h3 style={{ textAlign: "center" }}>Edit Sale Item</h3>
-              {/* <input
-                type="text"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="Customer Name"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              /> */}
+              <h3 style={{ textAlign: "center" }}>Edit Order</h3>
               <div
                 style={{ position: "relative", margin: "auto", width: "auto" }}
               >
                 <input
-                  type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  onFocus={() => setIsCustomerNameFocused(true)}
-                  onBlur={() => setIsCustomerNameFocused(false)}
+                  type="number"
+                  value={orderQuantity}
+                  onChange={(e) => setOrderQuantity(e.target.value)}
                   style={{
                     marginLeft: "20px",
                     marginRight: "20px",
@@ -87,32 +76,20 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   }}
                 />
                 <label
-                  htmlFor="customerName"
+                  htmlFor="orderQuantity"
                   style={{
                     position: "absolute",
-                    top: isCustomerNameFocused || customerName ? "0" : "10px",
+                    top: orderQuantity ? "0" : "10px",
                     left: "25px",
-                    color:
-                      isCustomerNameFocused || customerName ? "#999" : "#999",
+                    color: orderQuantity ? "#999" : "#999",
                     transition: "0.3s ease all",
-                    fontSize:
-                      isCustomerNameFocused || customerName ? "12px" : "15px",
+                    fontSize: orderQuantity ? "12px" : "15px",
                   }}
                 >
-                  Customer Name
+                  Number of Orders
                 </label>
               </div>
-              {/* <input
-                type="number"
-                value={totalAmount}
-                onChange={(e) => setTotalAmount(e.target.value)}
-                placeholder="Total Amount"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              /> */}
+
               <div
                 style={{ position: "relative", margin: "auto", width: "auto" }}
               >
@@ -120,8 +97,6 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   type="number"
                   value={totalAmount}
                   onChange={(e) => setTotalAmount(e.target.value)}
-                  onFocus={() => setIsTotalAmountFocused(true)}
-                  onBlur={() => setIsTotalAmountFocused(false)}
                   style={{
                     marginLeft: "20px",
                     marginRight: "20px",
@@ -133,20 +108,54 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   htmlFor="customerName"
                   style={{
                     position: "absolute",
-                    top: isTotalAmountFocused || totalAmount ? "0" : "10px",
+                    top: totalAmount ? "0" : "10px",
                     left: "25px",
-                    color:
-                      isTotalAmountFocused || totalAmount ? "#999" : "#999",
+                    color: totalAmount ? "#999" : "#999",
                     transition: "0.3s ease all",
-                    fontSize:
-                      isTotalAmountFocused || totalAmount ? "12px" : "15px",
+                    fontSize: totalAmount ? "12px" : "15px",
                   }}
                 >
                   Total Amount
                 </label>
               </div>
+
+              <div
+                style={{ position: "relative", margin: "auto", width: "auto" }}
+              >
+                <label
+                  htmlFor="orderStatus"
+                  style={{
+                    display: "block",
+                    marginBottom: "0px",
+                    fontSize: "15px",
+                    color: "#999",
+                  }}
+                >
+                  Status
+                </label>
+                <select
+                  id="orderStatus"
+                  value={orderStatus}
+                  onChange={(e) => setOrderStatus(e.target.value)}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "10px",
+                    fontSize: "15px",
+                    padding: "5px",
+                    width: "120px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <option value="PENDING" style={{ left: "15px" }}>
+                    Pending
+                  </option>
+                  <option value="RECEIVED">Received</option>
+                </select>
+              </div>
+
               <button
-                onClick={editSale}
+                onClick={editOrder}
                 style={{
                   marginTop: "10px",
                   backgroundColor: "#8ed495",
@@ -222,14 +231,14 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
           )}
         </div>
       </div>
-      <ConfirmationPopup
+      <OrdersConfirmation
         isOpen={isConfirmationOpen}
         onClose={() => setIsConfirmationOpen(false)}
-        saleId={selectedSale?.id}
-        deleteSale={handleDeleteConfirmation}
+        orderId={selectedOrder?.id}
+        deleteOrder={handleDeleteConfirmation}
       />
     </>
   );
 }
 
-export default EditDeleteModal;
+export default OrdersEditDelete;

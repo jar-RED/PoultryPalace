@@ -143,7 +143,7 @@ function SalesList() {
           />
         </div>
 
-        <div id="inv-order-container">
+        <div id="inv-order-container" className="body-list-container">
           {sales.map((sale, index) => (
             <div
               key={sale.id || index}
