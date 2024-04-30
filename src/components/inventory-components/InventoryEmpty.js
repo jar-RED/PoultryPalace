@@ -1,8 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Modal from "../modal/Modal";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { StockModal } from "./StockModal";
+import { db } from "../../firebase";
+import { FeedsModal } from "./FeedsModal";
 
 function InventoryEmpty() {
+  const [isStocksModalOpen, setIsStocksModalOpen] = useState(false);
+  const [stocks, setStocks] = useState([]);
+  const [isFeedsModalOpen, setIsFeedsModalOpen] = useState(false);
+  const [feeds, setFeeds] = useState([]);
+
+  const handleAddStockClick = () => {
+    setIsStocksModalOpen(true);
+  };
+
+  const handleAddFeedsClick = () => {
+    setIsFeedsModalOpen(true);
+  };
+
+  const formatFirestoreTimestamp = (timestamp) => {
+    const date = timestamp.toDate();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
+
+  useEffect(() => {
+    const stocksCollection = collection(db, "chickenStock");
+    const unsubscribe = onSnapshot(stocksCollection, (snapshot) => {
+      const stocksList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        stockDate: formatFirestoreTimestamp(doc.data().stockDate),
+      }));
+      setStocks(stocksList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const feedsCollection = collection(db, "chickenFeeds");
+    const unsubscribe = onSnapshot(feedsCollection, (snapshot) => {
+      const feedsList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        feedsDate: formatFirestoreTimestamp(doc.data().feedsDate),
+      }));
+      setFeeds(feedsList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div>
       <section id="inventory-header" className="header-welcome">
@@ -30,7 +82,7 @@ function InventoryEmpty() {
             </Link>
           </nav>
         </div>
-        <div style={{ overflowY: "auto", maxHeight: "93vh" }}>
+        <div style={{ overflowY: "auto", maxHeight: "92vh" }}>
           <div id="inv-order-container" className="inv-body-list-container">
             <div
               style={{
@@ -72,10 +124,17 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "auto",
                         marginRight: "20px",
+                        cursor: "pointer",
                       }}
+                      onClick={handleAddStockClick}
                     />
                   </div>
-                  <hr style={{ width: "80vw", backgroundColor: "black" }} />
+                  <hr
+                    style={{
+                      width: "80vw",
+                      backgroundColor: "black",
+                    }}
+                  />
                 </div>
                 <div
                   className="inptContainer"
@@ -88,21 +147,23 @@ function InventoryEmpty() {
                     marginRight: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "10px",
-                      width: "95px",
-                      color: "#40513e",
-                    }}
-                  >
-                    <label>4</label> <br />
-                    <label>Alert: </label> <br />
-                    <label>xx-xx-xxxx</label>
-                  </div>
+                  {stocks.map((stock, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                      }}
+                    >
+                      <label>{stock.stockQuantity}</label> <br />
+                      <label>Alert: {stock.stockAlert}</label> <br />
+                      <label>{stock.stockDate}</label>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -126,7 +187,9 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "auto",
                         marginRight: "20px",
+                        cursor: "pointer",
                       }}
+                      onClick={handleAddFeedsClick}
                     />
                   </div>
                   <hr style={{ width: "80vw", backgroundColor: "black" }} />
@@ -142,55 +205,24 @@ function InventoryEmpty() {
                     maxWidth: "94%",
                   }}
                 >
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "10px",
-                      width: "95px",
-                      marginBottom: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "10px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "10px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "10px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {feeds.map((feed, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{feed.feedQuantity}</label> <br />
+                      <label>Alert: {feed.feedAlert}</label> <br />
+                      <label>{feed.feedsDate}</label>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -212,7 +244,7 @@ function InventoryEmpty() {
                       style={{
                         marginBottom: "0px",
                         marginLeft: "20px",
-                        marginTop: "10px",
+                        marginTop: "20px",
                       }}
                     >
                       Chicken Eggs
@@ -224,6 +256,7 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "auto",
                         marginRight: "20px",
+                        marginTop: "10px",
                       }}
                     />
                   </div>
@@ -470,6 +503,14 @@ function InventoryEmpty() {
           </div>
         </div>
       </section>
+      <StockModal
+        isOpen={isStocksModalOpen}
+        onClose={() => setIsStocksModalOpen(false)}
+      />
+      <FeedsModal
+        isOpen={isFeedsModalOpen}
+        onClose={() => setIsFeedsModalOpen(false)}
+      />
     </div>
   );
 }
