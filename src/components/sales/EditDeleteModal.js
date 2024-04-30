@@ -41,8 +41,16 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
 
   return (
     <>
-      <div className="option-modal">
-        <div onClick={onClose} className="overlay" />
+      <div onClick={onClose} className="overlay" />
+      <div
+        className="option-modal"
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
         <div
           className="modal-content"
           style={{
@@ -59,17 +67,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
           {isEditMode ? (
             <>
               <h3 style={{ textAlign: "center" }}>Edit Sale Item</h3>
-              {/* <input
-                type="text"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="Customer Name"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              /> */}
+
               <div
                 style={{ position: "relative", margin: "auto", width: "auto" }}
               >
@@ -102,17 +100,7 @@ function EditDeleteModal({ isOpen, onClose, selectedSale, deleteSale }) {
                   Customer Name
                 </label>
               </div>
-              {/* <input
-                type="number"
-                value={totalAmount}
-                onChange={(e) => setTotalAmount(e.target.value)}
-                placeholder="Total Amount"
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontSize: "15px",
-                }}
-              /> */}
+
               <div
                 style={{ position: "relative", margin: "auto", width: "auto" }}
               >

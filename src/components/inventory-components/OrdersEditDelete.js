@@ -43,8 +43,16 @@ function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
 
   return (
     <>
-      <div className="option-modal">
-        <div onClick={onClose} className="overlay" />
+      <div onClick={onClose} className="overlay" />
+      <div
+        className="option-modal"
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
         <div
           className="modal-content"
           style={{

@@ -74,7 +74,7 @@ export default function InvoiceModal() {
                   type="string"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  style={{ width: "auto" }}
+                  style={{ width: "50vw" }}
                 />
               </label>
 
@@ -84,7 +84,7 @@ export default function InvoiceModal() {
                   type="number"
                   value={invoiceNumber}
                   onChange={(e) => setInvoiceNumber(e.target.value)}
-                  style={{ width: "auto" }}
+                  style={{ width: "50vw" }}
                 />
               </label>
 
@@ -94,7 +94,7 @@ export default function InvoiceModal() {
                   type="number"
                   value={totalAmount}
                   onChange={(e) => setTotalAmount(e.target.value)}
-                  style={{ width: "auto" }}
+                  style={{ width: "50vw" }}
                 />
               </label>
 
