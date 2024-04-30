@@ -77,6 +77,7 @@ export default function OrdersModal() {
                     type="radio"
                     id="option1"
                     name="options"
+                    style={{ width: "auto" }}
                     value="Chicken Stock"
                     checked={selectedOption === "Chicken Stock"}
                     onChange={(e) => setSelectedOption(e.target.value)}
@@ -94,6 +95,7 @@ export default function OrdersModal() {
                 >
                   <input
                     type="radio"
+                    style={{ width: "auto" }}
                     id="option2"
                     name="options"
                     value="Chicken Feeds"
