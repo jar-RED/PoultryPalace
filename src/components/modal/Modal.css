@@ -66,6 +66,7 @@ body.active-modal {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  width: 50vw;
 }
 
 .disc-btn {

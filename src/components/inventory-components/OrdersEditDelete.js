@@ -71,6 +71,7 @@ function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
                   style={{
                     marginLeft: "20px",
                     marginRight: "20px",
+                    width: "50vw",
                     fontSize: "15px",
                     paddingTop: "15px",
                   }}
@@ -100,6 +101,7 @@ function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
                   style={{
                     marginLeft: "20px",
                     marginRight: "20px",
+                    width: "50vw",
                     fontSize: "15px",
                     paddingTop: "15px",
                   }}
