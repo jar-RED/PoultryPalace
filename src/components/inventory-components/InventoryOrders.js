@@ -95,7 +95,7 @@ function InventoryOrders() {
         <div className="container">
           <nav>
             <Link
-              to="/inventory-list"
+              to="/inventory"
               className="inv-list"
               style={{
                 backgroundColor: activeLink === "inventory-list" ? "" : "",
