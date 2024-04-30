@@ -123,14 +123,6 @@ function InventoryOrders() {
             </Link>
           </nav>
         </div>
-        {/* <div id="setting-cont">
-          <img
-            className="sort-btn"
-            src="assets/images/sort-btn.svg"
-            alt="settings"
-            onClick={sortOrdersByDate}
-          />
-        </div> */}
 
         <div className="inv-setting-cont">
           <div style={{ display: "flex", marginLeft: "160px" }}>

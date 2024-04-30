@@ -85,7 +85,7 @@ html {
 .container {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   margin-bottom: auto;
   align-items: center;
   max-width: 450px;

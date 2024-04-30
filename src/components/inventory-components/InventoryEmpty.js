@@ -35,7 +35,7 @@ function InventoryEmpty() {
             <div
               style={{
                 backgroundColor: "#83a186",
-                height: "45vh",
+                height: "auto",
                 borderRadius: "20px",
                 margin: "20px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
@@ -70,7 +70,8 @@ function InventoryEmpty() {
                       style={{
                         height: "5vh",
                         marginBottom: "0px",
-                        marginLeft: "40vw",
+                        marginLeft: "auto",
+                        marginRight: "20px",
                       }}
                     />
                   </div>
@@ -84,6 +85,7 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                     overflowX: "auto",
                     maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   <div
@@ -92,47 +94,14 @@ function InventoryEmpty() {
                       height: "12vh",
                       background: "white",
                       borderRadius: "15px",
-                      marginRight: "15px",
+                      marginRight: "10px",
                       width: "95px",
+                      color: "#40513e",
                     }}
                   >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
-                  <div
-                    style={{
-                      flexShrink: 0,
-                      backgroundColor: "white",
-                      height: "12vh",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                      width: "95px",
-                    }}
-                  >
-                    <label>sample input2</label>
+                    <label>4</label> <br />
+                    <label>Alert: </label> <br />
+                    <label>xx-xx-xxxx</label>
                   </div>
                 </div>
               </div>
@@ -155,7 +124,8 @@ function InventoryEmpty() {
                       style={{
                         height: "5vh",
                         marginBottom: "0px",
-                        marginLeft: "40vw",
+                        marginLeft: "auto",
+                        marginRight: "20px",
                       }}
                     />
                   </div>
@@ -167,6 +137,7 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    marginRight: "20px",
                     overflowX: "auto",
                     maxWidth: "94%",
                   }}
@@ -177,8 +148,9 @@ function InventoryEmpty() {
                       backgroundColor: "white",
                       height: "12vh",
                       borderRadius: "15px",
-                      marginRight: "15px",
+                      marginRight: "10px",
                       width: "95px",
+                      marginBottom: "15px",
                     }}
                   >
                     <label>sample input</label>
@@ -189,7 +161,7 @@ function InventoryEmpty() {
                       backgroundColor: "white",
                       height: "12vh",
                       borderRadius: "15px",
-                      marginRight: "15px",
+                      marginRight: "10px",
                       width: "95px",
                     }}
                   >
@@ -201,7 +173,7 @@ function InventoryEmpty() {
                       backgroundColor: "white",
                       height: "12vh",
                       borderRadius: "15px",
-                      marginRight: "15px",
+                      marginRight: "10px",
                       width: "95px",
                     }}
                   >
@@ -213,7 +185,7 @@ function InventoryEmpty() {
                       backgroundColor: "white",
                       height: "12vh",
                       borderRadius: "15px",
-                      marginRight: "15px",
+                      marginRight: "10px",
                       width: "95px",
                     }}
                   >
@@ -227,7 +199,7 @@ function InventoryEmpty() {
               className="eggsContainer"
               style={{
                 background: "#83a186",
-                height: "100vh",
+                height: "auto",
                 borderRadius: "20px",
                 margin: "20px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
@@ -250,7 +222,8 @@ function InventoryEmpty() {
                       style={{
                         height: "5vh",
                         marginBottom: "0px",
-                        marginLeft: "42vw",
+                        marginLeft: "auto",
+                        marginRight: "20px",
                       }}
                     />
                   </div>
@@ -258,7 +231,7 @@ function InventoryEmpty() {
                 </div>
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -297,7 +270,7 @@ function InventoryEmpty() {
 
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -336,7 +309,7 @@ function InventoryEmpty() {
 
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -375,7 +348,7 @@ function InventoryEmpty() {
 
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -414,7 +387,7 @@ function InventoryEmpty() {
 
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -453,7 +426,7 @@ function InventoryEmpty() {
 
                 <h5
                   style={{
-                    marginBottom: "0px",
+                    marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
                   }}
@@ -488,6 +461,9 @@ function InventoryEmpty() {
                   >
                     <label>sample input2</label>
                   </div>
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <h4 style={{ marginLeft: "20px" }}>Total Eggs:</h4>
                 </div>
               </div>
             </div>
