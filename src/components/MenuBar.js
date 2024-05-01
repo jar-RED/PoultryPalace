@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { act } from "react-dom/test-utils";
 import { useNavigate } from "react-router-dom";
+import LogoutModal from "./modal/LogoutModal";
 
 function MenuBar() {
   const history = useNavigate();
@@ -10,6 +11,7 @@ function MenuBar() {
     notifications: false,
     reports: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const menuRef = useRef(null); // Ref for the menu bar
 
   // Function to handle clicks outside the menu bar
@@ -80,6 +82,10 @@ function MenuBar() {
     alert("Reports clicked");
   };
 
+  const handleLogoutClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <section id="dashboard-footer" className="main-footer" ref={menuRef}>
       <div className="menu">
@@ -87,9 +93,6 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              paddingTop: "10px",
-              // backgroundColor: activeItem.inventory ? "#708e76" : "",
-              borderTop: activeItem.inventory ? "2.5px solid lightgray" : "",
             }}
             onClick={handleInventoryClick}
           >
@@ -102,9 +105,6 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              paddingTop: "10px",
-              // backgroundColor: activeItem.sales ? "#708e76" : "",
-              borderTop: activeItem.sales ? "2px solid #FFFFFF" : "",
             }}
             onClick={handleSalesClick}
           >
@@ -114,7 +114,6 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              paddingTop: "10px",
               backgroundColor: activeItem.notifications ? "#708e76" : "",
             }}
             onClick={handleNotificationsClick}
@@ -128,17 +127,24 @@ function MenuBar() {
           <figure
             style={{
               cursor: "pointer",
-              paddingTop: "10px",
-              // backgroundColor: activeItem.reports ? "#708e76" : "",
-              borderTop: activeItem.reports ? "2px solid #FFFFFF" : "",
             }}
             onClick={handleReportsClick}
           >
             <img src="assets/images/reports-icon.svg" alt="reports" />
             <figcaption>Reports</figcaption>
           </figure>
+          <figure
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={handleLogoutClick}
+          >
+            <img src="assets/images/logout-icon.svg" alt="reports" />
+            <figcaption>Logout</figcaption>
+          </figure>
         </div>
       </div>
+      <LogoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

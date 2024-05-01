@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { auth } from "../firebase";
+import { AuthContext } from "./login-context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -9,10 +10,17 @@ function Login() {
   const [error] = useState(null);
   const history = useNavigate();
 
+  const { dispatch } = useContext(AuthContext);
+
   const signIn = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch({
+          type: "LOGIN",
+          payload: user,
+        });
         console.log(userCredential);
         history("/dashboard");
       })

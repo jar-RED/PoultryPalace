@@ -139,7 +139,7 @@ function InventoryEmpty() {
             </Link>
           </nav>
         </div>
-        <div style={{ overflowY: "auto", maxHeight: "92vh" }}>
+        <div style={{ overflowY: "auto", maxHeight: "93vh" }}>
           <div id="inv-order-container" className="inv-body-list-container">
             <div
               style={{
