@@ -4,12 +4,16 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { StockModal } from "./StockModal";
 import { db } from "../../firebase";
 import { FeedsModal } from "./FeedsModal";
+import { EggsModal } from "./EggsModal";
 
 function InventoryEmpty() {
   const [isStocksModalOpen, setIsStocksModalOpen] = useState(false);
   const [stocks, setStocks] = useState([]);
   const [isFeedsModalOpen, setIsFeedsModalOpen] = useState(false);
   const [feeds, setFeeds] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eggs, setEggs] = useState([]);
+  const [totalEggs, setTotalEggs] = useState(0);
 
   const handleAddStockClick = () => {
     setIsStocksModalOpen(true);
@@ -17,6 +21,10 @@ function InventoryEmpty() {
 
   const handleAddFeedsClick = () => {
     setIsFeedsModalOpen(true);
+  };
+
+  const handleAddEggsClick = () => {
+    setIsModalOpen(true);
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -54,6 +62,28 @@ function InventoryEmpty() {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const eggsCollection = collection(db, "chickenEggs");
+    const unsubscribe = onSnapshot(eggsCollection, (snapshot) => {
+      const eggsList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        eggsDate: formatFirestoreTimestamp(doc.data().eggsDate),
+      }));
+      setEggs(eggsList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    let total = 0;
+    eggs.forEach((egg) => {
+      total += egg.totalEggs;
+    });
+    setTotalEggs(total);
+  }, [eggs]);
 
   return (
     <div>
@@ -245,6 +275,7 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "20px",
                         marginTop: "20px",
+                        color: "#e3e3ce",
                       }}
                     >
                       Chicken Eggs
@@ -257,7 +288,9 @@ function InventoryEmpty() {
                         marginLeft: "auto",
                         marginRight: "20px",
                         marginTop: "10px",
+                        cursor: "pointer",
                       }}
+                      onClick={handleAddEggsClick}
                     />
                   </div>
                   <hr style={{ width: "80vw", backgroundColor: "black" }} />
@@ -267,6 +300,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Pullets
@@ -279,26 +313,23 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.pullets}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
 
                 <h5
@@ -306,6 +337,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Small
@@ -318,26 +350,23 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.small}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
 
                 <h5
@@ -345,6 +374,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Medium
@@ -357,26 +387,23 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.medium}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
 
                 <h5
@@ -384,6 +411,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Large
@@ -396,26 +424,23 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.large}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
 
                 <h5
@@ -423,6 +448,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Extra Large
@@ -435,26 +461,23 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.extraLarge}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
 
                 <h5
@@ -462,6 +485,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
+                    color: "#e3e3ce",
                   }}
                 >
                   Jumbo
@@ -474,29 +498,36 @@ function InventoryEmpty() {
                     marginLeft: "20px",
                   }}
                 >
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input</label>
-                  </div>
-                  <div
-                    style={{
-                      height: "12vh",
-                      background: "white",
-                      borderRadius: "15px",
-                      marginRight: "15px",
-                    }}
-                  >
-                    <label>sample input2</label>
-                  </div>
+                  {eggs.map((egg, index) => (
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        height: "12vh",
+                        background: "white",
+                        borderRadius: "15px",
+                        marginRight: "10px",
+                        width: "95px",
+                        color: "#40513e",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <label>{egg.jumbo}</label> <br />
+                      <label>{egg.eggsDate}</label>
+                    </div>
+                  ))}
                 </div>
+
                 <div style={{ marginBottom: "20px" }}>
-                  <h4 style={{ marginLeft: "20px" }}>Total Eggs:</h4>
+                  <h4
+                    style={{
+                      marginLeft: "20px",
+                      color: "white",
+                      textAlign: "center",
+                      paddingBottom: "10px",
+                    }}
+                  >
+                    Total Eggs: {totalEggs}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -511,6 +542,7 @@ function InventoryEmpty() {
         isOpen={isFeedsModalOpen}
         onClose={() => setIsFeedsModalOpen(false)}
       />
+      <EggsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
