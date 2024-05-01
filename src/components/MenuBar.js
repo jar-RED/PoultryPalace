@@ -42,7 +42,7 @@ function MenuBar() {
       notifications: false,
       reports: false,
     });
-    history("/inventory-list");
+    history("/inventory");
   };
 
   const handleSalesClick = (event) => {
