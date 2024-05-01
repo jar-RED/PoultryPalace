@@ -43,6 +43,7 @@ function InventoryEmpty() {
         ...doc.data(),
         stockDate: formatFirestoreTimestamp(doc.data().stockDate),
       }));
+      stocksList.sort((a, b) => new Date(b.stockDate) - new Date(a.stockDate));
       setStocks(stocksList);
     });
 
@@ -57,6 +58,7 @@ function InventoryEmpty() {
         ...doc.data(),
         feedsDate: formatFirestoreTimestamp(doc.data().feedsDate),
       }));
+      feedsList.sort((a, b) => new Date(b.feedsDate) - new Date(a.feedsDate));
       setFeeds(feedsList);
     });
 
@@ -71,6 +73,7 @@ function InventoryEmpty() {
         ...doc.data(),
         eggsDate: formatFirestoreTimestamp(doc.data().eggsDate),
       }));
+      eggsList.sort((a, b) => new Date(b.eggsDate) - new Date(a.eggsDate));
       setEggs(eggsList);
     });
 
@@ -182,7 +185,7 @@ function InventoryEmpty() {
                       style={{
                         flexShrink: 0,
                         height: "12vh",
-                        background: "white",
+                        background: "#e3e3ce",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
@@ -311,6 +314,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
@@ -348,6 +354,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
@@ -385,6 +394,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
@@ -422,6 +434,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
@@ -459,6 +474,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
@@ -496,6 +514,9 @@ function InventoryEmpty() {
                     // background: "green",
                     display: "flex",
                     marginLeft: "20px",
+                    overflowX: "auto",
+                    maxWidth: "94%",
+                    marginRight: "20px",
                   }}
                 >
                   {eggs.map((egg, index) => (
