@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   collection,
@@ -11,6 +11,7 @@ import MenuBar from "../MenuBar";
 import OrdersModal from "../modal/OrdersModal";
 import { db } from "../../firebase";
 import OrdersEditDelete from "./OrdersEditDelete";
+import { AuthContext } from "../login-context/AuthContext";
 
 function InventoryOrders() {
   const [activeLink, setActiveLink] = useState("");
@@ -18,6 +19,7 @@ function InventoryOrders() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const { currentUser } = useContext(AuthContext);
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
@@ -36,18 +38,24 @@ function InventoryOrders() {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const ordersCollection = collection(db, "orders");
     const unsubscribe = onSnapshot(ordersCollection, (snapshot) => {
-      const ordersList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        deliveryDate: formatFirestoreTimestamp(doc.data().deliveryDate),
-      }));
+      const ordersList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          deliveryDate: formatFirestoreTimestamp(doc.data().deliveryDate),
+        }));
       setOrders(ordersList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   const sortOrdersByDate = () => {
     const sortedOrders = [...orders].sort((a, b) => {

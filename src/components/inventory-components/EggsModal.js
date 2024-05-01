@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../../firebase";
 import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { AuthContext } from "../login-context/AuthContext";
 
 export function EggsModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -13,6 +14,7 @@ export function EggsModal({ isOpen, onClose }) {
   const [jumboQuantity, setJumboQuantity] = useState("");
   const [eggsAlert, setEggsAlert] = useState("");
   const [eggsDate, setEggsDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const handleEggs = async (e) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ export function EggsModal({ isOpen, onClose }) {
         Number(jumboQuantity);
 
       await addDoc(collection(db, "chickenEggs"), {
+        userId: currentUser.uid,
         pullets: Number(pulletQuantity),
         small: Number(smallQuantity),
         medium: Number(mediumQuantity),

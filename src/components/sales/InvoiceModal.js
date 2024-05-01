@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./salesModal.css";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { AuthContext } from "../login-context/AuthContext";
 
 export default function InvoiceModal() {
   const [modal, setModal] = useState(false);
@@ -9,6 +10,7 @@ export default function InvoiceModal() {
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const toggleModal = (e) => {
     setModal(!modal);
@@ -39,6 +41,7 @@ export default function InvoiceModal() {
     toggleModal();
     try {
       await addDoc(collection(db, "invoice"), {
+        userId: currentUser.uid,
         customerName,
         invoiceNumber: Number(invoiceNumber),
         totalAmount: Number(totalAmount),

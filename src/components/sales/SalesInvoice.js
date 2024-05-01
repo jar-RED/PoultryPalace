@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   collection,
@@ -12,6 +12,7 @@ import { db } from "../../firebase";
 import "./salesList.css";
 import InvoiceModal from "./InvoiceModal";
 import InvoiceEditDeleteModal from "./InvoiceEditDeleteModal";
+import { AuthContext } from "../login-context/AuthContext";
 
 function SalesInvoice() {
   const [activeLink, setActiveLink] = useState("");
@@ -19,6 +20,7 @@ function SalesInvoice() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -38,18 +40,24 @@ function SalesInvoice() {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const invoiceCollection = collection(db, "invoice");
     const unsubscribe = onSnapshot(invoiceCollection, (snapshot) => {
-      const invoiceList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        dueDate: formatFirestoreTimestamp(doc.data().dueDate),
-      }));
+      const invoiceList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          dueDate: formatFirestoreTimestamp(doc.data().dueDate),
+        }));
       setInvoiceList(invoiceList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   const sortInvoiceByDate = () => {
     const sortedInvoice = [...invoice].sort((a, b) => {

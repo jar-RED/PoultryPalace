@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./salesModal.css";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { AuthContext } from "../login-context/AuthContext";
 
 export default function SalesModal() {
   const [modal, setModal] = useState(false);
   const [customerName, setCustomerName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const toggleModal = () => {
     setModal(!modal);
@@ -37,6 +39,7 @@ export default function SalesModal() {
     toggleModal();
     try {
       await addDoc(collection(db, "sales"), {
+        userId: currentUser.uid,
         customerName,
         totalAmount: Number(totalAmount),
         dateOfPurchase: new Date(purchaseDate),

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { StockModal } from "./StockModal";
 import { db } from "../../firebase";
 import { FeedsModal } from "./FeedsModal";
 import { EggsModal } from "./EggsModal";
+import { AuthContext } from "../login-context/AuthContext";
 
 function InventoryEmpty() {
   const [activeLink, setActiveLink] = useState("");
@@ -15,6 +16,7 @@ function InventoryEmpty() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eggs, setEggs] = useState([]);
   const [totalEggs, setTotalEggs] = useState(0);
+  const { currentUser } = useContext(AuthContext);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -41,49 +43,67 @@ function InventoryEmpty() {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const stocksCollection = collection(db, "chickenStock");
     const unsubscribe = onSnapshot(stocksCollection, (snapshot) => {
-      const stocksList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        stockDate: formatFirestoreTimestamp(doc.data().stockDate),
-      }));
+      const stocksList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          stockDate: formatFirestoreTimestamp(doc.data().stockDate),
+        }));
       stocksList.sort((a, b) => new Date(b.stockDate) - new Date(a.stockDate));
       setStocks(stocksList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const feedsCollection = collection(db, "chickenFeeds");
     const unsubscribe = onSnapshot(feedsCollection, (snapshot) => {
-      const feedsList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        feedsDate: formatFirestoreTimestamp(doc.data().feedsDate),
-      }));
+      const feedsList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          feedsDate: formatFirestoreTimestamp(doc.data().feedsDate),
+        }));
       feedsList.sort((a, b) => new Date(b.feedsDate) - new Date(a.feedsDate));
       setFeeds(feedsList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const eggsCollection = collection(db, "chickenEggs");
     const unsubscribe = onSnapshot(eggsCollection, (snapshot) => {
-      const eggsList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        eggsDate: formatFirestoreTimestamp(doc.data().eggsDate),
-      }));
+      const eggsList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          eggsDate: formatFirestoreTimestamp(doc.data().eggsDate),
+        }));
       eggsList.sort((a, b) => new Date(b.eggsDate) - new Date(a.eggsDate));
       setEggs(eggsList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     let total = 0;

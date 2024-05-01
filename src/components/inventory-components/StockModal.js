@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { AuthContext } from "../login-context/AuthContext";
 
 export function StockModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -8,12 +9,14 @@ export function StockModal({ isOpen, onClose }) {
   const [stockQuantity, setStockQuantity] = useState("");
   const [stockAlert, setStockAlert] = useState("");
   const [stockDate, setStockDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const handleStock = async (e) => {
     e.preventDefault();
     onClose();
     try {
       await addDoc(collection(db, "chickenStock"), {
+        userId: currentUser.uid,
         stockQuantity: Number(stockQuantity),
         stockAlert: Number(stockAlert),
         stockDate: new Date(stockDate),

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { AuthContext } from "../login-context/AuthContext";
 
 export function FeedsModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -8,12 +9,14 @@ export function FeedsModal({ isOpen, onClose }) {
   const [feedQuantity, setFeedQuantity] = useState("");
   const [feedAlert, setFeedAlert] = useState("");
   const [feedsDate, setFeedsDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const handleFeeds = async (e) => {
     e.preventDefault();
     onClose();
     try {
       await addDoc(collection(db, "chickenFeeds"), {
+        userId: currentUser.uid,
         feedQuantity: Number(feedQuantity),
         feedAlert: Number(feedAlert),
         feedsDate: new Date(feedsDate),

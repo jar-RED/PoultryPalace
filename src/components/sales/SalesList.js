@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   collection,
@@ -12,6 +12,7 @@ import { db } from "../../firebase";
 import "./salesList.css";
 import SalesModal from "./SalesModal";
 import EditDeleteModal from "./EditDeleteModal";
+import { AuthContext } from "../login-context/AuthContext";
 
 function SalesList() {
   const [activeLink, setActiveLink] = useState("");
@@ -19,6 +20,7 @@ function SalesList() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSale, setSelectedSale] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -38,18 +40,24 @@ function SalesList() {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
     const salesCollection = collection(db, "sales");
     const unsubscribe = onSnapshot(salesCollection, (snapshot) => {
-      const salesList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        dateOfPurchase: formatFirestoreTimestamp(doc.data().dateOfPurchase),
-      }));
+      const salesList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          dateOfPurchase: formatFirestoreTimestamp(doc.data().dateOfPurchase),
+        }));
       setSalesList(salesList);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   const sortSalesByDate = () => {
     const sortedSales = [...sales].sort((a, b) => {

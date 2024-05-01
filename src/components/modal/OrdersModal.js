@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Modal.css";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { AuthContext } from "../login-context/AuthContext";
 
 export default function OrdersModal() {
   const [modal, setModal] = useState(false);
@@ -9,6 +10,7 @@ export default function OrdersModal() {
   const [quantity, setQuantity] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   const toggleModal = (e) => {
     setModal(!modal);
@@ -35,6 +37,7 @@ export default function OrdersModal() {
     toggleModal();
     try {
       await addDoc(collection(db, "orders"), {
+        userId: currentUser.uid,
         orderCategory: selectedOption,
         quantity: Number(quantity),
         totalAmount: Number(totalAmount),
