@@ -46,7 +46,7 @@ function Register() {
               "The email address is already in use by another account.";
             break;
           case "auth/invalid-email":
-            errorMessage = "Please fill in the required fields.";
+            errorMessage = "Please enter a valid email address.";
             break;
           case "auth/weak-password":
             errorMessage = "The password is too weak.";
