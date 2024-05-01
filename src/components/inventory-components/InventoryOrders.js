@@ -114,7 +114,7 @@ function InventoryOrders() {
                   activeLink === "inventory-orders"
                     ? "inventory-orders"
                     : "#3a4d39",
-                borderRadius: "20px",
+                borderRadius: "15px",
               }}
               onClick={() => handleLinkClick("inventory-orders")}
             >

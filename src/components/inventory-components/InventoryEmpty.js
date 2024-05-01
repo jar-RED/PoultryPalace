@@ -7,6 +7,7 @@ import { FeedsModal } from "./FeedsModal";
 import { EggsModal } from "./EggsModal";
 
 function InventoryEmpty() {
+  const [activeLink, setActiveLink] = useState("");
   const [isStocksModalOpen, setIsStocksModalOpen] = useState(false);
   const [stocks, setStocks] = useState([]);
   const [isFeedsModalOpen, setIsFeedsModalOpen] = useState(false);
@@ -14,6 +15,10 @@ function InventoryEmpty() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eggs, setEggs] = useState([]);
   const [totalEggs, setTotalEggs] = useState(0);
+
+  const handleLinkClick = (linkName) => {
+    setActiveLink(linkName);
+  };
 
   const handleAddStockClick = () => {
     setIsStocksModalOpen(true);
@@ -95,7 +100,17 @@ function InventoryEmpty() {
           <div className="header-content">
             <img src="assets/images/farm-logo.png" alt="farm-logo" />
             <div className="main-header-text">
-              <p className="web-name">JOYLISA WEB</p>
+              <p>
+                {" "}
+                <Link
+                  to="/dashboard"
+                  className="web-name"
+                  style={{ textDecoration: "none" }}
+                >
+                  {" "}
+                  JOYLISA WEB
+                </Link>{" "}
+              </p>
               <p className="intro-text">Inventory</p>
             </div>
           </div>
@@ -105,7 +120,16 @@ function InventoryEmpty() {
       <section id="inventory-body" className="content-body">
         <div className="container">
           <nav>
-            <Link to="/inventory-list" className="inv-list">
+            <Link
+              to="/inventory"
+              className="inv-list"
+              style={{
+                backgroundColor:
+                  activeLink === "inventory" ? "inventory" : "#3a4d39",
+                borderRadius: "15px",
+              }}
+              onClick={() => handleLinkClick("inventory")}
+            >
               {" "}
               Inventory
             </Link>
@@ -131,6 +155,7 @@ function InventoryEmpty() {
                   textAlign: "center",
                   marginBottom: "10px",
                   marginTop: "10px",
+                  paddingTop: "10px",
                   color: "white",
                 }}
               >
