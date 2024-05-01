@@ -33,12 +33,54 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/inventory" element={<InventoryDefault />} />
-          <Route path="/sales" element={<SalesMain />} />
-          <Route path="/inventory-list" element={<InventoryList />} />
-          <Route path="/inventory-orders" element={<InventoryOrders />} />
-          <Route path="/sales-list" element={<SalesList />} />
-          <Route path="/sales-invoice" element={<SalesInvoice />} />
+          <Route
+            path="/inventory"
+            element={
+              <RequireAuth>
+                <InventoryDefault />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sales"
+            element={
+              <RequireAuth>
+                <SalesMain />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inventory-list"
+            element={
+              <RequireAuth>
+                <InventoryList />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inventory-orders"
+            element={
+              <RequireAuth>
+                <InventoryOrders />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sales-list"
+            element={
+              <RequireAuth>
+                <SalesList />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sales-invoice"
+            element={
+              <RequireAuth>
+                <SalesInvoice />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
