@@ -84,6 +84,7 @@ function MenuBar() {
 
   const handleLogoutClick = () => {
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   return (
@@ -144,7 +145,13 @@ function MenuBar() {
           </figure>
         </div>
       </div>
-      <LogoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+      />
     </section>
   );
 }
