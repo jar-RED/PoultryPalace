@@ -27,6 +27,7 @@ function InventoryOrders() {
   const handleOrdersClick = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -198,7 +199,10 @@ function InventoryOrders() {
       </section>
       <OrdersEditDelete
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
         selectedOrder={selectedOrder}
         deleteOrder={deleteOrder}
       />

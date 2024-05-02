@@ -29,6 +29,7 @@ function SalesList() {
   const handleSaleClick = (sale) => {
     setSelectedSale(sale);
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -193,7 +194,10 @@ function SalesList() {
       </section>
       <EditDeleteModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
         selectedSale={selectedSale}
         deleteSale={deleteSale}
       />

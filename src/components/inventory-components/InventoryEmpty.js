@@ -24,14 +24,17 @@ function InventoryEmpty() {
 
   const handleAddStockClick = () => {
     setIsStocksModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const handleAddFeedsClick = () => {
     setIsFeedsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const handleAddEggsClick = () => {
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -159,7 +162,9 @@ function InventoryEmpty() {
             </Link>
           </nav>
         </div>
-        <div style={{ overflowY: "auto", maxHeight: "92.5vh" }}>
+        <div
+          style={{ overflowY: "auto", maxHeight: "93vh", marginTop: "10px" }}
+        >
           <div id="inv-order-container" className="inv-body-list-container">
             <div
               style={{
@@ -174,7 +179,7 @@ function InventoryEmpty() {
                 style={{
                   textAlign: "center",
                   marginBottom: "10px",
-                  marginTop: "10px",
+                  marginTop: "0px",
                   paddingTop: "10px",
                   color: "white",
                 }}
@@ -654,13 +659,25 @@ function InventoryEmpty() {
       </section>
       <StockModal
         isOpen={isStocksModalOpen}
-        onClose={() => setIsStocksModalOpen(false)}
+        onClose={() => {
+          setIsStocksModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
       />
       <FeedsModal
         isOpen={isFeedsModalOpen}
-        onClose={() => setIsFeedsModalOpen(false)}
+        onClose={() => {
+          setIsFeedsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
       />
-      <EggsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <EggsModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+      />
     </div>
   );
 }

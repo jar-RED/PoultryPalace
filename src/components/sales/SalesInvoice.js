@@ -29,6 +29,7 @@ function SalesInvoice() {
   const handleInvoiceClick = (invoice) => {
     setSelectedInvoice(invoice);
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -222,7 +223,10 @@ function SalesInvoice() {
       </section>
       <InvoiceEditDeleteModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
         selectedInvoice={selectedInvoice}
         deleteInvoice={deleteInvoice}
       />

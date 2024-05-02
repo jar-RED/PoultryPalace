@@ -39,6 +39,8 @@ export default function InvoiceModal() {
       return;
     }
     toggleModal();
+    document.querySelector(".menu").classList.remove("menu-hidden");
+
     try {
       await addDoc(collection(db, "invoice"), {
         userId: currentUser.uid,
@@ -58,7 +60,10 @@ export default function InvoiceModal() {
       <div className="inv-btn-cont">
         <img
           src="assets/images/add-square.svg"
-          onClick={toggleModal}
+          onClick={() => {
+            toggleModal();
+            document.querySelector(".menu").classList.add("menu-hidden");
+          }}
           className="btn-modal"
           alt="add-tbn"
           style={{ height: "50px" }}
@@ -67,7 +72,13 @@ export default function InvoiceModal() {
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay" />
+          <div
+            onClick={() => {
+              toggleModal();
+              document.querySelector(".menu").classList.remove("menu-hidden");
+            }}
+            className="overlay"
+          />
           <div className="modal-content" style={{ maxWidth: "250px" }}>
             <h2>Create Invoice</h2>
             <form action="addInvItem">
@@ -110,14 +121,25 @@ export default function InvoiceModal() {
                 />
               </label>
             </form>
-            <button className="close-modal" onClick={toggleModal}>
+            <button
+              className="close-modal"
+              onClick={() => {
+                toggleModal();
+                document.querySelector(".menu").classList.remove("menu-hidden");
+              }}
+            >
               X
             </button>
 
             <div className="modal-btns" style={{ display: "flex" }}>
               <button
                 className="disc-btn"
-                onClick={toggleModal}
+                onClick={() => {
+                  toggleModal();
+                  document
+                    .querySelector(".menu")
+                    .classList.remove("menu-hidden");
+                }}
                 style={{ marginRight: "0px" }}
               >
                 Discard

@@ -198,6 +198,19 @@ html {
   align-items: center;
   justify-content: center;
   border-color: none;
+  margin-top: auto;
+  position: relative;
+  height: auto;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.menu-hidden {
+  position: inherit;
+}
+
+.menu-show {
+  position: relative;
 }
 
 .menu-items {
@@ -749,7 +762,7 @@ html {
 
 @media (max-width: 768px) {
   .body-list-container {
-    max-height: 83vh;
+    max-height: 84vh;
   }
 }
 
