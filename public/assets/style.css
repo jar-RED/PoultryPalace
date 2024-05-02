@@ -206,11 +206,8 @@ html {
 }
 
 .menu-hidden {
-  position: inherit;
-}
-
-.menu-show {
-  position: relative;
+  /* position: inherit; */
+  display: none;
 }
 
 .menu-items {
