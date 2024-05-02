@@ -13,6 +13,10 @@ export function StockModal({ isOpen, onClose }) {
 
   const handleStock = async (e) => {
     e.preventDefault();
+    if (!stockQuantity || !stockAlert || !stockDate) {
+      alert("Please fill all fields.");
+      return;
+    }
     onClose();
     try {
       await addDoc(collection(db, "chickenStock"), {
@@ -27,6 +31,8 @@ export function StockModal({ isOpen, onClose }) {
     }
   };
 
+  const numberRegex = /^[0-9]{0,4}$/;
+
   return (
     <div>
       <div className="modal">
@@ -40,7 +46,11 @@ export function StockModal({ isOpen, onClose }) {
                 type="number"
                 style={{ width: "50vw" }}
                 value={stockQuantity}
-                onChange={(e) => setStockQuantity(e.target.value)}
+                onChange={(e) => {
+                  if (numberRegex.test(e.target.value)) {
+                    setStockQuantity(e.target.value);
+                  }
+                }}
               />
             </label>
 
@@ -50,7 +60,11 @@ export function StockModal({ isOpen, onClose }) {
                 type="number"
                 style={{ width: "50vw" }}
                 value={stockAlert}
-                onChange={(e) => setStockAlert(e.target.value)}
+                onChange={(e) => {
+                  if (numberRegex.test(e.target.value)) {
+                    setStockAlert(e.target.value);
+                  }
+                }}
               />
             </label>
 

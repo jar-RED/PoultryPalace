@@ -159,7 +159,7 @@ function InventoryEmpty() {
             </Link>
           </nav>
         </div>
-        <div style={{ overflowY: "auto", maxHeight: "93vh" }}>
+        <div style={{ overflowY: "auto", maxHeight: "92.5vh" }}>
           <div id="inv-order-container" className="inv-body-list-container">
             <div
               style={{
@@ -190,7 +190,7 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "20px",
                         marginTop: "10px",
-                        color: "#e3e3ce",
+                        color: "rgb(250 255 227)",
                       }}
                     >
                       Chicken Stock
@@ -229,15 +229,20 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
-                        background: "#e3e3ce",
+                        height: "auto",
+                        background: "rgb(250 255 227)",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
+                        textAlign: "center",
                       }}
                     >
-                      <label>{stock.stockQuantity}</label> <br />
+                      <label>Quantity:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {stock.stockQuantity}
+                      </label>{" "}
+                      <br />
                       <label>Alert: {stock.stockAlert}</label> <br />
                       <label>{stock.stockDate}</label>
                     </div>
@@ -253,7 +258,7 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "20px",
                         marginTop: "10px",
-                        color: "#e3e3ce",
+                        color: "rgb(250 255 227)",
                       }}
                     >
                       Chicken Feeds
@@ -287,16 +292,21 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
-                        background: "white",
+                        height: "auto",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{feed.feedQuantity}</label> <br />
+                      <label>Quantity:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {feed.feedQuantity}
+                      </label>{" "}
+                      <br />
                       <label>Alert: {feed.feedAlert}</label> <br />
                       <label>{feed.feedsDate}</label>
                     </div>
@@ -323,7 +333,7 @@ function InventoryEmpty() {
                         marginBottom: "0px",
                         marginLeft: "20px",
                         marginTop: "20px",
-                        color: "#e3e3ce",
+                        color: "rgb(250 255 227)",
                       }}
                     >
                       Chicken Eggs
@@ -348,7 +358,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Pullets
@@ -368,16 +378,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.pullets}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.pullets}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}
@@ -388,7 +405,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Small
@@ -408,16 +425,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.small}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.small}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}
@@ -428,7 +452,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Medium
@@ -448,16 +472,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.medium}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.medium}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}
@@ -468,7 +499,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Large
@@ -488,16 +519,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.large}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.large}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}
@@ -508,7 +546,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Extra Large
@@ -528,16 +566,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.extraLarge}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.extraLarge}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}
@@ -548,7 +593,7 @@ function InventoryEmpty() {
                     marginBottom: "5px",
                     marginLeft: "20px",
                     marginTop: "10px",
-                    color: "#e3e3ce",
+                    color: "rgb(250 255 227)",
                   }}
                 >
                   Jumbo
@@ -568,16 +613,23 @@ function InventoryEmpty() {
                     <div
                       style={{
                         flexShrink: 0,
-                        height: "12vh",
+                        height: "auto",
                         background: "white",
                         borderRadius: "15px",
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
                         marginBottom: "10px",
+                        textAlign: "center",
+                        background: "rgb(250 255 227)",
                       }}
                     >
-                      <label>{egg.jumbo}</label> <br />
+                      <label>Collected:</label> <br />
+                      <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                        {egg.jumbo}
+                      </label>{" "}
+                      <br />
+                      <label>Date:</label> <br />
                       <label>{egg.eggsDate}</label>
                     </div>
                   ))}

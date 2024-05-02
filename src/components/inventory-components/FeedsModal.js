@@ -13,6 +13,10 @@ export function FeedsModal({ isOpen, onClose }) {
 
   const handleFeeds = async (e) => {
     e.preventDefault();
+    if (!feedQuantity || !feedAlert || !feedsDate) {
+      alert("Please fill all fields.");
+      return;
+    }
     onClose();
     try {
       await addDoc(collection(db, "chickenFeeds"), {
@@ -27,6 +31,8 @@ export function FeedsModal({ isOpen, onClose }) {
     }
   };
 
+  const numberRegex = /^[0-9]{0,4}$/;
+
   return (
     <div>
       <div className="modal">
@@ -40,7 +46,11 @@ export function FeedsModal({ isOpen, onClose }) {
                 type="number"
                 style={{ width: "50vw" }}
                 value={feedQuantity}
-                onChange={(e) => setFeedQuantity(e.target.value)}
+                onChange={(e) => {
+                  if (numberRegex.test(e.target.value)) {
+                    setFeedQuantity(e.target.value);
+                  }
+                }}
               />
             </label>
 
@@ -50,7 +60,11 @@ export function FeedsModal({ isOpen, onClose }) {
                 type="number"
                 style={{ width: "50vw" }}
                 value={feedAlert}
-                onChange={(e) => setFeedAlert(e.target.value)}
+                onChange={(e) => {
+                  if (numberRegex.test(e.target.value)) {
+                    setFeedAlert(e.target.value);
+                  }
+                }}
               />
             </label>
 

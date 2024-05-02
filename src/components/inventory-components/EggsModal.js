@@ -18,6 +18,19 @@ export function EggsModal({ isOpen, onClose }) {
 
   const handleEggs = async (e) => {
     e.preventDefault();
+    if (
+      !pulletQuantity ||
+      !smallQuantity ||
+      !mediumQuantity ||
+      !largeQuantity ||
+      !extraLargeQuantity ||
+      !jumboQuantity ||
+      !eggsAlert ||
+      !eggsDate
+    ) {
+      alert("Please fill all fields.");
+      return;
+    }
     onClose();
     try {
       const totalEggs =
@@ -45,6 +58,8 @@ export function EggsModal({ isOpen, onClose }) {
       console.error("Error adding document: ", err);
     }
   };
+
+  const numberRegex = /^[0-9]{0,4}$/;
 
   return (
     <div>
@@ -75,7 +90,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={pulletQuantity}
-                    onChange={(e) => setPulletQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setPulletQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginLeft: "15px",
                       width: "20vw",
@@ -107,7 +126,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={smallQuantity}
-                    onChange={(e) => setSmallQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setSmallQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginRight: "20px",
                       width: "20vw",
@@ -141,7 +164,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={mediumQuantity}
-                    onChange={(e) => setMediumQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setMediumQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginLeft: "15px",
                       marginRight: "20px",
@@ -174,7 +201,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={largeQuantity}
-                    onChange={(e) => setLargeQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setLargeQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginRight: "20px",
                       width: "20vw",
@@ -208,7 +239,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={extraLargeQuantity}
-                    onChange={(e) => setExtraLargeQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setExtraLargeQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginLeft: "15px",
                       marginRight: "20px",
@@ -241,7 +276,11 @@ export function EggsModal({ isOpen, onClose }) {
                   <input
                     type="number"
                     value={jumboQuantity}
-                    onChange={(e) => setJumboQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (numberRegex.test(e.target.value)) {
+                        setJumboQuantity(e.target.value);
+                      }
+                    }}
                     style={{
                       marginRight: "20px",
                       width: "20vw",
