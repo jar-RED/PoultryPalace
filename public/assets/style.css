@@ -175,8 +175,9 @@ html {
 }
 
 .content-body {
-  height: 100vh; /* 100vh */
+  height: 100%; /* 100vh */
   width: 100vw;
+  padding-bottom: 50px;
   /* display: flex;
     align-items: center;
     justify-content: center; */
@@ -185,8 +186,7 @@ html {
 /* WEBSITE FOOTER STYLES */
 .main-footer {
   width: 100vw;
-  /* bottom: 0;
-  position: absolute; */
+  bottom: 0;
   /* height: 10%;
   z-index: 10; */
 }
@@ -199,10 +199,11 @@ html {
   justify-content: center;
   border-color: none;
   margin-top: auto;
-  position: relative;
+  position: fixed;
   height: auto;
   z-index: 1000;
   overflow: hidden;
+  bottom: 0;
 }
 
 .menu-hidden {
@@ -759,7 +760,8 @@ html {
 
 @media (max-width: 768px) {
   .body-list-container {
-    max-height: 84vh;
+    max-height: 100vh;
+    margin-bottom: 20px;
   }
 }
 

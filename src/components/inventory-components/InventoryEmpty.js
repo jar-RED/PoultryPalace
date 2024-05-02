@@ -163,7 +163,12 @@ function InventoryEmpty() {
           </nav>
         </div>
         <div
-          style={{ overflowY: "auto", maxHeight: "93vh", marginTop: "10px" }}
+          style={{
+            overflowY: "auto",
+            maxHeight: "100vh",
+            marginTop: "10px",
+            marginBottom: "20px",
+          }}
         >
           <div id="inv-order-container" className="inv-body-list-container">
             <div
