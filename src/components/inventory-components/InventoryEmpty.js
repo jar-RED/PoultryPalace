@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, deleteDoc } from "firebase/firestore";
 import { StockModal } from "./StockModal";
 import { db } from "../../firebase";
 import { FeedsModal } from "./FeedsModal";
 import { EggsModal } from "./EggsModal";
 import { AuthContext } from "../login-context/AuthContext";
+import EditStock from "./EditStock";
+import EditFeeds from "./EditFeeds";
 
 function InventoryEmpty() {
   const [activeLink, setActiveLink] = useState("");
@@ -17,6 +19,11 @@ function InventoryEmpty() {
   const [eggs, setEggs] = useState([]);
   const [totalEggs, setTotalEggs] = useState(0);
   const { currentUser } = useContext(AuthContext);
+  const [isEditStockModalOpen, setIsEditStockModalOpen] = useState(false);
+  const [isEditFeedModalOpen, setIsEditFeedModalOpen] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(false);
+  const [selectedFeeds, setSelectedFeeds] = useState(false);
+  const [selectedEggs, setSelectedEggs] = useState(false);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -34,6 +41,18 @@ function InventoryEmpty() {
 
   const handleAddEggsClick = () => {
     setIsModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleStockClick = (stock) => {
+    setSelectedStock(stock);
+    setIsEditStockModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleFeedsClick = (feed) => {
+    setSelectedFeeds(feed);
+    setIsEditFeedModalOpen(true);
     document.querySelector(".menu").classList.add("menu-hidden");
   };
 
@@ -66,6 +85,17 @@ function InventoryEmpty() {
     return () => unsubscribe();
   }, [currentUser]);
 
+  //Deleting stock item
+  const deleteStock = async (stockId) => {
+    try {
+      await deleteDoc(doc(db, "chickenStock", stockId));
+      console.log("Stock deleted successfully");
+      setStocks(stocks.filter((stock) => stock.id !== stockId));
+    } catch (error) {
+      console.error("Error deleting stock item: ", error);
+    }
+  };
+
   useEffect(() => {
     if (!currentUser) {
       console.log("No current user found.");
@@ -86,6 +116,17 @@ function InventoryEmpty() {
 
     return () => unsubscribe();
   }, [currentUser]);
+
+  //Deleting feed item
+  const deleteFeed = async (feedId) => {
+    try {
+      await deleteDoc(doc(db, "chickenFeeds", feedId));
+      console.log("Feed item deleted successfully");
+      setFeeds(feeds.filter((feed) => feed.id !== feedId));
+    } catch (error) {
+      console.error("Error deleting feed item: ", error);
+    }
+  };
 
   useEffect(() => {
     if (!currentUser) {
@@ -139,7 +180,6 @@ function InventoryEmpty() {
           </div>
         </header>
       </section>
-
       <section id="inventory-body" className="content-body">
         <div className="container">
           <nav>
@@ -246,7 +286,9 @@ function InventoryEmpty() {
                         width: "95px",
                         color: "#40513e",
                         textAlign: "center",
+                        cursor: "pointer",
                       }}
+                      onClick={() => handleStockClick(stock)}
                     >
                       <label>Quantity:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -310,7 +352,9 @@ function InventoryEmpty() {
                         marginBottom: "10px",
                         textAlign: "center",
                         background: "rgb(250 255 227)",
+                        cursor: "pointer",
                       }}
+                      onClick={() => handleFeedsClick(feed)}
                     >
                       <label>Quantity:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -682,6 +726,25 @@ function InventoryEmpty() {
           setIsModalOpen(false);
           document.querySelector(".menu").classList.remove("menu-hidden");
         }}
+      />
+      <EditStock
+        isOpen={isEditStockModalOpen}
+        onClose={() => {
+          setIsEditStockModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+        selectedStock={selectedStock}
+        deleteStock={deleteStock}
+      />
+
+      <EditFeeds
+        isOpen={isEditFeedModalOpen}
+        onClose={() => {
+          setIsEditFeedModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+        selectedFeeds={selectedFeeds}
+        deleteFeed={deleteFeed}
       />
     </div>
   );

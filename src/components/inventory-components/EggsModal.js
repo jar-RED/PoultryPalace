@@ -97,7 +97,7 @@ export function EggsModal({ isOpen, onClose }) {
                     }}
                     style={{
                       marginLeft: "15px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
@@ -133,7 +133,7 @@ export function EggsModal({ isOpen, onClose }) {
                     }}
                     style={{
                       marginRight: "20px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
@@ -172,7 +172,7 @@ export function EggsModal({ isOpen, onClose }) {
                     style={{
                       marginLeft: "15px",
                       marginRight: "20px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
@@ -208,7 +208,7 @@ export function EggsModal({ isOpen, onClose }) {
                     }}
                     style={{
                       marginRight: "20px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
@@ -247,7 +247,7 @@ export function EggsModal({ isOpen, onClose }) {
                     style={{
                       marginLeft: "15px",
                       marginRight: "20px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
@@ -262,7 +262,7 @@ export function EggsModal({ isOpen, onClose }) {
                       fontSize: extraLargeQuantity ? "12px" : "15px",
                     }}
                   >
-                    Extra Large
+                    X-Large
                   </label>
                 </div>
 
@@ -283,7 +283,7 @@ export function EggsModal({ isOpen, onClose }) {
                     }}
                     style={{
                       marginRight: "20px",
-                      width: "20vw",
+                      width: "17vw",
                       fontSize: "15px",
                       paddingTop: "15px",
                     }}
