@@ -7,7 +7,17 @@ Development of a web-based inventory and sales management system for Joylisa Pou
 | PP.010.001 | v1.0.0 | 2024-03-03 07:45:00 | 
 | PP.010.002 | v1.0.0 | 2024-03-17 07:30:00 | 
 | PP.020.003 | v2.0.3 | 2024-04-13 21:00:00 | 
+| PP.025.002 | v2.0.5 | 2024-05-03 18:15:00 |
 
+## PP.025.002 Release Notes
+* Edit, Delete and Sort functionalities in sales management fixed
+* Inventory list UI completely changed
+* Inventory list functionalities finished
+* Add, Edit, and Delete functionalities added for inventory module
+* App components are adjusted to fit mobile view only
+* Enhanced Log In and Log Out Authentication
+* Some input field conditions needs fixing
+* Error handling on some inputs need improvement
 
 ## PP.020.003 Release Notes
 * Adding inventory orders functionality implemented
