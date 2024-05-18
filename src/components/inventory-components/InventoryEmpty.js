@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { collection, doc, onSnapshot, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  deleteDoc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 import { StockModal } from "./StockModal";
 import { db } from "../../firebase";
 import { FeedsModal } from "./FeedsModal";
@@ -8,6 +15,7 @@ import { EggsModal } from "./EggsModal";
 import { AuthContext } from "../login-context/AuthContext";
 import EditStock from "./EditStock";
 import EditFeeds from "./EditFeeds";
+import EditEggs from "./EditEggs";
 
 function InventoryEmpty() {
   const [activeLink, setActiveLink] = useState("");
@@ -21,9 +29,19 @@ function InventoryEmpty() {
   const { currentUser } = useContext(AuthContext);
   const [isEditStockModalOpen, setIsEditStockModalOpen] = useState(false);
   const [isEditFeedModalOpen, setIsEditFeedModalOpen] = useState(false);
+  const [isEditEggModalOpen, setIsEditEggModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(false);
   const [selectedFeeds, setSelectedFeeds] = useState(false);
   const [selectedEggs, setSelectedEggs] = useState(false);
+  const [eggsData, setEggsData] = useState({
+    totalPullets: 0,
+    totalSmall: 0,
+    totalMedium: 0,
+    totalLarge: 0,
+    totalExtraLarge: 0,
+    totalJumbo: 0,
+    overallTotal: 0,
+  });
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -56,7 +74,50 @@ function InventoryEmpty() {
     document.querySelector(".menu").classList.add("menu-hidden");
   };
 
+  const handlePulletEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "pullets" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleSmallEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "small" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleMediumEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "medium" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleLargeEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "large" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleExtraLargeEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "extraLarge" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleJumboEggsClick = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "jumbo" });
+    setIsEditEggModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
   const formatFirestoreTimestamp = (timestamp) => {
+    if (
+      !timestamp ||
+      typeof timestamp !== "object" ||
+      timestamp instanceof Date
+    ) {
+      return "";
+    }
     const date = timestamp.toDate();
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -143,19 +204,71 @@ function InventoryEmpty() {
           eggsDate: formatFirestoreTimestamp(doc.data().eggsDate),
         }));
       eggsList.sort((a, b) => new Date(b.eggsDate) - new Date(a.eggsDate));
+
+      const totalSmall = eggsList.reduce((acc, curr) => acc + curr.small, 0);
+      const totalMedium = eggsList.reduce((acc, curr) => acc + curr.medium, 0);
+      const totalPullets = eggsList.reduce(
+        (acc, curr) => acc + curr.pullets,
+        0
+      );
+      const totalLarge = eggsList.reduce((acc, curr) => acc + curr.large, 0);
+      const totalExtraLarge = eggsList.reduce(
+        (acc, curr) => acc + curr.extraLarge,
+        0
+      );
+      const totalJumbo = eggsList.reduce((acc, curr) => acc + curr.jumbo, 0);
+      const overallTotal =
+        totalSmall +
+        totalMedium +
+        totalPullets +
+        totalLarge +
+        totalExtraLarge +
+        totalJumbo;
+
+      // Display sums
+      console.log(`Sum of small: ${totalSmall}`);
+      console.log(`Sum of medium: ${totalMedium}`);
+      console.log(`Sum of pullets: ${totalPullets}`);
+      console.log(`Sum of large: ${totalLarge}`);
+      console.log(`Sum of extraLarge: ${totalExtraLarge}`);
+      console.log(`Sum of jumbo: ${totalJumbo}`);
+      console.log(`Overall: ${overallTotal}`);
+
       setEggs(eggsList);
+
+      const docPath = doc(
+        db,
+        "overallEggs",
+        `${currentUser.uid}_overallChickenEggs`
+      );
+      setDoc(docPath, {
+        totalPullets,
+        totalSmall,
+        totalMedium,
+        totalLarge,
+        totalExtraLarge,
+        totalJumbo,
+        overallTotal,
+      })
+        .then(() => {
+          console.log("Aggregation successful!");
+        })
+        .catch((error) => {
+          console.error("Error aggregating egg quantities: ", error);
+        });
+
+      const unsubscribe = onSnapshot(docPath, (docSnap) => {
+        if (docSnap.exists()) {
+          setEggsData(docSnap.data()); // Update state with document data
+        } else {
+          console.log("No such document!");
+        }
+      });
+      return () => unsubscribe();
     });
 
     return () => unsubscribe();
   }, [currentUser]);
-
-  useEffect(() => {
-    let total = 0;
-    eggs.forEach((egg) => {
-      total += egg.totalEggs;
-    });
-    setTotalEggs(total);
-  }, [eggs]);
 
   return (
     <div>
@@ -407,16 +520,33 @@ function InventoryEmpty() {
                   </div>
                   <hr style={{ width: "80vw", backgroundColor: "black" }} />
                 </div>
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Pullets
-                </h5>
+
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Pullets:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalPullets}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -440,8 +570,10 @@ function InventoryEmpty() {
                         color: "#40513e",
                         marginBottom: "10px",
                         textAlign: "center",
+                        cursor: "pointer",
                         background: "rgb(250 255 227)",
                       }}
+                      onClick={() => handlePulletEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -454,16 +586,32 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Small
-                </h5>
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Small:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalSmall}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -485,10 +633,12 @@ function InventoryEmpty() {
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
+                        cursor: "pointer",
                         marginBottom: "10px",
                         textAlign: "center",
                         background: "rgb(250 255 227)",
                       }}
+                      onClick={() => handleSmallEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -501,16 +651,32 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Medium
-                </h5>
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Medium:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalMedium}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -532,10 +698,12 @@ function InventoryEmpty() {
                         marginRight: "10px",
                         width: "95px",
                         color: "#40513e",
+                        cursor: "pointer",
                         marginBottom: "10px",
                         textAlign: "center",
                         background: "rgb(250 255 227)",
                       }}
+                      onClick={() => handleMediumEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -548,16 +716,32 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Large
-                </h5>
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Large:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalLarge}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -581,8 +765,10 @@ function InventoryEmpty() {
                         color: "#40513e",
                         marginBottom: "10px",
                         textAlign: "center",
+                        cursor: "pointer",
                         background: "rgb(250 255 227)",
                       }}
+                      onClick={() => handleLargeEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -595,16 +781,32 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Extra Large
-                </h5>
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Extra Large:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalExtraLarge}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -629,7 +831,9 @@ function InventoryEmpty() {
                         marginBottom: "10px",
                         textAlign: "center",
                         background: "rgb(250 255 227)",
+                        cursor: "pointer",
                       }}
+                      onClick={() => handleExtraLargeEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -642,16 +846,32 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <h5
-                  style={{
-                    marginBottom: "5px",
-                    marginLeft: "20px",
-                    marginTop: "10px",
-                    color: "rgb(250 255 227)",
-                  }}
-                >
-                  Jumbo
-                </h5>
+                <div style={{ display: "flex" }}>
+                  <h4
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                      color: "rgb(250 255 227)",
+                    }}
+                  >
+                    Jumbo:
+                  </h4>
+
+                  <div>
+                    <h4
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        color: "rgb(250 255 227)",
+                      }}
+                    >
+                      {eggsData.totalJumbo}
+                    </h4>
+                  </div>
+                </div>
+
                 <div
                   className="inptContainer"
                   style={{
@@ -676,7 +896,9 @@ function InventoryEmpty() {
                         marginBottom: "10px",
                         textAlign: "center",
                         background: "rgb(250 255 227)",
+                        cursor: "pointer",
                       }}
+                      onClick={() => handleJumboEggsClick(egg)}
                     >
                       <label>Collected:</label> <br />
                       <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
@@ -698,7 +920,7 @@ function InventoryEmpty() {
                       paddingBottom: "10px",
                     }}
                   >
-                    Total Eggs: {totalEggs}
+                    Total Eggs: {eggsData.overallTotal}
                   </h4>
                 </div>
               </div>
@@ -745,6 +967,16 @@ function InventoryEmpty() {
         }}
         selectedFeeds={selectedFeeds}
         deleteFeed={deleteFeed}
+      />
+
+      <EditEggs
+        isOpen={isEditEggModalOpen}
+        onClose={() => {
+          setIsEditEggModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+        selectedEggs={selectedEggs}
+        eggType={selectedEggs.eggType}
       />
     </div>
   );

@@ -1,38 +1,28 @@
 import React, { useState } from "react";
-import { updateDoc, doc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { StocksConfirmation } from "./StocksConfirmation";
 
-function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
+const EditEggs = ({ isOpen, onClose, selectedEggs, eggType }) => {
   if (!isOpen) return null;
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [newValue, setNewValue] = useState(selectedEggs[eggType] || 0);
 
-  const [feedAlert, setFeedAlert] = useState(selectedFeeds?.feedAlert || "");
-
-  const [feedQuantity, setFeedQuantity] = useState(
-    selectedFeeds?.feedQuantity || ""
-  );
-
-  const handleDeleteClick = () => {
-    setIsConfirmationOpen(true);
-  };
-
-  const handleDeleteConfirmation = () => {
-    deleteFeed(selectedFeeds.id);
-    onClose();
-  };
-
-  const editFeeds = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await updateDoc(doc(db, "chickenFeeds", selectedFeeds.id), {
-        feedAlert: Number(feedAlert),
-        feedQuantity: Number(feedQuantity),
-      });
-      console.log("Feed item edited successfully");
-      onClose();
+      if (eggType) {
+        await updateDoc(doc(db, "chickenEggs", selectedEggs.id), {
+          [eggType]: Number(newValue),
+        });
+        console.log(`${eggType} eggs updated successfully`);
+        onClose();
+      } else {
+        console.error("Invalid egg type");
+        onClose();
+      }
     } catch (error) {
-      console.error("Error editing selected feed item: ", error);
+      console.error("Error updating eggs: ", error);
+      onClose();
     }
   };
 
@@ -69,8 +59,8 @@ function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
               >
                 <input
                   type="number"
-                  value={feedQuantity}
-                  onChange={(e) => setFeedQuantity(e.target.value)}
+                  value={newValue}
+                  onChange={(e) => setNewValue(e.target.value)}
                   style={{
                     marginLeft: "20px",
                     marginRight: "20px",
@@ -80,52 +70,21 @@ function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
                   }}
                 />
                 <label
-                  htmlFor="feedQuantity"
                   style={{
                     position: "absolute",
-                    top: feedQuantity ? "0" : "10px",
+                    top: newValue ? "0" : "10px",
                     left: "25px",
-                    color: feedQuantity ? "#999" : "#999",
+                    color: newValue ? "#999" : "#999",
                     transition: "0.3s ease all",
-                    fontSize: feedQuantity ? "12px" : "15px",
+                    fontSize: newValue ? "12px" : "15px",
                   }}
                 >
                   Quantity
                 </label>
               </div>
 
-              <div
-                style={{ position: "relative", margin: "auto", width: "auto" }}
-              >
-                <input
-                  type="number"
-                  value={feedAlert}
-                  onChange={(e) => setFeedAlert(e.target.value)}
-                  style={{
-                    marginLeft: "20px",
-                    marginRight: "20px",
-                    width: "50vw",
-                    fontSize: "15px",
-                    paddingTop: "15px",
-                  }}
-                />
-                <label
-                  htmlFor="customerName"
-                  style={{
-                    position: "absolute",
-                    top: feedAlert ? "0" : "10px",
-                    left: "25px",
-                    color: feedAlert ? "#999" : "#999",
-                    transition: "0.3s ease all",
-                    fontSize: feedAlert ? "12px" : "15px",
-                  }}
-                >
-                  Alert
-                </label>
-              </div>
-
               <button
-                onClick={editFeeds}
+                onClick={handleSubmit}
                 style={{
                   marginTop: "10px",
                   backgroundColor: "#8ed495",
@@ -200,6 +159,6 @@ function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
       </div>
     </>
   );
-}
+};
 
-export default EditFeeds;
+export default EditEggs;

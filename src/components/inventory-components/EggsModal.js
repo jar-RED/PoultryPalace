@@ -1,6 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { db } from "../../firebase";
-import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  doc,
+  setDoc,
+  getDoc,
+} from "firebase/firestore";
 import { AuthContext } from "../login-context/AuthContext";
 
 export function EggsModal({ isOpen, onClose }) {
@@ -336,7 +343,13 @@ export function EggsModal({ isOpen, onClose }) {
             >
               Discard
             </button>
-            <button className="save-btn" onClick={handleEggs}>
+            <button
+              className="save-btn"
+              onClick={(e) => {
+                handleEggs(e);
+                // aggregateEggQuantitiesInRealTime();
+              }}
+            >
               Save
             </button>
           </div>
