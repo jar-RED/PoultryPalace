@@ -93,7 +93,13 @@ export default function SalesModal() {
       </div>
 
       {modal && (
-        <div className="modal">
+        <div
+          className="modal"
+          style={{
+            overflowY: "auto",
+            maxHeight: "100vh",
+          }}
+        >
           <div
             onClick={() => {
               toggleModal();
