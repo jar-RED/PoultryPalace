@@ -126,6 +126,9 @@ export default function SalesModal() {
                   flexDirection: "column",
                   background: "#83a18c",
                   borderRadius: "15px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                  width: "auto",
                   marginBottom: "20px",
                   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
                 }}
@@ -152,7 +155,8 @@ export default function SalesModal() {
                           <td>
                             <input
                               style={{
-                                width: "20vw",
+                                width: "15vw",
+                                height: "1vh",
                                 margin: "0px",
                                 marginLeft: "10px",
                               }}
