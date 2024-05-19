@@ -45,7 +45,7 @@ function InventoryEmpty() {
   });
   const [isPriceInputModalOpen, setIsPriceInputModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
-  const [eggsAlert, setEggsAlert] = useState(null);
+  const [eggsAlert, setEggsAlert] = useState("");
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -239,8 +239,28 @@ function InventoryEmpty() {
     }
   };
 
+  const [eggSold, setEggSold] = useState([]);
+
   useEffect(() => {
     if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+    const soldCollection = collection(db, "sales");
+    const unsubscribe = onSnapshot(soldCollection, (snapshot) => {
+      const soldList = snapshot.docs
+        .filter((doc) => doc.data().userId === currentUser.uid)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      setEggSold(soldList);
+    });
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser || !eggSold) {
       console.log("No current user found.");
       return;
     }
@@ -255,18 +275,46 @@ function InventoryEmpty() {
         }));
       eggsList.sort((a, b) => new Date(b.eggsDate) - new Date(a.eggsDate));
 
-      const totalSmall = eggsList.reduce((acc, curr) => acc + curr.small, 0);
-      const totalMedium = eggsList.reduce((acc, curr) => acc + curr.medium, 0);
-      const totalPullets = eggsList.reduce(
-        (acc, curr) => acc + curr.pullets,
-        0
-      );
-      const totalLarge = eggsList.reduce((acc, curr) => acc + curr.large, 0);
-      const totalExtraLarge = eggsList.reduce(
-        (acc, curr) => acc + curr.extraLarge,
-        0
-      );
-      const totalJumbo = eggsList.reduce((acc, curr) => acc + curr.jumbo, 0);
+      setEggs(eggsList);
+
+      let eggSoldQuantities = {
+        Small: 0,
+        Medium: 0,
+        Pullets: 0,
+        Large: 0,
+        XLarge: 0,
+        Jumbo: 0,
+      };
+      if (eggSold.length > 0) {
+        eggSold.forEach((sale) => {
+          Object.entries(sale.eggSizeQuantities).forEach(([size, quantity]) => {
+            if (eggSoldQuantities[size]) {
+              eggSoldQuantities[size] += parseInt(quantity);
+            } else {
+              eggSoldQuantities[size] = parseInt(quantity);
+            }
+          });
+        });
+      }
+
+      const totalSmall =
+        eggsList.reduce((acc, curr) => acc + curr.small, 0) -
+        eggSoldQuantities.Small;
+      const totalMedium =
+        eggsList.reduce((acc, curr) => acc + curr.medium, 0) -
+        eggSoldQuantities.Medium;
+      const totalPullets =
+        eggsList.reduce((acc, curr) => acc + curr.pullets, 0) -
+        eggSoldQuantities.Pullets;
+      const totalLarge =
+        eggsList.reduce((acc, curr) => acc + curr.large, 0) -
+        eggSoldQuantities.Large;
+      const totalExtraLarge =
+        eggsList.reduce((acc, curr) => acc + curr.extraLarge, 0) -
+        eggSoldQuantities.XLarge;
+      const totalJumbo =
+        eggsList.reduce((acc, curr) => acc + curr.jumbo, 0) -
+        eggSoldQuantities.Jumbo;
       const overallTotal =
         totalSmall +
         totalMedium +
@@ -284,8 +332,6 @@ function InventoryEmpty() {
       console.log(`Sum of jumbo: ${totalJumbo}`);
       console.log(`Overall: ${overallTotal}`);
 
-      setEggs(eggsList);
-
       const docPath = doc(
         db,
         "overallEggs",
@@ -299,7 +345,6 @@ function InventoryEmpty() {
         totalExtraLarge,
         totalJumbo,
         overallTotal,
-        alertValue: eggsAlert,
       })
         .then(() => {
           console.log("Aggregation successful!");
@@ -307,19 +352,10 @@ function InventoryEmpty() {
         .catch((error) => {
           console.error("Error aggregating egg quantities: ", error);
         });
-
-      const unsubscribe = onSnapshot(docPath, (docSnap) => {
-        if (docSnap.exists()) {
-          setEggsData(docSnap.data());
-        } else {
-          console.log("No such document!");
-        }
-      });
-      return () => unsubscribe();
     });
 
     return () => unsubscribe();
-  }, [currentUser]);
+  }, [currentUser, eggSold]);
 
   const [eggPrices, setEggPrices] = useState({});
 
@@ -334,6 +370,48 @@ function InventoryEmpty() {
         }
       }
     );
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+
+    const docPath = doc(
+      db,
+      "overallEggs",
+      `${currentUser.uid}_overallChickenEggs`
+    );
+
+    const unsubscribe = onSnapshot(docPath, (docSnap) => {
+      if (docSnap.exists()) {
+        setEggsData(docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+
+    const docPath = doc(db, "overallEggs", `${currentUser.uid}_eggsAlert`);
+
+    const unsubscribe = onSnapshot(docPath, (docSnap) => {
+      if (docSnap.exists()) {
+        setEggsAlert(docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    });
 
     return () => unsubscribe();
   }, [currentUser]);
@@ -638,7 +716,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.pullets.pricePerPiece}
+                        Price/Piece: {eggPrices.pullets.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -650,7 +728,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.pullets.pricePerTray}
+                        Price/Tray: {eggPrices.pullets.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -742,7 +820,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.small.pricePerPiece}
+                        Price/Piece: {eggPrices.small.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -754,7 +832,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.small.pricePerTray}
+                        Price/Tray: {eggPrices.small.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -846,7 +924,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.medium.pricePerPiece}
+                        Price/Piece: {eggPrices.medium.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -858,7 +936,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.medium.pricePerTray}
+                        Price/Tray: {eggPrices.medium.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -950,7 +1028,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.large.pricePerPiece}
+                        Price/Piece: {eggPrices.large.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -962,7 +1040,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.large.pricePerTray}
+                        Price/Tray: {eggPrices.large.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -1054,7 +1132,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.extraLarge.pricePerPiece}
+                        Price/Piece: {eggPrices.extraLarge.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -1066,7 +1144,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.extraLarge.pricePerTray}
+                        Price/Tray: {eggPrices.extraLarge.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -1158,7 +1236,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Piece: {eggPrices.jumbo.pricePerPiece}
+                        Price/Piece: {eggPrices.jumbo.pricePerPiece}
                       </label>
                     </div>
                     <div>
@@ -1170,7 +1248,7 @@ function InventoryEmpty() {
                           color: "rgb(250 255 227)",
                         }}
                       >
-                        Price Per Tray: {eggPrices.jumbo.pricePerTray}
+                        Price/Tray: {eggPrices.jumbo.pricePerTray}
                       </label>
                     </div>
                   </div>
@@ -1240,7 +1318,7 @@ function InventoryEmpty() {
                       paddingBottom: "10px",
                     }}
                   >
-                    Alert: {eggsData.alertValue}
+                    Alert: {eggsAlert.alertValue}
                   </h4>
                 </div>
               </div>

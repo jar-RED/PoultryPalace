@@ -1,15 +1,27 @@
 import React, { useState, useContext } from "react";
+import { doc, setDoc } from "firebase/firestore";
+import { AuthContext } from "../login-context/AuthContext";
+import { db } from "../../firebase";
 
 const EggsAlert = ({ isOpen, onClose, onEggsAlertChange }) => {
   if (!isOpen) return null;
   const [isEditMode, setIsEditMode] = useState(false);
   const [alert, setAlert] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newAlert = Number(alert); // Retrieve the alert value from state
-    onEggsAlertChange(newAlert);
-    onClose();
+    const newAlert = Number(alert);
+    const docPath = doc(db, "overallEggs", `${currentUser.uid}_eggsAlert`);
+
+    try {
+      await setDoc(docPath, { alertValue: newAlert }, { merge: true });
+      console.log("Alert value updated successfully!");
+      onEggsAlertChange(newAlert);
+      onClose();
+    } catch (error) {
+      console.error("Error updating alert value: ", error);
+    }
   };
   return (
     <>

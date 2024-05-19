@@ -19,7 +19,6 @@ export function EggsModal({ isOpen, onClose }) {
   const [largeQuantity, setLargeQuantity] = useState("");
   const [extraLargeQuantity, setExtraLargeQuantity] = useState("");
   const [jumboQuantity, setJumboQuantity] = useState("");
-  const [eggsAlert, setEggsAlert] = useState("");
   const [eggsDate, setEggsDate] = useState("");
   const { currentUser } = useContext(AuthContext);
 
@@ -32,7 +31,6 @@ export function EggsModal({ isOpen, onClose }) {
       !largeQuantity ||
       !extraLargeQuantity ||
       !jumboQuantity ||
-      !eggsAlert ||
       !eggsDate
     ) {
       alert("Please fill all fields.");
@@ -56,7 +54,6 @@ export function EggsModal({ isOpen, onClose }) {
         large: Number(largeQuantity),
         extraLarge: Number(extraLargeQuantity),
         jumbo: Number(jumboQuantity),
-        eggsAlert: Number(eggsAlert),
         eggsDate: new Date(eggsDate),
         totalEggs: totalEggs,
       });
@@ -310,16 +307,6 @@ export function EggsModal({ isOpen, onClose }) {
                 </div>
               </div>
             </div>
-
-            <label htmlFor="order-amnt">
-              Alert if total eggs are under: <br />
-              <input
-                type="number"
-                style={{ width: "50vw" }}
-                value={eggsAlert}
-                onChange={(e) => setEggsAlert(e.target.value)}
-              />
-            </label>
 
             <label htmlFor="order-date">
               Date:

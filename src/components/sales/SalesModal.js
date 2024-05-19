@@ -9,6 +9,15 @@ export default function SalesModal() {
   const [customerName, setCustomerName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
+  const [inputsList, setInputsList] = useState([]);
+  const [eggSizeQuantities, setEggSizeQuantities] = useState({
+    Pullets: 0,
+    Small: 0,
+    Medium: 0,
+    Large: 0,
+    XLarge: 0,
+    Jumbo: 0,
+  });
   const { currentUser } = useContext(AuthContext);
 
   const toggleModal = () => {
@@ -27,12 +36,20 @@ export default function SalesModal() {
       setCustomerName("");
       setTotalAmount("");
       setPurchaseDate("");
+      setEggSizeQuantities({
+        Pullets: "",
+        Small: "",
+        Medium: "",
+        Large: "",
+        XLarge: "",
+        Jumbo: "",
+      });
     }
   }, [modal]);
 
   const handleSales = async (e) => {
     e.preventDefault();
-    if (!customerName || !totalAmount || !purchaseDate) {
+    if (!customerName || !purchaseDate || !totalAmount) {
       window.alert("Please fill in all fields.");
       return;
     }
@@ -44,10 +61,20 @@ export default function SalesModal() {
         customerName,
         totalAmount: Number(totalAmount),
         dateOfPurchase: new Date(purchaseDate),
+        eggSizeQuantities,
       });
+
+      console.log("Sale recorded successfully!");
     } catch (err) {
-      console.error("Error adding document: ", err);
+      console.error("Error recording sale: ", err);
     }
+  };
+
+  const handleEggSizeQuantityChange = (eggSize, value) => {
+    setEggSizeQuantities((prevState) => ({
+      ...prevState,
+      [eggSize]: Number(value),
+    }));
   };
 
   return (
@@ -85,6 +112,60 @@ export default function SalesModal() {
                   onChange={(e) => setCustomerName(e.target.value)}
                 />
               </label>
+
+              <div
+                style={{
+                  marginBottom: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "#83a18c",
+                  borderRadius: "15px",
+                  marginBottom: "20px",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
+                }}
+              >
+                <table
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Pieces</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(eggSizeQuantities).map(
+                      ([eggSize, quantity], index) => (
+                        <tr key={index}>
+                          <td>{eggSize}</td>
+                          <td>
+                            <input
+                              style={{
+                                width: "20vw",
+                                margin: "0px",
+                                marginLeft: "10px",
+                              }}
+                              type="number"
+                              value={quantity}
+                              onChange={(e) =>
+                                handleEggSizeQuantityChange(
+                                  eggSize,
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
               <label htmlFor="order-amnt">
                 Total amount
