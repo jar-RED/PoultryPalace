@@ -16,6 +16,8 @@ import { AuthContext } from "../login-context/AuthContext";
 import EditStock from "./EditStock";
 import EditFeeds from "./EditFeeds";
 import EditEggs from "./EditEggs";
+import EggPrice from "./EggPrice";
+import EggsAlert from "./EggsAlert";
 
 function InventoryEmpty() {
   const [activeLink, setActiveLink] = useState("");
@@ -25,7 +27,6 @@ function InventoryEmpty() {
   const [feeds, setFeeds] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eggs, setEggs] = useState([]);
-  const [totalEggs, setTotalEggs] = useState(0);
   const { currentUser } = useContext(AuthContext);
   const [isEditStockModalOpen, setIsEditStockModalOpen] = useState(false);
   const [isEditFeedModalOpen, setIsEditFeedModalOpen] = useState(false);
@@ -42,6 +43,9 @@ function InventoryEmpty() {
     totalJumbo: 0,
     overallTotal: 0,
   });
+  const [isPriceInputModalOpen, setIsPriceInputModalOpen] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [eggsAlert, setEggsAlert] = useState(null);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -108,6 +112,52 @@ function InventoryEmpty() {
     setSelectedEggs({ ...egg, eggType: "jumbo" });
     setIsEditEggModalOpen(true);
     document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handlePulletPrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "pullets" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleSmallPrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "small" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleMediumPrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "medium" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleLargePrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "large" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleExtraLargePrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "extraLarge" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleJumboPrice = (egg) => {
+    setSelectedEggs({ ...egg, eggType: "jumbo" });
+    setIsPriceInputModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleAlertInput = () => {
+    setIsAlertModalOpen(true);
+    document.querySelector(".menu").classList.add("menu-hidden");
+  };
+
+  const handleEggsAlertChange = (newAlert) => {
+    setEggsAlert(newAlert);
+    console.log("New egg alert:", newAlert);
   };
 
   const formatFirestoreTimestamp = (timestamp) => {
@@ -249,6 +299,7 @@ function InventoryEmpty() {
         totalExtraLarge,
         totalJumbo,
         overallTotal,
+        alertValue: eggsAlert,
       })
         .then(() => {
           console.log("Aggregation successful!");
@@ -259,13 +310,30 @@ function InventoryEmpty() {
 
       const unsubscribe = onSnapshot(docPath, (docSnap) => {
         if (docSnap.exists()) {
-          setEggsData(docSnap.data()); // Update state with document data
+          setEggsData(docSnap.data());
         } else {
           console.log("No such document!");
         }
       });
       return () => unsubscribe();
     });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  const [eggPrices, setEggPrices] = useState({});
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(db, "overallEggs", `${currentUser.uid}_eggPrices`),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          setEggPrices(docSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      }
+    );
 
     return () => unsubscribe();
   }, [currentUser]);
@@ -502,6 +570,7 @@ function InventoryEmpty() {
                         marginTop: "20px",
                         color: "rgb(250 255 227)",
                       }}
+                      onClick={handleAlertInput}
                     >
                       Chicken Eggs
                     </h4>
@@ -521,7 +590,7 @@ function InventoryEmpty() {
                   <hr style={{ width: "80vw", backgroundColor: "black" }} />
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -545,7 +614,47 @@ function InventoryEmpty() {
                       {eggsData.totalPullets}
                     </h4>
                   </div>
+                  <div></div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handlePulletPrice}
+                  />
                 </div>
+
+                {eggPrices.pullets ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.pullets.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.pullets.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -586,7 +695,7 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -610,7 +719,46 @@ function InventoryEmpty() {
                       {eggsData.totalSmall}
                     </h4>
                   </div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handleSmallPrice}
+                  />
                 </div>
+
+                {eggPrices.small ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.small.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.small.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -651,7 +799,7 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -675,7 +823,46 @@ function InventoryEmpty() {
                       {eggsData.totalMedium}
                     </h4>
                   </div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handleMediumPrice}
+                  />
                 </div>
+
+                {eggPrices.medium ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.medium.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.medium.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -716,7 +903,7 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -740,7 +927,46 @@ function InventoryEmpty() {
                       {eggsData.totalLarge}
                     </h4>
                   </div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handleLargePrice}
+                  />
                 </div>
+
+                {eggPrices.large ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.large.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.large.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -781,7 +1007,7 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -805,7 +1031,46 @@ function InventoryEmpty() {
                       {eggsData.totalExtraLarge}
                     </h4>
                   </div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handleExtraLargePrice}
+                  />
                 </div>
+
+                {eggPrices.extraLarge ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.extraLarge.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.extraLarge.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -846,7 +1111,7 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", marginBottom: "10px" }}>
                   <h4
                     style={{
                       marginBottom: "5px",
@@ -870,7 +1135,46 @@ function InventoryEmpty() {
                       {eggsData.totalJumbo}
                     </h4>
                   </div>
+                  <img
+                    src="assets/images/price-icon.svg"
+                    style={{
+                      height: "4vh",
+                      marginLeft: "auto",
+                      marginRight: "20px",
+                      marginTop: "5px",
+                    }}
+                    onClick={handleJumboPrice}
+                  />
                 </div>
+
+                {eggPrices.jumbo ? (
+                  <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "20px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Piece: {eggPrices.jumbo.pricePerPiece}
+                      </label>
+                    </div>
+                    <div>
+                      <label
+                        style={{
+                          marginBottom: "5px",
+                          marginLeft: "10px",
+                          marginTop: "0px",
+                          color: "rgb(250 255 227)",
+                        }}
+                      >
+                        Price Per Tray: {eggPrices.jumbo.pricePerTray}
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div
                   className="inptContainer"
@@ -911,7 +1215,23 @@ function InventoryEmpty() {
                   ))}
                 </div>
 
-                <div style={{ marginBottom: "20px" }}>
+                <div
+                  style={{
+                    marginBottom: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <h4
+                    style={{
+                      color: "white",
+                      textAlign: "center",
+                      paddingBottom: "10px",
+                    }}
+                  >
+                    Total Eggs: {eggsData.overallTotal}
+                  </h4>
                   <h4
                     style={{
                       marginLeft: "20px",
@@ -920,7 +1240,7 @@ function InventoryEmpty() {
                       paddingBottom: "10px",
                     }}
                   >
-                    Total Eggs: {eggsData.overallTotal}
+                    Alert: {eggsData.alertValue}
                   </h4>
                 </div>
               </div>
@@ -977,6 +1297,25 @@ function InventoryEmpty() {
         }}
         selectedEggs={selectedEggs}
         eggType={selectedEggs.eggType}
+      />
+
+      <EggPrice
+        isOpen={isPriceInputModalOpen}
+        onClose={() => {
+          setIsPriceInputModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+        selectedEggs={selectedEggs}
+        eggType={selectedEggs.eggType}
+      />
+
+      <EggsAlert
+        isOpen={isAlertModalOpen}
+        onClose={() => {
+          setIsAlertModalOpen(false);
+          document.querySelector(".menu").classList.remove("menu-hidden");
+        }}
+        onEggsAlertChange={handleEggsAlertChange}
       />
     </div>
   );
