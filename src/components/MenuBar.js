@@ -79,7 +79,7 @@ function MenuBar() {
       reports: true,
     });
     console.log("Reports clicked");
-    alert("Reports clicked");
+    history("/reports");
   };
 
   const handleLogoutClick = () => {

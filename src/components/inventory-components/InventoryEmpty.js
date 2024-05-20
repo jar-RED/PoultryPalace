@@ -323,15 +323,6 @@ function InventoryEmpty() {
         totalExtraLarge +
         totalJumbo;
 
-      // Display sums
-      console.log(`Sum of small: ${totalSmall}`);
-      console.log(`Sum of medium: ${totalMedium}`);
-      console.log(`Sum of pullets: ${totalPullets}`);
-      console.log(`Sum of large: ${totalLarge}`);
-      console.log(`Sum of extraLarge: ${totalExtraLarge}`);
-      console.log(`Sum of jumbo: ${totalJumbo}`);
-      console.log(`Overall: ${overallTotal}`);
-
       const docPath = doc(
         db,
         "overallEggs",

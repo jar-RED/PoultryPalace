@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./salesModal.css";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../login-context/AuthContext";
 
@@ -9,16 +9,16 @@ export default function SalesModal() {
   const [customerName, setCustomerName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
-  const [inputsList, setInputsList] = useState([]);
   const [eggSizeQuantities, setEggSizeQuantities] = useState({
     Pullets: 0,
     Small: 0,
     Medium: 0,
     Large: 0,
-    XLarge: 0,
+    ExtraLarge: 0,
     Jumbo: 0,
   });
   const { currentUser } = useContext(AuthContext);
+  const [totalEggs, setTotalEggs] = useState([]);
 
   const toggleModal = () => {
     setModal(!modal);
@@ -41,27 +41,82 @@ export default function SalesModal() {
         Small: "",
         Medium: "",
         Large: "",
-        XLarge: "",
+        ExtraLarge: "",
         Jumbo: "",
       });
     }
   }, [modal]);
 
+  useEffect(() => {
+    const docPath = doc(
+      db,
+      "overallEggs",
+      `${currentUser.uid}_overallChickenEggs`
+    );
+    const unsubscribe = onSnapshot(docPath, (docSnap) => {
+      if (docSnap.exists()) {
+        setTotalEggs(docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
   const handleSales = async (e) => {
     e.preventDefault();
+
     if (!customerName || !purchaseDate || !totalAmount) {
       window.alert("Please fill in all fields.");
       return;
     }
+
+    let isValid = true;
+
+    if (eggSizeQuantities.Pullets > totalEggs.totalPullets) {
+      window.alert(`Entered quantity for Pullets exceeds available stock.`);
+      isValid = false;
+    } else if (eggSizeQuantities.Small > totalEggs.totalSmall) {
+      window.alert(`Entered quantity for Small exceeds available stock.`);
+      isValid = false;
+    } else if (eggSizeQuantities.Medium > totalEggs.totalMedium) {
+      window.alert(`Entered quantity for Medium exceeds available stock.`);
+      isValid = false;
+    } else if (eggSizeQuantities.Large > totalEggs.totalLarge) {
+      window.alert(`Entered quantity for Large exceeds available stock.`);
+      isValid = false;
+    } else if (eggSizeQuantities.ExtraLarge > totalEggs.totalExtraLarge) {
+      window.alert(`Entered quantity for Extra Large exceeds available stock.`);
+      isValid = false;
+    } else if (eggSizeQuantities.Jumbo > totalEggs.totalJumbo) {
+      window.alert(`Entered quantity for Jumbo exceeds available stock.`);
+      isValid = false;
+    } else {
+      isValid = true;
+    }
+
+    const totalEggsSold = Object.values(eggSizeQuantities).reduce(
+      (sum, current) => sum + current,
+      0
+    );
+
+    if (!isValid) {
+      return;
+    }
+
     toggleModal();
     document.querySelector(".menu").classList.remove("menu-hidden");
+
     try {
+      const validatedQuantities = JSON.parse(JSON.stringify(eggSizeQuantities));
       await addDoc(collection(db, "sales"), {
         userId: currentUser.uid,
         customerName,
         totalAmount: Number(totalAmount),
         dateOfPurchase: new Date(purchaseDate),
-        eggSizeQuantities,
+        eggSizeQuantities: validatedQuantities,
+        totalEggsSold,
       });
 
       console.log("Sale recorded successfully!");
