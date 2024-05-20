@@ -4,6 +4,13 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import MenuBar from "../MenuBar";
 import { db } from "../../firebase";
 import { AuthContext } from "../login-context/AuthContext";
+import TotalEggsChart from "./report-charts/TotalEggsChart";
+import TotalPullets from "./report-charts/TotalPullets";
+import TotalSmallChart from "./report-charts/TotalSmallChart";
+import TotalMediumChart from "./report-charts/TotalMediumChart";
+import TotalLargeChart from "./report-charts/TotalLargeChart";
+import TotalExtraLargeChart from "./report-charts/TotalExtraLargeChart";
+import TotalJumboChart from "./report-charts/TotalJumboChart";
 
 function Reports() {
   const [salesData, setSalesData] = useState([]);
@@ -177,8 +184,8 @@ function Reports() {
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
               }}
             >
-              <p style={{ margin: "0px", fontSize: "14pt" }}>Chicken Eggs</p>
-              <p style={{ fontSize: "8pt" }}>Eggs this Month</p>
+              <p style={{ margin: "0px", fontSize: "14pt" }}>Eggs</p>
+              <p style={{ fontSize: "8pt" }}>Total eggs this Month</p>
               <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
                 {allEggs}
               </label>
@@ -253,103 +260,14 @@ function Reports() {
             <label style={{ marginBottom: "20px" }}>
               CHART OF EGGS OF THE WEEK
             </label>
-            <div
-              style={{
-                backgroundColor: "gray",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "auto",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Total Eggs</p>
-            </div>
 
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Pullets</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "violet",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Small</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "purple",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Medium</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "indigo",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Large</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "lavender",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Extra Large</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: "lightblue",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Jumbo</p>
-            </div>
+            <TotalEggsChart />
+            <TotalPullets />
+            <TotalSmallChart />
+            <TotalMediumChart />
+            <TotalLargeChart />
+            <TotalExtraLargeChart />
+            <TotalJumboChart />
           </div>
         </div>
         <hr
