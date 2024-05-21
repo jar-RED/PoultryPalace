@@ -11,6 +11,7 @@ import SalesList from "./components/sales/SalesList";
 import SalesInvoice from "./components/sales/SalesInvoice";
 import { AuthContext } from "./components/login-context/AuthContext";
 import Reports from "./components/reports-component/Reports";
+import Sample from "./components/sales/Sample";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -87,6 +88,14 @@ function App() {
             element={
               <RequireAuth>
                 <Reports />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sample"
+            element={
+              <RequireAuth>
+                <Sample />
               </RequireAuth>
             }
           />

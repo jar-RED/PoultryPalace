@@ -53,6 +53,7 @@ function SalesInvoice() {
           id: doc.id,
           ...doc.data(),
           dueDate: formatFirestoreTimestamp(doc.data().dueDate),
+          dateOfPurchase: formatFirestoreTimestamp(doc.data().dateOfPurchase),
         }));
       setInvoiceList(invoiceList);
     });
@@ -155,6 +156,308 @@ function SalesInvoice() {
         <div id="inv-order-container" className="body-list-container">
           {invoice.map((invoice, index) => (
             <div
+              style={{
+                background: "rgb(131, 161, 134)",
+                boxShadow: "rgba(0, 0, 0, 0.25) 0px 4px 8px",
+                color: "#e3e3ce",
+                marginLeft: "20px",
+                marginRight: "20px",
+                borderRadius: "20px",
+                marginBottom: "15px",
+                cursor: "pointer",
+              }}
+              key={invoice.id || index}
+              id="invoice-list"
+              onClick={() => handleInvoiceClick(invoice)}
+            >
+              <div style={{ display: "flex" }}>
+                <label
+                  style={{
+                    marginLeft: "20px",
+                    marginTop: "10px",
+                  }}
+                >
+                  Invoice # {invoice.invoiceNumber}
+                </label>
+                <label
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "20px",
+                    marginTop: "10px",
+                    paddingTop: "5px",
+                    paddingBottom: "5px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                    fontWeight: "bold",
+                    color: "black",
+                    backgroundColor:
+                      invoice.status === "DRAFT" ? "#E3B09F" : "#8ed495",
+                    borderRadius: "20px",
+                  }}
+                >
+                  {invoice.status}
+                </label>
+              </div>
+              <label
+                style={{
+                  marginLeft: "20px",
+                  marginTop: "10px",
+                  fontWeight: "bold",
+                  fontSize: "15pt",
+                }}
+              >
+                {invoice.customerName}
+              </label>
+              <div>
+                <label
+                  style={{
+                    marginLeft: "20px",
+                    marginTop: "10px",
+                  }}
+                >
+                  Date of Purchase:
+                </label>
+                <label style={{ marginLeft: "10px" }}>
+                  {invoice.dateOfPurchase}
+                </label>
+              </div>
+              <hr style={{ width: "75vw" }} />
+              <div>
+                <label
+                  style={{
+                    marginLeft: "20px",
+                    marginTop: "10px",
+                  }}
+                >
+                  Purchase Summary:
+                </label>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <table
+                      style={{
+                        marginLeft: "20px",
+                        marginRight: "20px",
+                        borderCollapse: "collapse",
+                        width: "100%",
+                        borderSpacing: "0",
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <th style={{ padding: "8px", textAlign: "left" }}>
+                            Item
+                          </th>
+                          <th style={{ padding: "8px", textAlign: "center" }}>
+                            Quantity
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <>
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Pullet Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.Pullets || 0}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Small Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.Small || 0}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Medium Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.Medium || 0}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Large Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.Large || 0}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Extra large Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.ExtraLarge || 0}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "left",
+                              }}
+                            >
+                              <span style={{ marginLeft: "0px" }}>
+                                Jumbo Eggs
+                              </span>
+                            </td>
+                            <td
+                              style={{
+                                padding: "8px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {invoice.eggInfo.Jumbo || 0}
+                            </td>
+                          </tr>
+                        </>
+                      </tbody>
+                    </table>
+                  </div>
+                  <hr style={{ width: "75vw" }} />
+                </div>
+              </div>
+              <table
+                style={{
+                  marginLeft: "20px",
+                  marginRight: "20px",
+                  borderCollapse: "collapse",
+                  width: "95%",
+                  borderSpacing: "0",
+                }}
+              >
+                <thead>
+                  <tr>
+                    <th
+                      style={{
+                        padding: "8px",
+                        textAlign: "left",
+                      }}
+                    >
+                      Total Amount
+                    </th>
+                    <th style={{ padding: "8px", textAlign: "center" }}>
+                      <label
+                        style={{
+                          marginTop: "10px",
+                          paddingTop: "5px",
+                          paddingBottom: "5px",
+                          paddingLeft: "20px",
+                          paddingRight: "20px",
+                          color: "black",
+                          backgroundColor:
+                            invoice.status === "DRAFT" ? "#E3B09F" : "#8ed495",
+                          borderRadius: "20px",
+                        }}
+                      >
+                        {invoice.totalAmount}.00
+                      </label>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  paddingBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  Payment due date:
+                </label>
+                <label
+                  style={{
+                    marginLeft: "10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {invoice.dueDate}
+                </label>
+              </div>
+            </div>
+          ))}
+          {/* {invoice.map((invoice, index) => (
+            <div
               key={invoice.id || index}
               id="sales-list"
               style={{ cursor: "pointer" }}
@@ -218,7 +521,7 @@ function SalesInvoice() {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </section>
       <InvoiceEditDeleteModal

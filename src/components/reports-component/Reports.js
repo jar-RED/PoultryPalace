@@ -11,6 +11,8 @@ import TotalMediumChart from "./report-charts/TotalMediumChart";
 import TotalLargeChart from "./report-charts/TotalLargeChart";
 import TotalExtraLargeChart from "./report-charts/TotalExtraLargeChart";
 import TotalJumboChart from "./report-charts/TotalJumboChart";
+import TotalSalesChart from "./report-charts/TotalSalesChart";
+import TotalSoldEggs from "./report-charts/TotalSoldEggs";
 
 function Reports() {
   const [salesData, setSalesData] = useState([]);
@@ -20,13 +22,19 @@ function Reports() {
   const [totalPurchases, setTotalPurchases] = useState([]);
   const [totalPending, setTotalPending] = useState([]);
   const [totalReceived, setTotalReceived] = useState([]);
+  const [monthlySales, setMonthlySales] = useState([]);
+  const [allTimeSales, setAllTimeSales] = useState([]);
+  const [monthlyPaid, setMonthlyPaid] = useState([]);
+  const [monthlyUnpaid, setMonthlyUnpaid] = useState([]);
+  const [allTimePaid, setAllTimePaid] = useState([]);
+  const [allTimeUnpaid, setAllTimeUnpaid] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-  //Total Eggs
+  //Total Sold Eggs and Monthly Sales
   useEffect(() => {
     if (!currentUser) {
       console.log("No current user found.");
@@ -53,12 +61,44 @@ function Reports() {
         0
       );
       setMonthEggSales(totalEggsSales);
+
+      const totalMonthSales = tempSalesData.reduce(
+        (sum, sale) => sum + sale.totalAmount,
+        0
+      );
+      setMonthlySales(totalMonthSales);
     });
 
     return () => unsubscribe();
   }, [currentUser]);
 
-  //Total Sold Eggs
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+
+    const salesCollectionRef = collection(db, "sales");
+    const q = query(salesCollectionRef, where("userId", "==", currentUser.uid));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const tempSalesData = [];
+      querySnapshot.forEach((doc) => {
+        tempSalesData.push({ id: doc.id, ...doc.data() });
+      });
+      setSalesData(tempSalesData);
+
+      const totalSales = tempSalesData.reduce(
+        (sum, sale) => sum + sale.totalAmount,
+        0
+      );
+      setAllTimeSales(totalSales);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  //Total Eggs per Month
   useEffect(() => {
     if (!currentUser) {
       console.log("No current user found.");
@@ -130,6 +170,73 @@ function Reports() {
     return () => unsubscribe();
   }, [currentUser]);
 
+  //Invoices paid or unpaid
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+
+    const ordersCollectionRef = collection(db, "invoice");
+    const q = query(
+      ordersCollectionRef,
+      where("userId", "==", currentUser.uid),
+      where("dueDate", ">=", startOfMonth),
+      where("dueDate", "<=", endOfMonth)
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const tempInvoiceData = [];
+      querySnapshot.forEach((doc) => {
+        tempInvoiceData.push({ id: doc.id, ...doc.data() });
+      });
+
+      const unpaidInvoice = tempInvoiceData.filter(
+        (order) => order.status === "DRAFT"
+      );
+      setMonthlyUnpaid(unpaidInvoice.length);
+
+      const paidInvoice = tempInvoiceData.filter(
+        (order) => order.status === "PAID"
+      );
+      setMonthlyPaid(paidInvoice.length);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("No current user found.");
+      return;
+    }
+
+    const ordersCollectionRef = collection(db, "invoice");
+    const q = query(
+      ordersCollectionRef,
+      where("userId", "==", currentUser.uid)
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const tempInvoiceData = [];
+      querySnapshot.forEach((doc) => {
+        tempInvoiceData.push({ id: doc.id, ...doc.data() });
+      });
+
+      const unpaidInvoice = tempInvoiceData.filter(
+        (order) => order.status === "DRAFT"
+      );
+      setAllTimeUnpaid(unpaidInvoice.length);
+
+      const paidInvoice = tempInvoiceData.filter(
+        (order) => order.status === "PAID"
+      );
+      setAllTimePaid(paidInvoice.length);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
   return (
     <div>
       <section id="inventory-header" className="header-welcome">
@@ -164,7 +271,6 @@ function Reports() {
       >
         <div
           style={{
-            // backgroundColor: "red",
             color: "white",
             height: "auto",
             borderRadius: "10px",
@@ -277,42 +383,102 @@ function Reports() {
         />
         <div
           style={{
-            backgroundColor: "blue",
+            color: "white",
             height: "auto",
             borderRadius: "10px",
-            margin: "10px",
-            paddingBottom: "10px",
-            marginBottom: "40px",
+            margin: "20px",
           }}
         >
-          <p>Sales</p>
+          <p style={{ color: "white", marginLeft: "10px" }}>Sales</p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "#83A186",
                 padding: "20px",
                 marginRight: "20px",
                 marginBottom: "20px",
                 borderRadius: "10px",
-                marginLeft: "20px",
-                width: "50vw",
+                width: "40%",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
               }}
             >
-              <p>Report 1</p>
+              <p style={{ margin: "0px", fontSize: "14pt" }}>Sales</p>
+              <p style={{ fontSize: "8pt" }}>Sales this Month</p>
+              <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                ₱ {monthlySales}
+              </label>
+              <div style={{ display: "flex", marginTop: "10px" }}>
+                <p
+                  style={{
+                    fontSize: "8pt",
+                    margin: "0px",
+                    marginRight: "auto",
+                  }}
+                >
+                  Invoice Paid
+                </p>
+                <label style={{ fontSize: "8pt", fontWeight: "bold" }}>
+                  {monthlyPaid}
+                </label>
+              </div>
+              <div style={{ display: "flex", marginTop: "0px" }}>
+                <p
+                  style={{
+                    fontSize: "8pt",
+                    margin: "0px",
+                    marginRight: "auto",
+                  }}
+                >
+                  Invoice Unpaid
+                </p>
+                <label style={{ fontSize: "8pt", fontWeight: "bold" }}>
+                  {monthlyUnpaid}
+                </label>
+              </div>
             </div>
             <div
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "#83A186",
                 padding: "20px",
-                marginRight: "20px",
                 marginBottom: "20px",
                 borderRadius: "10px",
-                width: "50vw",
+                width: "40%",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
               }}
             >
-              <p>Report 2</p>
+              <p style={{ margin: "0px", fontSize: "14pt" }}>Sales</p>
+              <p style={{ fontSize: "8pt" }}>All Time Sales</p>
+              <label style={{ fontWeight: "bold", fontSize: "15pt" }}>
+                ₱ {allTimeSales}
+              </label>
+              <div style={{ display: "flex", marginTop: "10px" }}>
+                <p
+                  style={{
+                    fontSize: "8pt",
+                    margin: "0px",
+                    marginRight: "auto",
+                  }}
+                >
+                  Invoice Paid
+                </p>
+                <label style={{ fontSize: "8pt", fontWeight: "bold" }}>
+                  {allTimePaid}
+                </label>
+              </div>
+              <div style={{ display: "flex", marginTop: "0px" }}>
+                <p
+                  style={{
+                    fontSize: "8pt",
+                    margin: "0px",
+                    marginRight: "auto",
+                  }}
+                >
+                  Invoice Unpaid
+                </p>
+                <label style={{ fontSize: "8pt", fontWeight: "bold" }}>
+                  {allTimeUnpaid}
+                </label>
+              </div>
             </div>
           </div>
           <div
@@ -320,34 +486,18 @@ function Reports() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <div
-              style={{
-                backgroundColor: "gray",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>This Month Graph</p>
-            </div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderRadius: "10px",
-                width: "50vw",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p>Last Month Graph</p>
-            </div>
+            <label style={{ marginBottom: "20px" }}>
+              CHART OF SALES OF THE WEEK
+            </label>
+
+            <TotalSalesChart />
+            <label style={{ marginBottom: "20px" }}>
+              CHART OF SOLD EGGS FOR THE MONTH
+            </label>
+            <TotalSoldEggs />
           </div>
         </div>
       </div>

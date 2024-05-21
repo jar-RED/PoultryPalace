@@ -72,8 +72,6 @@ export default function InvoiceModal() {
     return () => unsubscribe();
   }, [currentUser]);
 
-  console.log("Sales Info:", saleInfo);
-
   const handleCustomerChange = (e) => {
     const selectedCustomerName = e.target.value;
     const selectedSaleInfo = saleInfo.find(

@@ -311,7 +311,7 @@ function InventoryEmpty() {
         eggSoldQuantities.Large;
       const totalExtraLarge =
         eggsList.reduce((acc, curr) => acc + curr.extraLarge, 0) -
-        eggSoldQuantities.XLarge;
+        eggSoldQuantities.ExtraLarge;
       const totalJumbo =
         eggsList.reduce((acc, curr) => acc + curr.jumbo, 0) -
         eggSoldQuantities.Jumbo;
@@ -347,23 +347,6 @@ function InventoryEmpty() {
 
     return () => unsubscribe();
   }, [currentUser, eggSold]);
-
-  const [eggPrices, setEggPrices] = useState({});
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(db, "overallEggs", `${currentUser.uid}_eggPrices`),
-      (docSnap) => {
-        if (docSnap.exists()) {
-          setEggPrices(docSnap.data());
-        } else {
-          console.log("No such document!");
-        }
-      }
-    );
-
-    return () => unsubscribe();
-  }, [currentUser]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -683,47 +666,7 @@ function InventoryEmpty() {
                       {eggsData.totalPullets}
                     </h4>
                   </div>
-                  <div></div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handlePulletPrice}
-                  />
                 </div>
-
-                {eggPrices.pullets ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.pullets.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.pullets.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
@@ -788,46 +731,7 @@ function InventoryEmpty() {
                       {eggsData.totalSmall}
                     </h4>
                   </div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handleSmallPrice}
-                  />
                 </div>
-
-                {eggPrices.small ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.small.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.small.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
@@ -892,46 +796,7 @@ function InventoryEmpty() {
                       {eggsData.totalMedium}
                     </h4>
                   </div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handleMediumPrice}
-                  />
                 </div>
-
-                {eggPrices.medium ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.medium.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.medium.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
@@ -996,46 +861,7 @@ function InventoryEmpty() {
                       {eggsData.totalLarge}
                     </h4>
                   </div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handleLargePrice}
-                  />
                 </div>
-
-                {eggPrices.large ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.large.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.large.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
@@ -1100,46 +926,7 @@ function InventoryEmpty() {
                       {eggsData.totalExtraLarge}
                     </h4>
                   </div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handleExtraLargePrice}
-                  />
                 </div>
-
-                {eggPrices.extraLarge ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.extraLarge.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.extraLarge.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
@@ -1204,46 +991,7 @@ function InventoryEmpty() {
                       {eggsData.totalJumbo}
                     </h4>
                   </div>
-                  <img
-                    src="assets/images/price-icon.svg"
-                    style={{
-                      height: "4vh",
-                      marginLeft: "auto",
-                      marginRight: "20px",
-                      marginTop: "5px",
-                    }}
-                    onClick={handleJumboPrice}
-                  />
                 </div>
-
-                {eggPrices.jumbo ? (
-                  <div style={{ display: "flex", marginBottom: "10px" }}>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "20px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Piece: {eggPrices.jumbo.pricePerPiece}
-                      </label>
-                    </div>
-                    <div>
-                      <label
-                        style={{
-                          marginBottom: "5px",
-                          marginLeft: "10px",
-                          marginTop: "0px",
-                          color: "rgb(250 255 227)",
-                        }}
-                      >
-                        Price/Tray: {eggPrices.jumbo.pricePerTray}
-                      </label>
-                    </div>
-                  </div>
-                ) : null}
 
                 <div
                   className="inptContainer"
