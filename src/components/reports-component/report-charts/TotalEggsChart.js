@@ -16,7 +16,7 @@ import {
 } from "recharts";
 
 function TotalSalesChart() {
-  const [totalSales, setTotalSales] = useState([]);
+  const [totalEggs, setTotalEggs] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
   const now = new Date();
@@ -29,34 +29,34 @@ function TotalSalesChart() {
       return;
     }
 
-    const eggsCollectionRef = collection(db, "sales");
+    const eggsCollectionRef = collection(db, "chickenEggs");
     const q = query(
       eggsCollectionRef,
       where("userId", "==", currentUser.uid),
-      where("dateOfPurchase", ">=", sevenDaysAgo),
-      where("dateOfPurchase", "<=", now)
+      where("eggsDate", ">=", sevenDaysAgo),
+      where("eggsDate", "<=", now)
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const tempSalesData = [];
+      const tempEggsData = [];
       querySnapshot.forEach((doc) => {
-        const salesData = doc.data();
-        tempSalesData.push({
-          date: salesData.dateOfPurchase,
-          totalSale: salesData.totalEggsSold,
+        const eggsData = doc.data();
+        tempEggsData.push({
+          date: eggsData.eggsDate,
+          totalEggs: eggsData.totalEggs,
         });
       });
-      setTotalSales(tempSalesData);
+      setTotalEggs(tempEggsData);
     });
 
     return () => unsubscribe();
   }, [currentUser]);
 
-  const formattedData = totalSales.map((sale) => ({
-    date: sale.date.toDate
-      ? `${sale.date.toDate().getMonth() + 1}-${sale.date.toDate().getDate()}-${sale.date.toDate().getFullYear()}`
+  const formattedData = totalEggs.map((egg) => ({
+    date: egg.date.toDate
+      ? `${egg.date.toDate().getMonth() + 1}-${egg.date.toDate().getDate()}-${egg.date.toDate().getFullYear()}`
       : "",
-    totalSale: sale.totalSale,
+    totalEggs: egg.totalEggs,
   }));
 
   return (
@@ -73,7 +73,7 @@ function TotalSalesChart() {
       <div
         style={{ textAlign: "center", marginBottom: "10px", marginTop: "5px" }}
       >
-        Sales Data
+        Total Eggs COllected
       </div>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
@@ -100,7 +100,7 @@ function TotalSalesChart() {
           <Tooltip />
 
           <Bar
-            dataKey="totalSale"
+            dataKey="totalEggs"
             fill="#E3E3CE"
             activeBar={<Rectangle fill="white" stroke="#83A186" />}
           />

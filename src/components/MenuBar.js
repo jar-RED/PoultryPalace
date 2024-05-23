@@ -12,12 +12,10 @@ function MenuBar() {
     reports: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const menuRef = useRef(null); // Ref for the menu bar
+  const menuRef = useRef(null);
 
-  // Function to handle clicks outside the menu bar
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
-      // Reset the active state if the click is outside the menu bar
       setActiveItem({
         inventory: false,
         sales: false,
@@ -28,16 +26,15 @@ function MenuBar() {
   };
 
   useEffect(() => {
-    // Add the event listener when the component mounts
     document.addEventListener("mousedown", handleClickOutside);
-    // Clean up the event listener when the component unmounts
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const handleInventoryClick = (event) => {
-    event.stopPropagation(); // Prevent the event from bubbling up
+    event.stopPropagation();
     setActiveItem({
       inventory: true,
       sales: false,
