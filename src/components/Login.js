@@ -13,7 +13,7 @@ function Login() {
   const [error] = useState(null);
   const history = useNavigate();
 
-  const { dispatch, showError } = useContext(AuthContext);
+  const { dispatch, showError, showToast } = useContext(AuthContext);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -63,13 +63,15 @@ function Login() {
 
   const handleForgotPassword = () => {
     if (!email) {
-      alert("Please enter your email address to reset your password.");
+      //alert("Please enter your email address to reset your password.");
+      showError("Please enter your email address to reset your password.");
       return;
     }
 
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        alert("Password reset email sent! Check your inbox.");
+        // alert("Password reset email sent! Check your inbox.");
+        showToast("Password reset email sent! Check your inbox.");
       })
       .catch((error) => {
         console.log(error);
@@ -87,7 +89,8 @@ function Login() {
             errorMessage = "An error occurred.";
         }
 
-        alert(errorMessage);
+        //alert(errorMessage);
+        showError(errorMessage);
       });
   };
 
