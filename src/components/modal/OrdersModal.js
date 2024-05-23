@@ -10,7 +10,7 @@ export default function OrdersModal() {
   const [quantity, setQuantity] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
 
   const toggleModal = (e) => {
     setModal(!modal);
@@ -46,6 +46,7 @@ export default function OrdersModal() {
         deliveryDate: new Date(deliveryDate),
         status: "PENDING",
       });
+      showToast("Order added successfully!");
     } catch (err) {
       console.error("Error adding document: ", err);
     }

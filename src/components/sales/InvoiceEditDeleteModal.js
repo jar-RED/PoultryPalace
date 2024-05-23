@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { AuthContext } from "../login-context/AuthContext";
 import { InvoiceConfirmationPopup } from "./InvoiceConfirmationPopup";
 
 function InvoiceEditDeleteModal({
@@ -12,6 +13,7 @@ function InvoiceEditDeleteModal({
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { showToast } = useContext(AuthContext);
   const [customerName, setCustomerName] = useState(
     selectedInvoice?.customerName || ""
   );
@@ -44,7 +46,7 @@ function InvoiceEditDeleteModal({
         invoiceNumber: Number(invoiceNumber),
         status: invoiceStatus,
       });
-      console.log("Invoice edited successfully");
+      showToast("Invoice edited successfully");
       onClose();
     } catch (error) {
       console.error("Error editing invoice: ", error);

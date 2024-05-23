@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { AuthContext } from "../login-context/AuthContext";
 
 const EditEggs = ({ isOpen, onClose, selectedEggs, eggType }) => {
   if (!isOpen) return null;
   const [isEditMode, setIsEditMode] = useState(false);
   const [newValue, setNewValue] = useState(selectedEggs[eggType] || 0);
-
+  const { showToast, showError } = useContext(AuthContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -14,13 +15,14 @@ const EditEggs = ({ isOpen, onClose, selectedEggs, eggType }) => {
         await updateDoc(doc(db, "chickenEggs", selectedEggs.id), {
           [eggType]: Number(newValue),
         });
-        console.log(`${eggType} eggs updated successfully`);
+        showToast(`${eggType} eggs updated successfully`);
         onClose();
       } else {
         console.error("Invalid egg type");
         onClose();
       }
     } catch (error) {
+      showError("Error updating eggs");
       console.error("Error updating eggs: ", error);
       onClose();
     }

@@ -20,7 +20,7 @@ function SalesList() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSale, setSelectedSale] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast } = useContext(AuthContext);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -74,6 +74,7 @@ function SalesList() {
     try {
       await deleteDoc(doc(db, "sales", saleId));
       console.log("Sale deleted successfully");
+      showToast("Sale deleted successfully");
       setSalesList(sales.filter((sale) => sale.id !== saleId));
     } catch (error) {
       console.error("Error deleting sale: ", error);

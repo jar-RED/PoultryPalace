@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
+import { Toaster, toast } from "sonner";
 
 const INITIAL_STATE = {
   currentUser: JSON.parse(localStorage.getItem("user")) || null,
@@ -14,9 +15,20 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(state.currentUser));
   }, [state.currentUser]);
 
+  const showToast = (message) => {
+    toast.success(message);
+  };
+
+  const showError = (message) => {
+    toast.error(message);
+  };
+
   return (
-    <AuthContext.Provider value={{ currentUser: state.currentUser, dispatch }}>
+    <AuthContext.Provider
+      value={{ currentUser: state.currentUser, dispatch, showToast, showError }}
+    >
       {children}
+      <Toaster richColors position="top-center" />
     </AuthContext.Provider>
   );
 };

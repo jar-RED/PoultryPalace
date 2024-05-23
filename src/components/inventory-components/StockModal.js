@@ -9,12 +9,12 @@ export function StockModal({ isOpen, onClose }) {
   const [stockQuantity, setStockQuantity] = useState("");
   const [stockAlert, setStockAlert] = useState("");
   const [stockDate, setStockDate] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
 
   const handleStock = async (e) => {
     e.preventDefault();
     if (!stockQuantity || !stockAlert || !stockDate) {
-      alert("Please fill all fields.");
+      showError("Please fill all fields.");
       return;
     }
     onClose();
@@ -25,7 +25,8 @@ export function StockModal({ isOpen, onClose }) {
         stockAlert: Number(stockAlert),
         stockDate: new Date(stockDate),
       });
-      console.log("Stock added successfully");
+
+      showToast("Stock added successfully");
     } catch (err) {
       console.error("Error adding document: ", err);
     }

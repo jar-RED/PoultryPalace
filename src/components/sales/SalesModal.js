@@ -17,7 +17,7 @@ export default function SalesModal() {
     ExtraLarge: 0,
     Jumbo: 0,
   });
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast } = useContext(AuthContext);
   const [totalEggs, setTotalEggs] = useState([]);
 
   const toggleModal = () => {
@@ -119,7 +119,7 @@ export default function SalesModal() {
         totalEggsSold,
       });
 
-      console.log("Sale recorded successfully!");
+      showToast("Sales added successfully!");
     } catch (err) {
       console.error("Error recording sale: ", err);
     }

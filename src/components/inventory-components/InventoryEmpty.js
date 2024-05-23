@@ -27,7 +27,7 @@ function InventoryEmpty() {
   const [feeds, setFeeds] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eggs, setEggs] = useState([]);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
   const [isEditStockModalOpen, setIsEditStockModalOpen] = useState(false);
   const [isEditFeedModalOpen, setIsEditFeedModalOpen] = useState(false);
   const [isEditEggModalOpen, setIsEditEggModalOpen] = useState(false);
@@ -200,6 +200,7 @@ function InventoryEmpty() {
   const deleteStock = async (stockId) => {
     try {
       await deleteDoc(doc(db, "chickenStock", stockId));
+      showToast("Stock deleted successfully");
       console.log("Stock deleted successfully");
       setStocks(stocks.filter((stock) => stock.id !== stockId));
     } catch (error) {
@@ -233,6 +234,7 @@ function InventoryEmpty() {
     try {
       await deleteDoc(doc(db, "chickenFeeds", feedId));
       console.log("Feed item deleted successfully");
+      showToast("Feed item deleted successfully");
       setFeeds(feeds.filter((feed) => feed.id !== feedId));
     } catch (error) {
       console.error("Error deleting feed item: ", error);

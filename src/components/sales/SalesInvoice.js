@@ -20,7 +20,7 @@ function SalesInvoice() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast } = useContext(AuthContext);
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -74,7 +74,7 @@ function SalesInvoice() {
   const deleteInvoice = async (invoiceId) => {
     try {
       await deleteDoc(doc(db, "invoice", invoiceId));
-      console.log("Invoice deleted successfully");
+      showToast("Invoice deleted successfully", "success");
       setInvoiceList(invoice.filter((invoice) => invoice.id !== invoiceId));
     } catch (error) {
       console.error("Error deleting invoice: ", error);

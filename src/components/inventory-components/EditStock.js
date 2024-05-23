@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { StocksConfirmation } from "./StocksConfirmation";
+import { AuthContext } from "../login-context/AuthContext";
 
 function EditStock({ isOpen, onClose, selectedStock, deleteStock }) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { showToast } = useContext(AuthContext);
 
   const [stockAlert, setStockAlert] = useState(selectedStock?.stockAlert || "");
 
@@ -30,6 +32,7 @@ function EditStock({ isOpen, onClose, selectedStock, deleteStock }) {
         stockQuantity: Number(stockQuantity),
       });
       console.log("Order edited successfully");
+      showToast("Order edited successfully");
       onClose();
     } catch (error) {
       console.error("Error editing selected order: ", error);

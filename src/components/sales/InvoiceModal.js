@@ -21,7 +21,7 @@ export default function InvoiceModal() {
   const [dueDate, setDueDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
   const [eggInfo, setEggInfo] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
   const [saleInfo, setSaleInfo] = useState([]);
 
   const toggleModal = (e) => {
@@ -94,13 +94,13 @@ export default function InvoiceModal() {
   const handleInvoice = async (e) => {
     e.preventDefault();
     if (!dueDate || !invoiceNumber) {
-      window.alert("Please fill in all fields.");
+      showError("Please fill in all fields.");
       return;
     }
 
     // Check if customerName is selected
     if (!customerName) {
-      window.alert("Please select a customer name.");
+      showError("Please select a customer name.");
       return;
     }
 
@@ -114,7 +114,7 @@ export default function InvoiceModal() {
     );
 
     if (!querySnapshot.empty) {
-      window.alert(
+      showError(
         `An invoice already exists for the customer ${customerName}. Please create a new invoice for a different customer.`
       );
       return;
@@ -134,6 +134,7 @@ export default function InvoiceModal() {
         dueDate: new Date(dueDate),
         status: "DRAFT",
       });
+      showToast("Invoice created successfully!");
     } catch (err) {
       console.error("Error adding document: ", err);
     }

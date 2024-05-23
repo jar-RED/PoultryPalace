@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
+import { AuthContext } from "./login-context/AuthContext";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error] = useState(null);
+  const { showToast } = useContext(AuthContext);
   const history = useNavigate();
 
   const signUp = (e) => {
@@ -34,6 +36,7 @@ function Register() {
         history("/login");
         setEmail("");
         setPassword("");
+        showToast("Account created successfully!");
       })
       .catch((error) => {
         console.log(error);

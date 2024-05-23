@@ -9,12 +9,12 @@ export function FeedsModal({ isOpen, onClose }) {
   const [feedQuantity, setFeedQuantity] = useState("");
   const [feedAlert, setFeedAlert] = useState("");
   const [feedsDate, setFeedsDate] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
 
   const handleFeeds = async (e) => {
     e.preventDefault();
     if (!feedQuantity || !feedAlert || !feedsDate) {
-      alert("Please fill all fields.");
+      showError("Please fill all fields.");
       return;
     }
     onClose();
@@ -26,6 +26,7 @@ export function FeedsModal({ isOpen, onClose }) {
         feedsDate: new Date(feedsDate),
       });
       console.log("Feeds added successfully");
+      showToast("Feeds added successfully");
     } catch (err) {
       console.error("Error adding document: ", err);
     }

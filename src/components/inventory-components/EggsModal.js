@@ -20,7 +20,7 @@ export function EggsModal({ isOpen, onClose }) {
   const [extraLargeQuantity, setExtraLargeQuantity] = useState("");
   const [jumboQuantity, setJumboQuantity] = useState("");
   const [eggsDate, setEggsDate] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast, showError } = useContext(AuthContext);
 
   const handleEggs = async (e) => {
     e.preventDefault();
@@ -33,7 +33,8 @@ export function EggsModal({ isOpen, onClose }) {
       !jumboQuantity ||
       !eggsDate
     ) {
-      alert("Please fill all fields.");
+      showError("Please fill all fields.");
+
       return;
     }
     onClose();
@@ -57,7 +58,8 @@ export function EggsModal({ isOpen, onClose }) {
         eggsDate: new Date(eggsDate),
         totalEggs: totalEggs,
       });
-      console.log("Chicken Eggs added successfully");
+
+      showToast("Chicken Eggs added successfully!");
     } catch (err) {
       console.error("Error adding document: ", err);
     }

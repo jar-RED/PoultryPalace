@@ -19,7 +19,7 @@ function InventoryOrders() {
   const [sortAscending, setSortAscending] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, showToast } = useContext(AuthContext);
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
   };
@@ -71,7 +71,7 @@ function InventoryOrders() {
   const deleteOrder = async (orderId) => {
     try {
       await deleteDoc(doc(db, "orders", orderId));
-      console.log("Order deleted successfully");
+      showToast("Order deleted successfully");
       setOrders(orders.filter((order) => order.id !== orderId));
     } catch (error) {
       console.error("Error deleting order: ", error);

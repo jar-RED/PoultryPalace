@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { StocksConfirmation } from "./StocksConfirmation";
+import { AuthContext } from "../login-context/AuthContext";
 
 function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { showToast } = useContext(AuthContext);
 
   const [feedAlert, setFeedAlert] = useState(selectedFeeds?.feedAlert || "");
 
@@ -29,7 +31,7 @@ function EditFeeds({ isOpen, onClose, selectedFeeds, deleteFeed }) {
         feedAlert: Number(feedAlert),
         feedQuantity: Number(feedQuantity),
       });
-      console.log("Feed item edited successfully");
+      showToast("Feed item edited successfully");
       onClose();
     } catch (error) {
       console.error("Error editing selected feed item: ", error);
