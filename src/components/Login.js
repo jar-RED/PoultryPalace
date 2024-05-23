@@ -24,8 +24,9 @@ function Login() {
           type: "LOGIN",
           payload: user,
         });
-        console.log(userCredential);
+        // console.log(userCredential);
         history("/dashboard");
+        showToast("Login successful!");
       })
       .catch((error) => {
         console.log(error);
