@@ -9,24 +9,27 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error] = useState(null);
-  const { showToast } = useContext(AuthContext);
+  const { showToast, showError } = useContext(AuthContext);
   const history = useNavigate();
 
   const signUp = (e) => {
     e.preventDefault();
 
     if (password.length > 1 && password.length < 8) {
-      alert("Password must be at least 8 characters long.");
+      //alert("Password must be at least 8 characters long.");
+      showError("Password must be at least 8 characters long.");
       return;
     }
 
     if (!/[A-Z]/.test(password) && password.length > 1) {
-      alert("Password must contain at least one uppercase letter.");
+      showError("Password must contain at least one uppercase letter.");
+      //alert("Password must contain at least one uppercase letter.");
       return;
     }
 
     if (!/\d/.test(password) && password.length > 1) {
-      alert("Password must contain at least one number.");
+      showError("Password must contain at least one number.");
+      //alert("Password must contain at least one number.");
       return;
     }
 
@@ -61,8 +64,7 @@ function Register() {
           default:
             errorMessage = "An unknown error occurred.";
         }
-
-        alert(errorMessage);
+        showError(errorMessage);
       });
   };
 
