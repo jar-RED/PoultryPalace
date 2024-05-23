@@ -66,8 +66,7 @@ function MenuBar() {
       notifications: true,
       reports: false,
     });
-    console.log("Notifications clicked");
-    alert("Notifications clicked");
+    history("/notification");
   };
 
   const handleReportsClick = (event) => {

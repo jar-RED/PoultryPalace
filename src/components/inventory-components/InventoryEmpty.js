@@ -114,42 +114,6 @@ function InventoryEmpty() {
     document.querySelector(".menu").classList.add("menu-hidden");
   };
 
-  const handlePulletPrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "pullets" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
-  const handleSmallPrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "small" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
-  const handleMediumPrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "medium" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
-  const handleLargePrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "large" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
-  const handleExtraLargePrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "extraLarge" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
-  const handleJumboPrice = (egg) => {
-    setSelectedEggs({ ...egg, eggType: "jumbo" });
-    setIsPriceInputModalOpen(true);
-    document.querySelector(".menu").classList.add("menu-hidden");
-  };
-
   const handleAlertInput = () => {
     setIsAlertModalOpen(true);
     document.querySelector(".menu").classList.add("menu-hidden");

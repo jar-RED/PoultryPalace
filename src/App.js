@@ -11,7 +11,8 @@ import SalesList from "./components/sales/SalesList";
 import SalesInvoice from "./components/sales/SalesInvoice";
 import { AuthContext } from "./components/login-context/AuthContext";
 import Reports from "./components/reports-component/Reports";
-import Sample from "./components/sales/Sample";
+import Notification from "./components/notifications/Notification";
+import { NotificationProvider } from "./components/notifications/NotificationProvider";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -22,86 +23,88 @@ function App() {
   console.log(currentUser);
 
   return (
-    <BrowserRouter>
-      <div>
-        <Routes>
-          <Route path="/" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/dashboard"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/inventory"
-            element={
-              <RequireAuth>
-                <InventoryDefault />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/sales"
-            element={
-              <RequireAuth>
-                <SalesMain />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/inventory-list"
-            element={
-              <RequireAuth>
-                <InventoryList />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/inventory-orders"
-            element={
-              <RequireAuth>
-                <InventoryOrders />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/sales-list"
-            element={
-              <RequireAuth>
-                <SalesList />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/sales-invoice"
-            element={
-              <RequireAuth>
-                <SalesInvoice />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/reports"
-            element={
-              <RequireAuth>
-                <Reports />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/sample"
-            element={
-              <RequireAuth>
-                <Sample />
-              </RequireAuth>
-            }
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <NotificationProvider>
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route path="/" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/inventory"
+              element={
+                <RequireAuth>
+                  <InventoryDefault />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/sales"
+              element={
+                <RequireAuth>
+                  <SalesMain />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/inventory-list"
+              element={
+                <RequireAuth>
+                  <InventoryList />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/inventory-orders"
+              element={
+                <RequireAuth>
+                  <InventoryOrders />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/sales-list"
+              element={
+                <RequireAuth>
+                  <SalesList />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/sales-invoice"
+              element={
+                <RequireAuth>
+                  <SalesInvoice />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <RequireAuth>
+                  <Reports />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/notification"
+              element={
+                <RequireAuth>
+                  <Notification />
+                </RequireAuth>
+              }
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </NotificationProvider>
   );
 }
 

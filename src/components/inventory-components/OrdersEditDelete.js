@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { OrdersConfirmation } from "./OrdersConfirmation";
+import { AuthContext } from "../login-context/AuthContext";
 
 function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
   if (!isOpen) return null;
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { showToast } = useContext(AuthContext);
 
   const [totalAmount, setTotalAmount] = useState(
     selectedOrder?.totalAmount || ""
@@ -34,7 +36,7 @@ function OrdersEditDelete({ isOpen, onClose, selectedOrder, deleteOrder }) {
         quantity: Number(orderQuantity),
         status: orderStatus,
       });
-      console.log("Order edited successfully");
+      showToast("Order edited successfully");
       onClose();
     } catch (error) {
       console.error("Error editing selected order: ", error);

@@ -1,5 +1,8 @@
-import React, { useState, useContext } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState, useContext, cloneElement } from "react";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { AuthContext } from "./login-context/AuthContext";
@@ -10,7 +13,7 @@ function Login() {
   const [error] = useState(null);
   const history = useNavigate();
 
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, showError } = useContext(AuthContext);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -49,6 +52,37 @@ function Login() {
             errorMessage = "Please enter your password and try again.";
             break;
           case "auth/network-request-failed":
+          default:
+            errorMessage = "An error occurred.";
+        }
+
+        // alert(errorMessage);
+        showError(errorMessage);
+      });
+  };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert("Please enter your email address to reset your password.");
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset email sent! Check your inbox.");
+      })
+      .catch((error) => {
+        console.log(error);
+        let errorMessage = "An error occurred.";
+
+        // Check for specific error codes
+        switch (error.code) {
+          case "auth/invalid-email":
+            errorMessage = "Invalid email address.";
+            break;
+          case "auth/user-not-found":
+            errorMessage = "No user found with this email.";
+            break;
           default:
             errorMessage = "An error occurred.";
         }
@@ -100,6 +134,23 @@ function Login() {
           </form>
         </div>
       </section>
+      <p style={{ textAlign: "center" }}>
+        <button
+          onClick={handleForgotPassword}
+          style={{
+            textDecoration: "underline",
+            textAlign: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+            background: "none",
+            border: "none",
+            color: "white",
+            cursor: "pointer",
+          }}
+        >
+          Forgot Password?
+        </button>
+      </p>
     </>
   );
 }
